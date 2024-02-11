@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {Logo}  from "../Assets/whit_logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,6 +10,11 @@ const Navbar = () => {
     <nav className="bg-[#d9d9d9] p-4">
       <div className="container">
         <span className="hidden md:flex mx-auto container justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center">
+            <img src={Logo} alt="Myvet Logo" />
+          </div>
+          {/* Search bar */}
           <div className="flex items-center">
             <div className="relative ml-20">
               <input
@@ -21,6 +27,7 @@ const Navbar = () => {
               </div>
             </div>
           </div>
+          {/* Home, Login, Signup */}
           <div className="flex items-center">
             <div className="relative">
               <a href="#" className="px-4 py-2 text-black font-medium">
@@ -45,6 +52,7 @@ const Navbar = () => {
             </div>
           </div>
         </span>
+        {/* Mobile Devices */}
         <div className="md:hidden flex items-center justify-end">
           <button
             onClick={() => setIsOpen(!isOpen)}
