@@ -1,26 +1,31 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import {Logo}  from "../Assets/whit_logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-[#d9d9d9] p-4">
+    <nav className="bg-[#4120A9] p-4">
       <div className="container">
         <span className="hidden md:flex mx-auto container justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center">
-            <img src={Logo} alt="Myvet Logo" />
+          <div className="flex items-center absolute">
+            <div className="align-middle">
+              <img
+                src="src/Assets/whit_logo.png"
+                alt="Logo"
+                className="w-24"
+              />
+            </div>
           </div>
           {/* Search bar */}
-          <div className="flex items-center">
-            <div className="relative ml-20">
+          <div className="flex items-center ml-36 min-w-20 ">
+            <div className="relative">
               <input
                 type="text"
                 placeholder="Search..."
-                className="text-[#737276] px-4 py-2 rounded-3xl pl-10 bg-[#b7b7b7] outline-none "
+                className="text-[#59595c] px-4 py-2 rounded-3xl pl-10 bg-white outline-none w-72 font-medium"
               />
               <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                 <FontAwesomeIcon icon={faSearch} className="text-[#737276]" />
@@ -30,14 +35,14 @@ const Navbar = () => {
           {/* Home, Login, Signup */}
           <div className="flex items-center">
             <div className="relative">
-              <a href="#" className="px-4 py-2 text-black font-medium">
+              <a href="#" className="px-4 py-2 text-white font-medium">
                 Home
               </a>
             </div>
             <div className="relative">
               <a
                 href="#"
-                className="ml-2 px-4 py-2 rounded-3xl text-[#4120a9] border-2 border-[#4120a9] font-medium"
+                className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
               >
                 Login
               </a>
@@ -45,7 +50,7 @@ const Navbar = () => {
             <div className="relative">
               <a
                 href="#"
-                className="ml-2 px-4 py-2 rounded-3xl bg-[#4120a9] text-white"
+                className="ml-2 px-4 py-2 rounded-3xl text-[#4120a9] bg-white border-2 border-white"
               >
                 Sign Up
               </a>
@@ -53,10 +58,17 @@ const Navbar = () => {
           </div>
         </span>
         {/* Mobile Devices */}
-        <div className="md:hidden flex items-center justify-end">
+        <div className="md:hidden flex items-center justify-between h-10">
+        <div className="flex items-center">
+              <img
+                src="src/Assets/whit_logo.png"
+                alt="Logo"
+                className="w-24 absolute -top-2"
+              />
+          </div>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="px-3 py-2 rounded-md bg-[#4120a9] text-white focus:outline-none focus:bg-gray-600"
+            className="px-3 py-2 rounded-md text-[#4120a9] bg-white focus:outline-none focus:bg-gray-600"
           >
             <FontAwesomeIcon icon={faBars} className="w-6 h-6 fill-current" />
           </button>
