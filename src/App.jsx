@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from "./components/Navbar"
-import { SignUp } from './SignUp'
+import { SignUp } from './components/SignUp'
 
 const App = () => {
   return (
