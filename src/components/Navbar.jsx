@@ -69,7 +69,7 @@ const Navbar = () => {
             <FontAwesomeIcon icon={faBars} className="w-6 h-6 fill-current" />
           </button>
           {isOpen && (
-            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 overflow-auto">
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 overflow-auto z-50">
               <div className="flex flex-col items-center">
                 <div className="flex items-center relative top-auto mb-10">
                   <div className="align-middle">
