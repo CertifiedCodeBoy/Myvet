@@ -69,9 +69,9 @@ const Navbar = () => {
             <FontAwesomeIcon icon={faBars} className="w-6 h-6 fill-current" />
           </button>
           {isOpen && (
-            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800">
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 overflow-auto">
               <div className="flex flex-col items-center">
-                <div className="flex items-center absolute top-40">
+                <div className="flex items-center relative top-auto mb-10">
                   <div className="align-middle">
                     <img
                       src="src/Assets/whit_logo.png"
@@ -126,15 +126,17 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
+                  <div className=" flex items-center justify-center w-20 mt-20">
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-gray-400 focus:outline-none mt-4 absolute bottom-20 left-1/2 transform -translate-x-1/2"
+                  className="text-gray-400 focus:outline-none bottom-20 "
                 >
                   <FontAwesomeIcon
                     icon={faTimes}
                     className="w-6 h-6 fill-current bg-gray-900 p-2 rounded-full"
-                  />
-                </button>
+                    />
+                    </button>
+                </div>
               </div>
             </div>
           )}
