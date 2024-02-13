@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,27 +31,27 @@ const Navbar = () => {
           </div>
           {/* Home, Login, Signup */}
           <div className="flex items-center">
-            <div className="relative">
-              <a href="#" className="px-4 py-2 text-white font-medium">
-                Home
-              </a>
-            </div>
-            <div className="relative">
-              <a
-                href="#"
-                className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
-              >
-                Login
-              </a>
-            </div>
-            <div className="relative">
-              <a
-                href="#"
-                className="ml-2 px-4 py-2 rounded-3xl text-[#4120a9] bg-white border-2 border-white"
-              >
-                Sign Up
-              </a>
-            </div>
+              <div className="relative">
+                <Link to="/" className="px-4 py-2 text-white font-medium">
+                  Home
+                </Link>
+              </div>
+              <div className="relative">
+                <Link
+                  to="/Login"
+                  className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
+                >
+                  Login
+                </Link>
+              </div>
+              <div className="relative">
+                <Link
+                  to="/SignUp"
+                  className="ml-2 px-4 py-2 rounded-3xl text-[#4120a9] bg-white border-2 border-white"
+                >
+                  Sign Up
+                </Link>
+              </div>
           </div>
         </span>
         {/* Mobile Devices */}
@@ -126,16 +127,16 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
-                  <div className=" flex items-center justify-center w-20 mt-20">
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="text-gray-400 focus:outline-none bottom-20 "
-                >
-                  <FontAwesomeIcon
-                    icon={faTimes}
-                    className="w-6 h-6 fill-current bg-gray-900 p-2 rounded-full"
+                <div className=" flex items-center justify-center w-20 mt-20">
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="text-gray-400 focus:outline-none bottom-20 "
+                  >
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      className="w-6 h-6 fill-current bg-gray-900 p-2 rounded-full"
                     />
-                    </button>
+                  </button>
                 </div>
               </div>
             </div>

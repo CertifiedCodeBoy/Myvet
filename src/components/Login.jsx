@@ -1,7 +1,7 @@
 import { Input } from "postcss";
 import React from "react";
 
-export const Login = () => {
+const Login = () => {
   return (
     <div className="h-screen flex   ">
       <div
@@ -117,3 +117,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;

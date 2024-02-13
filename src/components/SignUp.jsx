@@ -1,6 +1,6 @@
 import React from "react";
 
-export const SignUp = () => {
+const SignUp = () => {
   return (
     <div className="h-screen flex   ">
       <div
@@ -150,3 +150,5 @@ export const SignUp = () => {
     </div>
   );
 };
+
+export default SignUp;
