@@ -5,24 +5,53 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const scrollToSlow = (to, duration) => {
+    const element = document.documentElement;
+    const start = element.scrollTop;
+    const change = to - start;
+    let currentTime = 0;
+    const increment = 1; // Adjust the increment for smoother scrolling
+
+    const animateScroll = () => {
+      currentTime += increment;
+      const val = Math.easeInOutQuad(currentTime, start, change, duration);
+      element.scrollTop = val;
+      if (currentTime < duration) {
+        requestAnimationFrame(animateScroll);
+      }
+    };
+
+    animateScroll();
+  };
+
+  // Easing functions
+  Math.easeInOutQuad = function (t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return (c / 2) * t * t + b;
+    t--;
+    return (-c / 2) * (t * (t - 2) - 1) + b;
+  };
+
+  React.useEffect(() => {
+    scrollToSlow(1000, 50);
+  }, []);
   return (
-    <div className=" font-main">
-      <div className="relative border w-10/12  mx-auto">
-        <div>
-          <div className=" mx-auto my-20 pb-96 sticky border top-20 text-secondary ">
-            <h1 className=" text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold drop-shadow-xl text-center">
-              Welcome Back !
-            </h1>
-            <h2 className="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold drop-shadow-lg  text-center">
-              Continue your shopping adventure
-            </h2>
-          </div>
-          <div className="h-96"></div>
-          <div className="flex justify-center mt-80 sticky top-80 mx-auto w-full border">
-            <div className=" w-96 sm:w-[900px] p-10 shrink-1 h-full border-2 border-solid border-third rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light">
+    <div className=" font-main overflow-auto">
+      <div className="relative w-10/12  mx-auto  ">
+        <div className="">
+          <div className=" mx-auto my-20 pb-80 relative top-20 text-secondary "></div>
+          <div className=""></div>
+          <div className="flex justify-center mt-80 sticky top-72 mx-auto w-full ">
+            <div className=" w-96 sm:w-[800px] p-10 shrink-1 h-full  border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light">
               <form className="flex justify-center align-middle">
-                <div className=" border sm:w-[300px]">
-                  <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-6xl text-center mb-10 font-bold text-secondary drop-shadow-lg">
+                <div className="  sm:w-[300px]">
+                  <h1 className=" text-2xl sm:text-xl md:text-xl lg:text-xl xl:text-4xl mb-10 font-bold drop-shadow-xl text-center text-black">
+                    Welcome Back !
+                  </h1>
+                  <h2 className="hidden text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold drop-shadow-lg  text-center">
+                    Continue your shopping adventure
+                  </h2>
+                  <h1 className=" hidden text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-6xl text-center mb-10 font-bold text-secondary drop-shadow-lg">
                     Login
                   </h1>
                   <input
@@ -78,6 +107,9 @@ const Login = () => {
                     <div className="flex-grow border-t border-black"></div>
                     <div className="px-2 text-center font-bold">OR</div>
                     <div className="flex-grow border-t border-black"></div>
+                  </div>
+                  <div className="px-2 mb-4 text-center font-bold">
+                    Login with :{" "}
                   </div>
 
                   <div className="flex h-12 w-24 mx-auto">

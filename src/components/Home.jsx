@@ -3,8 +3,9 @@ import React from 'react'
 const Home = () => {
   return (
         <div
-        className="flex h-full font-main"
+        className="flex h-96 font-main"
       >
+        <div className="h-full"></div>
     </div>
   )
 }

@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-none p-4 sticky top-0 z-50 font-main -mt-10">
+    <nav className="bg-none p-4 fixed w-full top-0 z-50 font-main ">
       <div className="container">
         <span className="hidden md:flex mx-auto container justify-between items-center">
           {/* Logo */}
