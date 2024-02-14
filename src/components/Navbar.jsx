@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-[#4120A9] p-4 sticky top-0 z-50">
+    <nav className="bg-none p-4 sticky top-0 z-50 font-main -mt-10">
       <div className="container">
         <span className="hidden md:flex mx-auto container justify-between items-center">
           {/* Logo */}

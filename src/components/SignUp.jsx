@@ -1,17 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   return (
-    <div className="h-screen flex   ">
+    <div className="h-screen flex font-main p-5">
       <div
-        className="relative  max-w-screen-xl w-10/12 h-5/6 mx-auto my-20 rounded-3xl bg-gradient-to-bl overflow-hidden"
+        className="relative max-w-screen-xl w-10/12 h-full mx-auto rounded-3xl bg-gradient-to-bl overflow-hidden"
         style={{
           background: "linear-gradient(-120deg, #4120A9, #FFFFFF 80%)",
           boxShadow: "0px 2px 10outline-nonepx 2px rgba(0, 0, 0, 0.7)",
         }}
       >
         {/* {Text} */}
-        <div className=" mx-10 absolute top-20" style={{ color: "#4120A9" }}>
+        <div className=" mx-10 absolute top-20 text-primary" id="textguyContainer">
           <h1
             className="font-semibold text-6xl my-8 "
             style={{ textShadow: "1px 5px 5px rgba(0, 0, 0, 0.4)" }}
@@ -24,7 +25,7 @@ const SignUp = () => {
           </h2>
         </div>
 
-        <form style={{ fontFamily: "poppins" }}>
+        <form className="">
           <div className=" p-5 w-80 absolute right-24 m-2">
             <h1 className="text-5xl text-center m-10 font-bold">Sign Up</h1>
             <input
@@ -135,7 +136,7 @@ const SignUp = () => {
             </button>
             <div className="my-6 text-center">
               Already have an account ?{" "}
-              <button style={{ color: "#4120A9" }}>Log in</button>
+              <Link to="/Login" className="text-[#4120A9]">Log in</Link>
             </div>
           </div>
         </form>

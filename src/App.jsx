@@ -7,10 +7,17 @@ import SignUp from "./components/SignUp";
 
 const App = () => {
   return (
+    <div
+        className="h-full font-main p-5"
+        style={{
+          background: "url('src/Assets/bg.png') no-repeat center center fixed",
+          backgroundSize: "cover",
+        }}
+      >
     <Router>
-      <Navbar />
+      <Navbar/>
       <Routes>
-        <Route path="/"  element={<Home />} exact>       
+        <Route path="/" element={<Home />} exact>       
         </Route>
         <Route path="/Login" element={<Login />}>         
         </Route>
@@ -18,6 +25,7 @@ const App = () => {
         </Route>
       </Routes>
     </Router>
+    </div>
   );
 };
 

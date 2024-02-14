@@ -2,8 +2,9 @@ import React from 'react'
 
 const Home = () => {
   return (
-    <div>
-        <h1>Home</h1>
+        <div
+        className="flex h-full font-main"
+      >
     </div>
   )
 }
