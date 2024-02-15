@@ -22,6 +22,7 @@ const Login = () => {
     };
 
     animateScroll();
+    element.style.overflow = "hidden";
   };
 
   // Easing functions
@@ -33,14 +34,15 @@ const Login = () => {
   };
 
   React.useEffect(() => {
-    scrollToSlow(1000, 50);
+    scrollToSlow(2000, 50);
+    
   }, []);
   return (
     <div className=" font-main overflow-auto">
-      <div className="relative w-10/12  mx-auto  ">
+      <div className="relative w-10/12 mx-auto">
         <div className="">
-          <div className=" mx-auto my-20 pb-80 relative top-20 text-secondary "></div>
-          <div className=""></div>
+          <div className=" mx-auto my-20 sm:h-8 md:h-10  pb-80 relative top-20 text-secondary "></div>
+          <div className="h-[1000px]"></div>
           <div className="flex justify-center mt-80 sticky top-72 mx-auto w-full ">
             <div className=" w-96 sm:w-[800px] p-10 shrink-1 h-full  border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light">
               <form className="flex justify-center align-middle">
@@ -95,10 +97,13 @@ const Login = () => {
 
                   <button
                     type="submit"
-                    className="w-full my-3 text-white py-3 px-4 rounded-xl"
-                    style={{
-                      boxShadow: "2px 2px 8px 0px rgba(0, 0, 0, 0.6)",
-                      backgroundColor: "#6d4c3d",
+                    className="w-full my-3 text-white py-3 px-4 rounded-xl bg-primary"
+                    onFocus={(e) => {
+                      e.target.style.boxShadow =
+                        "2px 2px 8px 0px rgba(0, 0, 0, 0.6)";
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.boxShadow = "none";
                     }}
                   >
                     Log in

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-none p-4 fixed w-full top-0 z-50 font-main ">
+    <nav className="bg-none p-4 fixed w-full top-0 z-50 font-main">
       <div className="container">
         <span className="hidden md:flex mx-auto container justify-between items-center">
           {/* Logo */}
@@ -31,41 +31,41 @@ const Navbar = () => {
           </div>
           {/* Home, Login, Signup */}
           <div className="flex items-center">
-              <div className="relative">
-                <Link to="/" className="px-4 py-2 text-white font-medium">
-                  Home
-                </Link>
-              </div>
-              <div className="relative">
-                <Link
-                  to="/Login"
-                  className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
-                >
-                  Login
-                </Link>
-              </div>
-              <div className="relative">
-                <Link
-                  to="/SignUp"
-                  className="ml-2 px-4 py-2 rounded-3xl text-[#4120a9] bg-white border-2 border-white"
-                >
-                  Sign Up
-                </Link>
-              </div>
+            <div className="relative">
+              <Link to="/" className="px-4 py-2 text-white font-medium">
+                Home
+              </Link>
+            </div>
+            <div className="relative">
+              <Link
+                to="/Login"
+                className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
+              >
+                Login
+              </Link>
+            </div>
+            <div className="relative">
+              <Link
+                to="/SignUp"
+                className="ml-2 px-4 py-2 rounded-3xl text-[#4120a9] bg-white border-2 border-white"
+              >
+                Sign Up
+              </Link>
+            </div>
           </div>
         </span>
         {/* Mobile Devices */}
-        <div className="md:hidden flex items-center justify-between h-10">
-          <div className="flex items-center">
+        <div className="md:hidden flex items-center justify-between h-10 px-8">
+          <div className="flex justify-center items-center">
             <img
               src="src/Assets/whit_logo.png"
               alt="Logo"
-              className="w-24 absolute -top-[12px]"
+              className="w-24 absolute"
             />
           </div>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="px-2 py-1 rounded-md text-[#4120a9] bg-white focus:outline-none focus:bg-gray-600"
+            className="px-2 py-1 rounded-md text-primary bg-white focus:outline-none focus:bg-gray-600"
           >
             <FontAwesomeIcon icon={faBars} className="w-6 h-6 fill-current" />
           </button>
@@ -100,29 +100,32 @@ const Navbar = () => {
 
                   <div className="flex flex-col items-center h-full justify-evenly">
                     <div className="flex">
-                      <a
-                        href="#"
-                        className="px-4 py-2 text-white font-medium text-justify"
+                      <Link
+                        to="/"
+                        className="px-4 py-2 text-white font-medium"
+                        onClick={() => setIsOpen(!isOpen)}
                       >
                         Home
-                      </a>
+                      </Link>
                     </div>
                     <div className="flex w-60 justify-evenly">
                       <div className="flex">
-                        <a
-                          href="#"
+                        <Link
+                          to="/Login"
                           className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
+                          onClick={() => setIsOpen(!isOpen)}
                         >
                           Login
-                        </a>
+                        </Link>
                       </div>
                       <div className="flex">
-                        <a
-                          href="#"
+                        <Link
+                          to="/SignUp"
                           className="ml-2 px-4 py-2 rounded-3xl text-[#4120a9] bg-white border-2 border-white"
+                          onClick={() => setIsOpen(!isOpen)}
                         >
                           Sign Up
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
