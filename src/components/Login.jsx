@@ -33,10 +33,10 @@ const Login = () => {
   };
 
   React.useEffect(() => {
-    scrollToSlow(2000, 50);
+    scrollToSlow(2000, 100);
   }, []);
   return (
-    <div className=" font-main my-0 h-screen overflow-auto">
+    <div className=" font-main my-0 h-screen overflow-hidden">
       <div className="relative w-10/12 mx-auto">
         <div className=" h-full flex items-center pb-16 md:pb-5 ">
           <div className="h-[1000px]"></div>
