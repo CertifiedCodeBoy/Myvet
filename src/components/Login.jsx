@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -37,9 +35,9 @@ const Login = () => {
     scrollToSlow(2000, 50);
   }, []);
   return (
-    <div className=" font-main overflow-auto">
+    <div className=" font-main my-0  overflow-auto">
       <div className="relative w-10/12 mx-auto">
-        <div className=" h-screen flex items-end pb-16 md:pb-5 md:h-full">
+        <div className=" h-full flex items-end pb-16 md:pb-5 ">
           <div className="h-[1000px]"></div>
           <div className="flex justify-center mx-auto w-full ">
             <div className=" w-96 sm:w-[800px] p-5 shrink-1 h-1/3 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light">
@@ -88,7 +86,7 @@ const Login = () => {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute inset-y-0 right-4 bottom-1/2 top-1/3 flex items-center justify-center" // Adjusted the positioning
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      show
                     </button>
                   </div>
                   <div className="flex items-center mr-4 ml-5"></div>

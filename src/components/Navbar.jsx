@@ -7,9 +7,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-none p-4 fixed w-full top-0 z-50 font-main">
+    <nav className="bg-none p-4 fixed w-full top-0 flex justify-center z-50 font-main" id="nav">
       <div className="container">
-        <span className="hidden md:flex mx-auto container justify-between items-center">
+        <span className="hidden md:flex mx-auto container justify-between items-center w-full">
           {/* Logo */}
           <div className="flex items-center absolute">
             <div className="align-middle">
@@ -22,7 +22,7 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search..."
-                className="text-[#59595c] px-4 py-2 rounded-3xl pl-10 bg-white outline-none w-72 font-medium"
+                className="text-[#59595c] pr-5 py-2 rounded-3xl pl-10 bg-white outline-none md:w-40 lg:w-72 font-medium"
               />
               <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                 <FontAwesomeIcon icon={faSearch} className="text-[#737276]" />
@@ -30,28 +30,25 @@ const Navbar = () => {
             </div>
           </div>
           {/* Home, Login, Signup */}
-          <div className="flex items-center">
-            <div className="relative">
-              <Link to="/" className="px-4 py-2 text-white font-medium">
-                Home
-              </Link>
-            </div>
-            <div className="relative">
-              <Link
-                to="/Login"
-                className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
-              >
-                Login
-              </Link>
-            </div>
-            <div className="relative">
-              <Link
-                to="/SignUp"
-                className="ml-2 px-4 py-2 rounded-3xl text-[#4120a9] bg-white border-2 border-white"
-              >
-                Sign Up
-              </Link>
-            </div>
+          <div className="flex items-center px-4" id="links">
+            <Link to="/" className="px-4 py-2 text-white font-medium">
+              Home
+            </Link>
+            <Link to="/" className="px-4 py-2 text-white font-medium">
+              Categories
+            </Link>
+            <Link
+              to="/Login"
+              className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
+            >
+              Login
+            </Link>
+            <Link
+              to="/SignUp"
+              className="mx-2 px-4 py-2 rounded-3xl text-primary bg-white border-2 border-white"
+            >
+              Sign Up
+            </Link>
           </div>
         </span>
         {/* Mobile Devices */}
@@ -87,7 +84,7 @@ const Navbar = () => {
                       <input
                         type="text"
                         placeholder="Search..."
-                        className="text-[#59595c] px-4 py-2 rounded-3xl pl-10 bg-white outline-none w-72 font-medium"
+                        className="text-[#59595c] pl-10 pr-5 py-2 rounded-3xl bg-white outline-none w-56 font-medium"
                       />
                       <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                         <FontAwesomeIcon
