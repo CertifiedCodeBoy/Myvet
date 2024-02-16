@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Eye } from "phosphor-react";
+import { Eye, EyeSlash } from "phosphor-react";
 
 const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -40,7 +40,7 @@ const Login = () => {
       <div className="relative w-10/12 mx-auto">
         <div className=" h-full flex items-center pb-16 md:pb-5 ">
           <div className="h-[1000px]"></div>
-          <div className="flex justify-center mx-auto w-full ">
+          <div className="flex justify-center mx-auto w-full flex-nowrap">
             <div className=" w-96 sm:w-[800px] p-5 shrink-1 h-1/3 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light">
               <form className="flex justify-center align-middle">
                 <div className="  sm:w-[300px]">
@@ -87,7 +87,7 @@ const Login = () => {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute inset-y-0 right-4 bottom-1/2 top-1/3 flex items-center justify-center" // Adjusted the positioning
                     >
-                      <Eye size={32} />
+                      {showPassword? <EyeSlash size={30} /> :<Eye size={30} /> }
                     </button>
                   </div>
                   <div className="flex items-center mr-4 ml-5"></div>
