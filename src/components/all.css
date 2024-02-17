@@ -9,4 +9,7 @@
     scrollbar-width: none;  /* Firefox */
     -ms-overflow-style: none;  /* Internet Explorer/Edge */
   }
+  .scroll {
+    transition: all 2s cubic-bezier(0.1, 0.1, 0.1, 0.1);
+  }
   

@@ -7,7 +7,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-none p-4 fixed w-full top-0 flex justify-center z-50 font-main" id="nav">
+    <nav
+      className="bg-none p-4 fixed w-full top-0 flex justify-center z-50 font-main"
+      id="nav"
+    >
       <div className="container">
         <span className="hidden md:flex mx-auto container justify-between items-center w-full">
           {/* Logo */}
@@ -31,12 +34,66 @@ const Navbar = () => {
           </div>
           {/* Home, Login, Signup */}
           <div className="flex items-center px-4" id="links">
-            <Link to="/" className="px-4 py-2 text-white font-medium">
+            <Link to="/" className="nav-link px-0 mx-4 py-1 text-white font-medium">
               Home
             </Link>
-            <Link to="/" className="px-4 py-2 text-white font-medium">
+
+            <style jsx>{`
+              .nav-link {
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+              }
+
+              .nav-link::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background: #e74c3c;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+              }
+
+              .nav-link:hover::after {
+                transform: translateX(0);
+              }
+              .nav-link:hover {
+                color: #e74c3c;
+              }
+            `}</style>
+            <Link to="/" className="nav-link px-0 mx-4 py-1 text-white font-medium">
               Categories
             </Link>
+
+            <style jsx>{`
+              .nav-link {
+                position: relative;
+                overflow: hidden;
+                transition: all 0.3s ease;
+              }
+
+              .nav-link::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background: #e74c3c;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+              }
+
+              .nav-link:hover::after {
+                transform: translateX(0);
+              }
+              .nav-link:hover {
+                color: #e74c3c;
+              }
+            `}</style>
             <Link
               to="/Login"
               className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
