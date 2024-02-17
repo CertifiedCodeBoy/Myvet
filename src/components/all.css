@@ -1,0 +1,12 @@
+#signupdiv::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+#logindiv::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+  
+  #signupdiv,#logindiv {
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
+  }
+  

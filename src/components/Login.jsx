@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Eye, EyeSlash } from "phosphor-react";
+import { Eye, EyeSlash, At } from "phosphor-react";
+import "./all.css";
 
-const Login = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
+const login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const scrollToSlow = (to, duration) => {
     const element = document.documentElement;
     const start = element.scrollTop;
@@ -35,41 +36,51 @@ const Login = () => {
   React.useEffect(() => {
     scrollToSlow(2000, 100);
   }, []);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Add your login logic here
+    console.log(formData);
+    setFormData({
+      email: "",
+      password: "",
+    });
+  };
+
   return (
-    <div className=" font-main my-0 h-screen overflow-hidden">
+    <div className="font-main my-0 h-screen scroll-m-72 flex-nowrap overflow-hidden">
       <div className="relative w-10/12 mx-auto">
-        <div className=" h-full flex items-center pb-16 md:pb-5 ">
+        <div className="h-full flex items-center pb-16 md:pb-5">
           <div className="h-[1000px]"></div>
-          <div className="flex justify-center mx-auto w-full flex-nowrap">
-            <div className=" w-96 sm:w-[800px] p-5 shrink-1 h-1/3 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light">
-              <form className="flex justify-center align-middle">
-                <div className="  sm:w-[300px]">
-                  <h1 className=" text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-10 font-bold drop-shadow-xl text-center text-black">
-                    Welcome Back !
-                  </h1>
-                  <h2 className="hidden text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-semibold drop-shadow-lg  text-center">
-                    Continue your shopping adventure
-                  </h2>
-                  <h1 className=" hidden text-3xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-6xl text-center mb-10 font-bold text-secondary drop-shadow-lg">
+          <div className="flex justify-center mx-auto w-full">
+            <div
+              className="w-96 sm:w-[800px] p-5 shrink-1 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[500px] mb-44 overflow-auto"
+              id="logindiv"
+            >
+              <form
+                className="flex justify-center align-middle"
+                onSubmit={handleSubmit}
+              >
+                <div className="sm:w-[300px]">
+                  <h1 className="text-xl sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl mb-10 font-bold drop-shadow-xl text-center text-black">
                     Login
                   </h1>
-                  <input
-                    onFocus={(e) => {
-                      e.target.style.boxShadow =
-                        "2px 2px 8px 0px rgba(0, 0, 0, 0.6)";
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.boxShadow = "none";
-                    }}
-                    type="email"
-                    id="email"
-                    name="email"
-                    className="w-full bg-gray-200 rounded-2xl py-3 px-3 mb-4 outline-none"
-                    placeholder="Email"
-                    required
-                  />
-                  <div className="relative">
+                  <div className="relative mb-4">
                     <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full bg-gray-200 rounded-2xl py-3 px-3 outline-none"
+                      placeholder="Email"
                       onFocus={(e) => {
                         e.target.style.boxShadow =
                           "2px 2px 8px 0px rgba(0, 0, 0, 0.6)";
@@ -77,21 +88,42 @@ const Login = () => {
                       onBlur={(e) => {
                         e.target.style.boxShadow = "none";
                       }}
+                      required
+                    />
+                    <div className="absolute inset-y-0 right-4 flex items-center justify-center">
+                      <At size={25} />
+                    </div>
+                  </div>
+                  <div className="relative mb-4">
+                    <input
                       type={showPassword ? "text" : "password"}
-                      className="w-full bg-gray-200 rounded-2xl py-3 px-3 mb-4 outline-none pr-10" // Added some padding to the right
+                      id="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full bg-gray-200 rounded-2xl py-3 px-3 outline-none pr-10"
                       placeholder="Password"
+                      onFocus={(e) => {
+                        e.target.style.boxShadow =
+                          "2px 2px 8px 0px rgba(0, 0, 0, 0.6)";
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.boxShadow = "none";
+                      }}
                       required
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-4 bottom-1/2 top-1/3 flex items-center justify-center" // Adjusted the positioning
+                      className="absolute inset-y-0 right-4 flex items-center justify-center"
                     >
-                      {showPassword? <EyeSlash size={30} /> :<Eye size={30} /> }
+                      {showPassword ? (
+                        <EyeSlash size={25} />
+                      ) : (
+                        <Eye size={25} />
+                      )}
                     </button>
                   </div>
-                  <div className="flex items-center mr-4 ml-5"></div>
-
                   <button
                     type="submit"
                     className="w-full my-3 text-white py-3 px-4 rounded-xl bg-primary"
@@ -104,7 +136,7 @@ const Login = () => {
                       e.target.style.boxShadow = "none";
                     }}
                   >
-                    Log in
+                    Login
                   </button>
                   <div className="relative my-5 flex items-center justify-center">
                     <div className="flex-grow border-t border-black"></div>
@@ -137,8 +169,8 @@ const Login = () => {
                   </div>
                   <div className="my-6 text-center">
                     Don't have an account ?{" "}
-                    <Link to="/SignUp" className="text-primary">
-                      Sign Up
+                    <Link to="/signUp" className="text-primary">
+                      Sign up
                     </Link>
                   </div>
                 </div>
@@ -151,4 +183,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default login;
