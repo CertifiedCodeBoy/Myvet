@@ -20,6 +20,7 @@ const Home = () => {
   };
 
   return (
+    //sections
     <div className="font-main overflow-auto">
       <section
         className="scroll h-screen flex items-center justify-center border"
