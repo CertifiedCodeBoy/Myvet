@@ -8,22 +8,35 @@ const Home = () => {
   const forYouRef = useRef(null);
   const welcomeRef = useRef(null);
   const [currentSection, setCurrentSection] = useState(0);
-
   const sections = [welcomeRef, forYouRef, latestRef, popularRef, contactRef];
 
-  const scrollToSection = (index) => {
-    sections[index].current.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-    setCurrentSection(index);
+  const handleScrollUp = () => {
+    if (currentSection) {
+      sections[currentSection - 1].current.scrollIntoView({
+        behavior: "smooth",
+      });
+      setCurrentSection(currentSection - 1);
+    }
   };
 
+  const handleScrollDown = () => {
+    if (currentSection < sections.length - 1) {
+      sections[currentSection + 1].current.scrollIntoView({
+        behavior: "smooth",
+      });
+      setCurrentSection(currentSection + 1);
+    }
+  };
+
+  const scrollToSection = (index) => {
+    sections[index].current.scrollIntoView({ behavior: "smooth" });
+    setCurrentSection(index);
+  };
   return (
     //sections
     <div className="font-main overflow-auto">
       <section
-        className="scroll h-screen flex items-center justify-center border"
+        className="scroll h-screen flex items-center justify-center"
         ref={welcomeRef}
       >
         <h1>Welcome</h1>
@@ -60,10 +73,7 @@ const Home = () => {
           className={`bg-primary text-white px-4 py-2 rounded-lg ${
             currentSection === 0 ? "opacity-50 cursor-not-allowed" : ""
           }`}
-          onClick={() =>
-            currentSection > 0 && scrollToSection(currentSection - 1)
-          }
-          disabled={currentSection === 0}
+          onClick={handleScrollUp}
         >
           Scroll Up
         </button>
@@ -74,11 +84,7 @@ const Home = () => {
                 ? "opacity-50 cursor-not-allowed"
                 : ""
             }`}
-            onClick={() =>
-              currentSection < sections.length - 1 &&
-              scrollToSection(currentSection + 1)
-            }
-            disabled={currentSection === sections.length - 1}
+            onClick={handleScrollDown}
           >
             Scroll Down
           </button>

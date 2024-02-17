@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Eye, EyeSlash, At } from "phosphor-react";
 import "./all.css";
 
-const login = () => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const scrollToSlow = (to, duration) => {
     const element = document.documentElement;
@@ -183,4 +183,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
