@@ -55,7 +55,7 @@ const login = () => {
   };
 
   return (
-    <div className="font-main my-0 h-screen scroll-m-72 flex-nowrap overflow-hidden">
+    <div className="font-main my-0 h-screen scroll-m-72 flex-nowrap overflow-hidden bg-slate-600">
       <div className="relative w-10/12 mx-auto">
         <div className="h-full flex items-center pb-16 md:pb-5">
           <div className="h-[1000px]"></div>

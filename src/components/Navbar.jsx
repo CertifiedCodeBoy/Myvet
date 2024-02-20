@@ -7,13 +7,16 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-none p-4 fixed w-full top-0 flex justify-center z-50 font-main" id="nav">
+    <nav
+      className="bg-gray-200 p-4 sticky w-full top-0 flex justify-center z-50 font-main shadow-xl"
+      id="nav"
+    >
       <div className="container">
         <span className="hidden md:flex mx-auto container justify-between items-center w-full">
           {/* Logo */}
           <div className="flex items-center absolute">
             <div className="align-middle">
-              <img src="src/Assets/whit_logo.png" alt="Logo" className="w-24" />
+              <img src="src/Assets/blacklogo.png" alt="Logo" className="w-24" />
             </div>
           </div>
           {/* Search bar */}
@@ -22,7 +25,7 @@ const Navbar = () => {
               <input
                 type="text"
                 placeholder="Search..."
-                className="text-[#59595c] pr-5 py-2 rounded-3xl pl-10 bg-white outline-none md:w-40 lg:w-72 font-medium"
+                className="text-[#59595c] bg-gray-300 pr-5 py-2 rounded-3xl pl-10 outline-none md:w-40 lg:w-72 font-medium"
               />
               <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                 <FontAwesomeIcon icon={faSearch} className="text-[#737276]" />
@@ -31,21 +34,21 @@ const Navbar = () => {
           </div>
           {/* Home, Login, Signup */}
           <div className="flex items-center px-4" id="links">
-            <Link to="/" className="px-4 py-2 text-white font-medium">
+            <Link to="/" className="px-4 py-2 text-black font-medium">
               Home
             </Link>
-            <Link to="/" className="px-4 py-2 text-white font-medium">
+            <Link to="/" className="px-4 py-2 text-black font-medium">
               Categories
             </Link>
             <Link
               to="/Login"
-              className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
+              className="ml-2 px-4 py-2 rounded-3xl text-black border-2 border-black font-medium"
             >
               Login
             </Link>
             <Link
               to="/SignUp"
-              className="mx-2 px-4 py-2 rounded-3xl text-primary bg-white border-2 border-white"
+              className="mx-2 px-4 py-2 rounded-3xl text-white bg-black border-2 border-black font-medium"
             >
               Sign Up
             </Link>
@@ -55,9 +58,9 @@ const Navbar = () => {
         <div className="md:hidden flex items-center justify-between h-10 px-8">
           <div className="flex justify-center items-center">
             <img
-              src="src/Assets/whit_logo.png"
+              src="src/Assets/blacklogo.png"
               alt="Logo"
-              className="w-24 absolute"
+              className="ml-8 w-24 absolute"
             />
           </div>
           <button
