@@ -8,13 +8,24 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className="font-main bg-gray-200 ">
-      <div className="flex flex-col w-full gap-8 ">
-        <section className="h-40 border"></section>
-        <section className="h-80 flex items-center justify-center"></section>
+    <div className="font-main bg-gray-700  ">
+      <div className="flex flex-col w-full gap-8">
+        <section className="h-36 mt-8 bg-primary p-2 text-3xl flex flex-col justify-center items-center gap-2">
+          <h2 className="font-medium">20% OFF on ALL products</h2>
+          <p className="text-2xl">
+            <Link to="/SignUp" className=" underline">
+              Sign up
+            </Link>{" "}
+            Right Now !
+          </p>
+        </section>
+        <div className="max-h-[1000px] h-[824px] bg-blue-300 flex items-center border justify-center w-full">
+          <section></section>
+        </div>
         <Section
           title="Men's"
           filter={(p) => p.category === "men's clothing"}
@@ -40,8 +51,10 @@ const Section = ({ title, filter }) => {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-6xl font-bold text-black text-center p-8">{title}</h1>
-      <div className="flex flex-row h-[450px] overflow-y-hidden justify-between overflow-x-auto">
+      <h1 className="text-4xl sm:text-6xl font-bold text-black text-left p-4">
+        {title}
+      </h1>
+      <div className="flex flex-row h-[450px] overflow-y-hidden justify-start overflow-x-auto">
         {filteredProducts.map((product) => (
           <Kard key={product.id} product={product} />
         ))}
@@ -52,16 +65,16 @@ const Section = ({ title, filter }) => {
 
 const Kard = ({ product }) => {
   return (
-    <Card className="w-full min-h-60 max-w-60 min-w-60 mx-2 overflow-hidden">
-      <CardHeader shadow={false} floated={false} className="mt-2 mb-4">
+    <Card className="w-full min-h-60 max-w-[auto] min-w-60 mx-4 overflow-hidden mb-4 flex justify-center items-center">
+      <CardHeader shadow={false} floated={false} className="mt-2 mb-8">
         <img
           src={product.image}
           alt="card-image"
-          className="h-60 w-80 object-contain"
+          className="h-60 w-80 object-top"
         />
       </CardHeader>
-      <CardBody>
-        <div className="m-auto flex items-center justify-between p-2 h-20 ">
+      <CardFooter className="">
+        <div className="m-auto relative bottom-0 flex items-center justify-between p-2 h-10 ">
           <Typography
             color="blue-gray"
             className="font-medium text-[12px] w-2/3 "
@@ -72,24 +85,23 @@ const Kard = ({ product }) => {
           </Typography>
           <Typography color="blue-gray" className="font-medium ">
             ${product.price}
-            <br />
-            {product.rating.rate} stars
+            {/* <br />
+            {product.rating.rate} stars */}
           </Typography>
         </div>
-        <Typography
+        {/* <Typography
           variant="small"
           color="gray"
           className="font-normal p-2 opacity-75 max-h-20 w-full overflow-x-hidden m-auto"
         >
           {product.description.substring(0, 50) + "..."}
-        </Typography>
-      </CardBody>
-      <CardFooter>
+        </Typography> */}
+      </CardFooter>
+      {/* <CardFooter>
         <div className="flex flex-row">
           <Button
             ripple={false}
             fullWidth={true}
-            className="bg-gray-200 text-blue-gray-900"
             onBlur={(e) => {
               e.target.style.boxShadow = "2px 2px 8px 0px rgba(0, 0, 0, 0.6)";
             }}
@@ -110,7 +122,7 @@ const Kard = ({ product }) => {
             Add to Cart
           </Button>
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };
