@@ -40,7 +40,7 @@ const Navbar = () => {
             <Link to="/" className="px-4 py-2 text-black font-medium">
               Home
             </Link>
-            <Link to="/" className="px-4 py-2 text-black font-medium">
+            <Link to="/Categories" className="px-4 py-2 text-black font-medium">
               Categories
             </Link>
             <Link
@@ -66,39 +66,35 @@ const Navbar = () => {
           </div>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="px-2 py-1 rounded-md text-primary bg-white focus:outline-none focus:bg-gray-600"
+            className="flex px-2 py-1 rounded-md text-primary bg-white focus:outline-none focus:bg-gray-600 "
           >
             <FontAwesomeIcon icon={faBars} className="w-6 h-6 fill-current" />
           </button>
           {isOpen && (
-            <div className="relative">
-              <div className="fixed top-0 right-0 w-3/4 h-full flex items-center justify-center bg-black overflow-auto z-50 ">
-                <div className="flex flex-col items-center">
-                  <div className="flex items-center relative top-auto mb-10">
-                    <div className="align-middle">
-                      <Link to="/" onClick={() => setIsOpen(!isOpen)}>
-                        <img
-                          src="src/Assets/whit_logo.png"
-                          alt="Logo"
-                          className="w-24"
-                        />
-                      </Link>
-                    </div>
+            <div className=" border">
+              <div className="fixed top-0 right-0 w-3/4 h-full flex items-center justify-center bg-primary overflow-auto z-50 border">
+                <div className="flex flex-col items-center overflow-hidden relative px-8 mx-4">
+                  <div className="mb-10 align-middle">
+                    <Link to="/" onClick={() => setIsOpen(!isOpen)}>
+                      <img
+                        src="src/Assets/whit_logo.png"
+                        alt="Logo"
+                        className="w-24"
+                      />
+                    </Link>
                   </div>
                   <div className="container flex flex-col items-center justify-evenly h-56">
-                    <div className="flex">
-                      <div className="relative">
-                        <input
-                          type="text"
-                          placeholder="Search..."
-                          className="text-[#59595c] pl-10 pr-5 py-2 rounded-3xl bg-white outline-none w-56 font-medium"
+                    <div className="relative min-w-20 ">
+                      <input
+                        type="text"
+                        placeholder="Search..."
+                        className="text-[#59595c] pl-10 pr-5 py-2 rounded-3xl bg-white outline-none min-w-10 sm:w-40 font-medium w-36"
+                      />
+                      <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                        <FontAwesomeIcon
+                          icon={faSearch}
+                          className="text-[#737276]"
                         />
-                        <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                          <FontAwesomeIcon
-                            icon={faSearch}
-                            className="text-[#737276]"
-                          />
-                        </div>
                       </div>
                     </div>
 
@@ -106,17 +102,24 @@ const Navbar = () => {
                       <div className="flex">
                         <Link
                           to="/"
-                          className="px-4 py-2 text-white font-medium"
+                          className="px-4 my-4 sm:my-0 text-white font-medium"
                           onClick={() => setIsOpen(!isOpen)}
                         >
                           Home
                         </Link>
                       </div>
-                      <div className="flex w-60 justify-evenly">
+                        <Link
+                          to="/Categories"
+                          className="px-4 text-white mb-4  sm:my-0 font-medium"
+                          onClick={() => setIsOpen(!isOpen)}
+                        >
+                          Categories
+                        </Link>
+                      <div className="flex flex-col gap-4 items-center sm:flex-row sm:w-60 sm:justify-evenly">
                         <div className="flex">
                           <Link
                             to="/Login"
-                            className="ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
+                            className="sm:ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
                             onClick={() => setIsOpen(!isOpen)}
                           >
                             Login
@@ -125,7 +128,7 @@ const Navbar = () => {
                         <div className="flex">
                           <Link
                             to="/SignUp"
-                            className="ml-2 px-4 py-2 rounded-3xl text-black bg-white border-2 border-white"
+                            className="sm:ml-2 px-4 py-2 rounded-3xl text-black bg-white border-2 border-white"
                             onClick={() => setIsOpen(!isOpen)}
                           >
                             Sign Up
@@ -147,7 +150,10 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-              <div onClick={() => setIsOpen(!isOpen)} className="fixed top-0 right-0 w-full h-full flex items-center justify-center backdrop-blur-[2px] overflow-hidden bg-black bg-opacity-50 z-20"></div>
+              <div
+                onClick={() => setIsOpen(!isOpen)}
+                className="fixed top-0 right-0 w-full h-full flex items-center justify-center backdrop-blur-[2px] overflow-hidden bg-black bg-opacity-50 z-20"
+              ></div>
             </div>
           )}
         </div>

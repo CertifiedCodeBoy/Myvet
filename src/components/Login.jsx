@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Eye, EyeSlash, At } from "phosphor-react";
-import "./all.css";
-import Navbar from "./Navbar";
-
 const login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -25,10 +22,10 @@ const login = () => {
   };
 
   return (
-    <div className="font-main h-[calc(100vh-60px)] shrink-1 overflow-auto flex items-center bg-slate-500">
+    <div className="font-main h-full 2xl:h-[calc(100vh-60px)] overflow-auto flex items-center "style={{backgroundImage: "url('src/Assets/bg.png')" , backgroundAttachment:"fixed", backgroundSize:"cover", backgroundRepeat:"no-repeat" }}>
       <div className="w-full sm:w-10/12 flex justify-center mx-0 sm:mx-auto ">
         <div className="flex justify-center w-full ">
-          <div className="w-96 sm:w-[800px] pt-[auto] px-0 sm:p-5 shrink-1 mt-10 mb-5 mx-2 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-auto">
+          <div className="w-96 sm:w-[800px] pt-[auto] px-0 sm:p-5 mt-10 mb-5 mx-2 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-hidden">
             <form
               className="flex justify-center align-middle"
               onSubmit={handleSubmit}

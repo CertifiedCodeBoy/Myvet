@@ -40,9 +40,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className="font-main sm:h-[calc(100vh-75px)] h-[calc(100vh-40px)] shrink-1 overflow-auto flex items-center bg-slate-500">
+    <div className="font-main h-full 2xl:h-[calc(100vh-75px)] overflow-auto flex items-center" style={{backgroundImage: "url('src/Assets/bg.png')" , backgroundAttachment:"fixed", backgroundSize:"cover", backgroundRepeat:"no-repeat" }}>
       <div className="w-full sm:w-10/12 flex justify-center mx-0 sm:mx-auto ">
-          <div className="w-96 sm:w-[800px] pt-[auto] px-2 mx-2 sm:p-5 mt-10 mb-5 sm:mt-36 sm:mb-10 shrink-1 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-auto">
+          <div className="w-96 sm:w-[800px] pt-[auto] px-2 mx-2 sm:p-5 sm:mt-10 my-5 lg:mt-20 sm:mb-10 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-auto">
             <form
               className="flex justify-center align-middle"
               onSubmit={handleSubmit}
@@ -126,7 +126,7 @@ const SignUp = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="w-full bg-gray-200 rounded-2xl py-3 pr-12 px-3 outline-none pr-10"
+                    className="w-full bg-gray-200 rounded-2xl py-3 pr-12 px-3 outline-none "
                     placeholder="Password"
                     onFocus={(e) => {
                       e.target.style.boxShadow =

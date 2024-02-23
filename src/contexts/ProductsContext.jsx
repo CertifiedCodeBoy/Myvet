@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from "react";
 
 // Create a context
 export const ProductsContext = createContext();
@@ -10,17 +10,16 @@ const ProductsProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-        try {
-            const response = await fetch('https://fakestoreapi.com/products');
-            const data = await response.json();
-            setProducts(data);
-            console.log(data)
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching products:', error);
-            setLoading(false);
-        }
-        }
+      try {
+        const response = await fetch("https://fakestoreapi.com/products");
+        const data = await response.json();
+        setProducts(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setLoading(false);
+      }
+    };
     fetchProducts();
   }, []);
 
