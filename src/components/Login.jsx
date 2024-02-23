@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Eye, EyeSlash, At } from "phosphor-react";
-const login = () => {
+const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -140,4 +140,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
