@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Categories from "./components/Categories";
 import Footer from "./components/Footer";
+import Cart from "./components/Cart";
 
 const App = () => {
   return (
@@ -26,6 +27,11 @@ const App = () => {
               <Categories/>
             </>
           }></Route>
+          <Route path="/Cart" element={
+            <>
+            <Cart />
+              <Footer />
+            </>}></Route>
         </Routes>
       </div>
     </Router>
