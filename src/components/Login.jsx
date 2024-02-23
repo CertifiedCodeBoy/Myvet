@@ -22,16 +22,16 @@ const Login = () => {
   };
 
   return (
-    <div className="font-main h-full 2xl:h-[calc(100vh-60px)] overflow-auto flex items-center "style={{backgroundImage: "url('src/Assets/bg.png')" , backgroundAttachment:"fixed", backgroundSize:"cover", backgroundRepeat:"no-repeat" }}>
+    <div className="font-main h-auto min-h-[100vh] overflow-auto flex items-center bg-secondary">
       <div className="w-full sm:w-10/12 flex justify-center mx-0 sm:mx-auto ">
-        <div className="flex justify-center w-full ">
-          <div className="w-96 sm:w-[800px] pt-[auto] px-0 sm:p-5 mt-10 mb-5 mx-2 border-solid shadow-2xl border border-secondary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-hidden">
+        <div className="flex justify-center w-full">
+          <div className="w-96 sm:w-[600px] pt-[auto] px-0 sm:p-5 mt-10 mb-5 mx-2 border-solid shadow-2xl border-2 border-primary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-hidden">
             <form
               className="flex justify-center align-middle"
               onSubmit={handleSubmit}
             >
               <div className="w-[90%] sm:w-[auto]">
-                <h1 className="text-4xl sm:text-4xl md:text-5xl mb-10 pt-8 font-bold drop-shadow-xl text-center text-black">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl mb-10 pt-8 font-bold drop-shadow-xl text-center text-black">
                   Login
                 </h1>
                 <div className="relative mb-4">
@@ -41,7 +41,7 @@ const Login = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full bg-gray-200 rounded-2xl py-3 pr-11 pl-4 outline-none"
+                    className="w-full bg-gray-200 rounded-2xl py-3 pr-10 pl-4 outline-none"
                     placeholder="Email"
                     onFocus={(e) => {
                       e.target.style.boxShadow =

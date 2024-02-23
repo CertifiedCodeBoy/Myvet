@@ -22,7 +22,7 @@ const Home = () => {
             Right Now !
           </p>
         </section>
-        <div className="max-h-96 h-[824px] bg-white flex items-center justify-center w-full overflow-hidden shrink">
+        <div className="max-h-[500px] h-auto py-8 bg-white flex items-center justify-center w-full overflow-hidden shrink">
           <Slideshow />
         </div>
         <Section
@@ -51,11 +51,11 @@ const Section = ({ title, filter }) => {
     (product) => product.category !== "electronics" && filter(product)
   );
   return (
-    <div className="flex flex-col ">
-      <h1 className="text-4xl sm:text-6xl font-bold text-black text-left p-4">
+    <div className="flex flex-col mb-8">
+      <h1 className="text-4xl sm:text-6xl font-bold text-black text-left p-4 ml-8">
         {title}
       </h1>
-      <div className="flex flex-row h-[450px] overflow-y-hidden justify-start overflow-x-auto">
+      <div className="flex flex-row gap-8 p-4 overflow-y-hidden justify-start overflow-x-auto">
         {filteredProducts.map((product) => (
           <Kard key={product.id} product={product} />
         ))}
@@ -66,30 +66,16 @@ const Section = ({ title, filter }) => {
 
 const Kard = ({ product }) => {
   return (
-    <Card className="w-full min-h-60 max-w-[auto] min-w-60 mx-4 overflow-hidden mb-4 flex justify-center items-center border-2 border-black hover:shadow-lg transition-all duration-300 ease-in-out cursor-pointer">
-      <CardHeader shadow={false} floated={false} className="mt-2 mb-8">
+    <div className="flex flex-col">
+    <Card className="w-full min-w-60 rounded-none overflow-hidden flex justify-center items-center hover:shadow-lg transition-all duration-300 ease-in-out cursor-pointer">
+      <CardHeader shadow={false} floated={false} className="py-8">
         <img
           src={product.image}
           alt="card-image"
-          className="h-60 w-80 object-contain hover:h-72 hover:w-96 transition-all duration-300 ease-in-out"
+          className="h-60 max-w-60 object-contain transition-all duration-300 ease-in-out"
         />
       </CardHeader>
       <CardFooter className="">
-        <div className="m-auto relative bottom-0 flex items-center justify-between p-2 h-10 ">
-          <Typography
-            color="blue-gray"
-            className="font-medium text-[12px] w-auto max-w-40 mx-8"
-          >
-            {product.title.length < 50
-              ? product.title
-              : product.title.substring(0, 50) + "..."}
-          </Typography>
-          <Typography color="blue-gray" className="font-medium ">
-            ${product.price}
-            {/* <br />
-            {product.rating.rate} stars */}
-          </Typography>
-        </div>
         {/* <Typography
           variant="small"
           color="gray"
@@ -124,7 +110,23 @@ const Kard = ({ product }) => {
           </Button>
         </div>
       </CardFooter> */}
-    </Card>
+    <div className="m-auto relative bottom-0 flex items-start px-2 justify-between w-full h-10 ">
+    <Typography
+      color="blue-gray"
+      className="font-medium text-[12px] max-w-36"
+      >
+      {product.title.length < 40
+        ? product.title  +"       "
+        : product.title.substring(0, 40) + "..." +"       "}
+    </Typography>
+    <Typography color="blue-gray" className="font-medium ">
+      ${product.price}
+      {/* <br />
+      {product.rating.rate} stars */}
+    </Typography>
+  </div>
+      </Card>
+  </div>
   );
 };
 

@@ -37,7 +37,7 @@ const Slideshow = () => {
                 key={product.id}
                 src={product.image}
                 alt={`Image ${product.id}`}
-                className={`max-w-96 max-h-96 transitions ${
+                className={`max-w-96 h-96 transitions ${
                   product.id === currentImage ? "" : "hidden"
                 }`}
                 style={{
@@ -52,27 +52,27 @@ const Slideshow = () => {
         </div>
       </div>
       <div className="flex justify-center items-center h-full">
-        <div>
+        <div className="relative w-full flex items-center">
           <button
             onClick={prevImage}
-            className="absolute left-0 rounded-full w-16 h-16 flex justify-center items-center mx-2"
+            className="absolute left-4"
           >
-            <CaretLeft size={48} weight="bold" />
+            <CaretLeft size={52} weight="bold" />
           </button>
           <button
             onClick={nextImage}
-            className="absolute right-0 rounded-full w-16 h-16 flex justify-center items-center mx-2"
+            className="absolute right-4"
           >
-            <CaretRight size={48} weight="bold" />
+            <CaretRight size={52} weight="bold" />
           </button>
         </div>
-        <div className="flex space-x-2 absolute bottom-4 align-baseline hover:bg-gray-400 p-2 rounded-full">
+        <div className="flex space-x-2 absolute bottom-0 align-middle hover:bg-gray-200 hover:border-2 hover:border-black p-2 px-4 rounded-full">
           {products.map((product) => (
             <button
               key={product.id}
               onClick={() => setCurrentImage(product.id)}
-              className={`rounded-full  h-2 w-2 ${
-                product.id === currentImage ? "bg-primary" : "bg-gray-200"
+              className={`rounded-full h-2 w-2 ${
+                product.id === currentImage ? "bg-primary border-black border-2" : "bg-gray-100"
               }`}
             ></button>
           ))}

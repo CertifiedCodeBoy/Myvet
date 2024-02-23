@@ -1,10 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  
+    // Clean up function
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   return (
     <nav className="bg-gray-200 sticky p-4 w-full top-0 flex justify-center z-50 font-main shadow-xl">
@@ -71,8 +83,8 @@ const Navbar = () => {
             <FontAwesomeIcon icon={faBars} className="w-6 h-6 fill-current" />
           </button>
           {isOpen && (
-            <div className=" border">
-              <div className="fixed top-0 right-0 w-3/4 h-full flex items-center justify-center bg-primary overflow-auto z-50 border">
+            <div className="">
+              <div className="fixed top-0 right-0 w-3/4 h-full flex items-center justify-center bg-primary overflow-auto z-50">
                 <div className="flex flex-col items-center overflow-hidden relative px-8 mx-4">
                   <div className="mb-10 align-middle">
                     <Link to="/" onClick={() => setIsOpen(!isOpen)}>
@@ -108,13 +120,13 @@ const Navbar = () => {
                           Home
                         </Link>
                       </div>
-                        <Link
-                          to="/Categories"
-                          className="px-4 text-white mb-4  sm:my-0 font-medium"
-                          onClick={() => setIsOpen(!isOpen)}
-                        >
-                          Categories
-                        </Link>
+                      <Link
+                        to="/Categories"
+                        className="px-4 text-white mb-4  sm:my-0 font-medium"
+                        onClick={() => setIsOpen(!isOpen)}
+                      >
+                        Categories
+                      </Link>
                       <div className="flex flex-col gap-4 items-center sm:flex-row sm:w-60 sm:justify-evenly">
                         <div className="flex">
                           <Link
