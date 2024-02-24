@@ -7,7 +7,7 @@ import SignUp from "./components/SignUp";
 import Categories from "./components/Categories";
 import Footer from "./components/Footer";
 import { OffersProvider } from "./contexts/OffersContext";
-
+import Cart from "./components/Cart";
 const App = () => {
   return (
     <Router>
@@ -29,6 +29,11 @@ const App = () => {
               <Categories/>
             </>
           }></Route>
+          <Route path="/Cart" element={
+            <>
+            <Cart />
+              <Footer />
+            </>}></Route>
         </Routes>
       </div>
     </Router>
