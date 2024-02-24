@@ -66,13 +66,13 @@ const Slideshow = () => {
             <CaretRight size={52} weight="bold" />
           </button>
         </div>
-        <div className="flex space-x-2 absolute bottom-0 align-middle hover:bg-gray-200 hover:border-2 hover:border-black p-2 px-4 rounded-full">
+        <div className="flex space-x-2 absolute bottom-0 align-middle hover:bg-gray-50 p-2 px-4 rounded-full">
           {products.map((product) => (
             <button
               key={product.id}
               onClick={() => setCurrentImage(product.id)}
               className={`rounded-full h-2 w-2 ${
-                product.id === currentImage ? "bg-primary border-black border-2" : "bg-gray-100"
+                product.id === currentImage ? "bg-primary " : "bg-gray-200"
               }`}
             ></button>
           ))}
