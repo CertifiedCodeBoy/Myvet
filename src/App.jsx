@@ -8,8 +8,10 @@ import Categories from "./components/Categories";
 import Footer from "./components/Footer";
 import { OffersProvider } from "./contexts/OffersContext";
 import Cart from "./components/Cart";
+import { ChakraProvider } from "@chakra-ui/react";
 const App = () => {
   return (
+    <ChakraProvider>
     <Router>
       <div className="">
         <Navbar />
@@ -37,6 +39,7 @@ const App = () => {
         </Routes>
       </div>
     </Router>
+    </ChakraProvider>
   );
 };
 
