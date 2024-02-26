@@ -6,8 +6,10 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Categories from "./components/Categories";
 import Footer from "./components/Footer";
+import { OffersProvider } from "./contexts/OffersContext";
 import Cart from "./components/Cart";
 import ProductPage from "./components/ProductPage";
+
 
 const App = () => {
   return (
@@ -19,7 +21,9 @@ const App = () => {
           <Route path="/Signup" element={<SignUp />}></Route>
           <Route path="/" element={
             <>
+              <OffersProvider>
               <Home />
+              </OffersProvider>
               <Footer />
             </>
           } exact></Route>
@@ -33,7 +37,12 @@ const App = () => {
             <Cart />
               <Footer />
             </>}></Route>
-            <Route path="/ProductPage" element={<ProductPage />}></Route>
+            <Route path="/ProductPage" element={
+            <>
+            <ProductPage />
+            <Footer/>
+            </>
+          }></Route>
         </Routes>
       </div>
     </Router>

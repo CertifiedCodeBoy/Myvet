@@ -9,35 +9,36 @@ const Footer = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [showMyvet, setShowMyvet] = useState(false);
   const [showPromotions, setShowPromotions] = useState(false);
-  const [showSocial, setShowSocial] = useState(false);
 
   return (
-    <div className="flex flex-col bg-black text-gray-400 p-4 sm:p-10 gap-4 sm:gap-10 overflow-hidden relative bottom-0">
-      <div className="flex flex-col sm:gap-20 sm:flex-row">
+    <div className="flex flex-col bg-[#111111] text-[#7e7e7e] pt-4 pb-2 px-4 sm:pt-10 gap-4 sm:gap-10 overflow-hidden relative bottom-0 text-">
+      <div className="w-full 2xl:justify-center flex flex-col gap-4 sm:gap-20 sm:flex-row">
         {/* help */}
         <div className="relative">
-          <h1 className="text-2xl text-white mb-2 sm:mb-8">Help</h1>
+        <h1 className="text-2xl text-white mb-2 sm:mb-4 cursor-pointer sm:cursor-default" onClick={() => {
+              setShowHelp(!showHelp);
+            }} >Help</h1>
           <div
-            className={`flex-col gap-4 mb-8 sm:mb-0 ${
+            className={`flex-col gap-4 pl-8 sm:pl-0 mb-8 sm:mb-0 ${
               showHelp ? `flex` : `hidden sm:flex`
             }`}
           >
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Get help
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Order Status
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Delivery
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Returns
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Payement options
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Contact Us
             </a>
           </div>
@@ -56,19 +57,21 @@ const Footer = () => {
         </div>
         {/* myvet */}
         <div className="relative">
-          <h1 className="text-2xl text-white mb-2 sm:mb-8">Myvet</h1>
+        <h1 className="text-2xl text-white mb-2 sm:mb-4 cursor-pointer sm:cursor-default" onClick={() => {
+              setShowMyvet(!showMyvet);
+            }} >Myvet</h1>
           <div
-            className={`flex-col gap-4 mb-8 sm:mb-0 ${
+            className={`flex-col gap-4 pl-8 sm:pl-0 mb-8 sm:mb-0 ${
               showMyvet ? `flex` : `hidden sm:flex`
             }`}
           >
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               About Us
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Careers
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               News
             </a>
           </div>
@@ -87,21 +90,23 @@ const Footer = () => {
         </div>
         {/* promotions */}
         <div className="relative">
-          <h1 className="text-2xl text-white mb-2 sm:mb-8">
+          <h1 className="text-2xl text-white mb-2 sm:mb-4 cursor-pointer sm:cursor-default" onClick={() => {
+              setShowPromotions(!showPromotions);
+            }} >
             Promotions & Offers
           </h1>
           <div
-            className={`flex-col gap-4 mb-8 sm:mb-0 ${
+            className={`flex-col gap-4 mb-8 pl-8 sm:pl-0 sm:mb-0 ${
               showPromotions ? `flex` : `hidden sm:flex`
             }`}
           >
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Gift Cards
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Birthdays
             </a>
-            <a href="#" className="hover:text-white">
+            <a href="#" className="hover:text-white text-sm sm:text-md">
               Students
             </a>
           </div>
@@ -119,12 +124,10 @@ const Footer = () => {
           </button>
         </div>
         {/* social */}
-        <div className="relative">
-          <h1 className="text-2xl text-white mb-2 sm:mb-8">Social</h1>
+        <div className="relative mt-8 sm:mt-0">
+            <h1 className="text-2xl text-white mb-2 sm:mb-4 hidden sm:block cursor-default">Social</h1>
           <div
-            className={`flex-col gap-4 mb-8 sm:mb-0 ${
-              showSocial ? `flex` : `hidden sm:flex`
-            }`}
+            className={`flex sm:flex-col justify-center pl-8 sm:pl-0 gap-4 mb-8 sm:mb-0 `}
           >
             <a href="#">
               <FacebookLogo size={32} color="#fafafa" />
@@ -136,35 +139,23 @@ const Footer = () => {
               <InstagramLogo size={32} color="#fafafa" />
             </a>
           </div>
-            <button
-              onClick={() => {
-                setShowSocial(!showSocial);
-              }}
-              className="absolute right-4 top-0 sm:hidden"
-            >
-              {showSocial ? (
-                <Minus size={30} color="#fafafa" />
-              ) : (
-                <Plus size={30} color="#fafafa" />
-              )}
-            </button>
         </div>
       </div>
-      <div className="flex sm:w-full flex-col-reverse sm:flex-row gap-10 items-center sm:justify-around">
+      <div className="flex sm:w-full flex-col-reverse sm:flex-row gap-10 items-center sm:justify-around 2xl:justify-center 2xl:gap-44">
         <div className="">
-          <p>©Myvet 2024 All Rights Reserved.</p>
+          <p className="text-[10px] sm:text-md cursor-default">©Myvet 2024 All Rights Reserved.</p>
         </div>
         <div className="flex sm:justify-end gap-8">
-          <a href="#" className="hover:text-white">
+          <a href="#" className="hover:text-white text-[10px] sm:text-md">
             Guides
           </a>
-          <a href="#" className="hover:text-white">
+          <a href="#" className="hover:text-white text-[10px] sm:text-md">
             Terms of Sale
           </a>
-          <a href="#" className="hover:text-white">
+          <a href="#" className="hover:text-white text-[10px] sm:text-md">
             Terms of use
           </a>
-          <a href="#" className="hover:text-white">
+          <a href="#" className="hover:text-white text-[10px] sm:text-md">
             Myvet Privacy policy
           </a>
         </div>

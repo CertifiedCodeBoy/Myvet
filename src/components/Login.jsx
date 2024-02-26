@@ -22,8 +22,8 @@ const Login = () => {
   };
 
   return (
-    <div className="font-main h-auto min-h-[100vh] overflow-auto flex items-center bg-secondary">
-      <div className="w-full sm:w-10/12 flex justify-center mx-0 sm:mx-auto ">
+    <div className="font-main h-auto min-h-[100vh] overflow-auto flex items-start bg-secondary">
+      <div className="w-full sm:w-10/12 flex justify-center mx-0 sm:mx-auto">
         <div className="flex justify-center w-full">
           <div className="w-96 sm:w-[600px] pt-[auto] px-0 sm:p-5 mt-10 mb-5 mx-2 border-solid shadow-2xl border-2 border-primary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-hidden">
             <form

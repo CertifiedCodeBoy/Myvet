@@ -8,19 +8,14 @@ import {
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import Slideshow from "./SlideShow";
+import Discounts from "./Discounts";
 
 const Home = () => {
   return (
     <div className="font-main bg-secondary h-full">
       <div className="flex flex-col w-full gap-8">
-        <section className="h-36 mt-8 bg-primary p-2 text-md sm:text-xl md:text-2xl flex flex-col justify-center items-center gap-2 shrink">
-          <h2 className="font-medium">20% OFF on ALL products</h2>
-          <p>
-            <Link to="/SignUp" className=" underline">
-              Sign up
-            </Link>{" "}
-            Right Now !
-          </p>
+        <section className="h-36 mt-8 bg-primary p-2 text-md sm:text-xl md:text-2xl flex items-center shrink">
+          <Discounts />
         </section>
         <div className="max-h-[500px] h-auto py-8 bg-white flex items-center justify-center w-full overflow-hidden shrink">
           <Slideshow />
