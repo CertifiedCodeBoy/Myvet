@@ -7,6 +7,7 @@ import SignUp from "./components/SignUp";
 import Categories from "./components/Categories";
 import Footer from "./components/Footer";
 import Cart from "./components/Cart";
+import ProductPage from "./components/ProductPage";
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
             <Cart />
               <Footer />
             </>}></Route>
+            <Route path="/ProductPage" element={<ProductPage />}></Route>
         </Routes>
       </div>
     </Router>
