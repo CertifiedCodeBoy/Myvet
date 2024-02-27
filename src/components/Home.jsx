@@ -1,14 +1,10 @@
 import React, { useContext } from "react";
 import { ProductsContext } from "../contexts/ProductsContext";
-import {
-  Card,
-  CardHeader,
-  CardFooter,
-  Typography,
-} from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import Slideshow from "./SlideShow";
 import Discounts from "./Discounts";
+import { Card, CardHeader, Image } from "@chakra-ui/react";
+import { useBreakpointValue } from "@chakra-ui/react";
 
 const Home = () => {
   return (
@@ -18,7 +14,7 @@ const Home = () => {
           <Discounts />
         </section>
         <div className="max-h-[500px] h-auto py-8 bg-white flex items-center justify-center w-full overflow-hidden shrink">
-          <Slideshow />
+          <Slideshow filter={(p) => p.category != "electronics" && p.rating.rate >= 4} />
         </div>
         <Section
           title="Men's"
@@ -47,7 +43,7 @@ const Section = ({ title, filter }) => {
   );
   return (
     <div className="flex flex-col mb-8">
-      <h1 className="text-4xl sm:text-6xl font-bold text-black text-left p-4 ml-8">
+      <h1 className="text-2xl sm:text-4xl font-normal text-[#111111] text-left p-4 ml-8">
         {title}
       </h1>
       <div className="flex flex-row gap-8 p-4 overflow-y-hidden justify-start overflow-x-auto">
@@ -60,17 +56,20 @@ const Section = ({ title, filter }) => {
 };
 
 const Kard = ({ product }) => {
+  const minWi = useBreakpointValue({ base: "150px", sm: "200px" });
+  const imageSize = useBreakpointValue({ base: "150px", sm: "200px" });
+
   return (
-    <div className="flex flex-col">
-    <Card className="w-full min-w-60 rounded-none overflow-hidden flex justify-center items-center hover:shadow-lg transition-all duration-300 ease-in-out cursor-pointer">
-      <CardHeader shadow={false} floated={false} className="py-8">
-        <img
-          src={product.image}
-          alt="card-image"
-          className="h-60 max-w-60 object-contain transition-all duration-300 ease-in-out"
-        />
-      </CardHeader>
-      <CardFooter className="">
+    <Link to={`/product/${product.id}`}>
+<Card minW={minWi} className=" overflow-hidden flex justify-center items-center hover:shadow-lg transition-all duration-300 ease-in-out cursor-pointer">
+  <CardHeader shadow={false} floated={false} className="py-8">
+  <Image
+    src={product.image}
+    alt="card-image"
+    minH={imageSize}
+    maxH={imageSize}
+  /> 
+  </CardHeader>
         {/* <Typography
           variant="small"
           color="gray"
@@ -78,7 +77,6 @@ const Kard = ({ product }) => {
         >
           {product.description.substring(0, 50) + "..."}
         </Typography> */}
-      </CardFooter>
       {/* <CardFooter>
         <div className="flex flex-row">
           <Button
@@ -106,22 +104,21 @@ const Kard = ({ product }) => {
         </div>
       </CardFooter> */}
     <div className="m-auto relative bottom-0 flex items-start px-2 justify-between w-full h-10 ">
-    <Typography
-      color="blue-gray"
-      className="font-medium text-[12px] max-w-36"
+    <p
+      className="font-medium text-[12px] max-w-28 overflow-hidden whitespace-nowrap text-[#111111]"
       >
       {product.title.length < 40
         ? product.title  +"       "
         : product.title.substring(0, 40) + "..." +"       "}
-    </Typography>
-    <Typography color="blue-gray" className="font-medium ">
+    </p>
+    <p className="font-medium pl-2">
       ${product.price}
       {/* <br />
       {product.rating.rate} stars */}
-    </Typography>
+    </p>
   </div>
       </Card>
-  </div>
+    </Link>
   );
 };
 

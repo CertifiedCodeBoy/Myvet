@@ -25,14 +25,14 @@ const Discounts = () => {
   return (
     <div className="w-full">
       {offers.length > 0 && (
-        <div className="relative flex flex-col justify-center items-center">
-          <h2 className="font-medium">{offers[currentOffer].title}</h2>
-          <p>
-            <Link to="/SignUp" className="underline">
+        <div className="relative flex flex-col justify-center items-center ">
+          <h2 className="font-medium ">{offers[currentOffer].title}</h2>
+          <p className="text-lg">
+            <Link to="/SignUp" className="underline ">
               Sign up
             </Link>
-            {" "} Right Now !
-          </p>
+            {" "} {offers[currentOffer].description}
+            </p>
             {/* <button onClick={prevOffer} className="absolute left-4">
               <CaretLeft size={52} weight="bold" />
             </button>
