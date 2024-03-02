@@ -155,7 +155,7 @@ const Categories = () => {
 
 const Kard = ({ product }) => {
   return (
-    <Link to={`/Products/${product.id}`}>
+    <Link to={`/Product/${product.id}`}>
       <Card
         px={4}
         pt={4}
