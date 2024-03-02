@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   Box,
   Stack,
@@ -14,7 +14,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import {ProductsContext} from "../contexts/ProductsContext";
+import { ProductsContext } from "../contexts/ProductsContext";
 import { Link } from "react-router-dom";
 
 const Categories = () => {
@@ -22,22 +22,32 @@ const Categories = () => {
   const useProducts = useContext(ProductsContext);
   const { products, loading } = useProducts;
 
+  const [priceFilter, setPriceFilter] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  useEffect(() => {
+    let filtered = products;
+  
+    if (category) {
+      filtered = filtered.filter((product) => product.category === category);
+    }
+  
+    if (priceFilter) {
+      const [min] = priceFilter.split("-");
+      filtered = filtered.filter((product) => product.price >= min);
+    }
+  
+    setFilteredProducts(filtered);
+  }, [products, priceFilter, category]);
+
   if (loading || !products) {
-    return <div className="min-h-full">Loading...</div>;
+    return <div className="min-h-96">Loading...</div>;
   }
-
-  const filteredProducts = products.filter(
-    (product) => product.category === category
-  );
-
   return (
     <>
-      <Box
-        w={"100%"}
-        overflow={"hidden"}
-      >
-        <Flex gap={4} direction={{base:'column', md:'row'}}>
-          <Box w={{base:"100%", md:'15%'}} p={4}>
+      <Box w={"100%"} overflow={"hidden"}>
+        <Flex gap={4} direction={{ base: "column", md: "row" }}>
+          <Box w={{ base: "100%", md: "15%" }} p={4}>
             <Stack placeItems={"start"}>
               <Accordion allowToggle w={"100%"} mb={4}>
                 <AccordionItem W={"100%"} border={"none"} position={"relative"}>
@@ -55,14 +65,16 @@ const Categories = () => {
                         </Flex>
                       </h2>
                       <AccordionPanel>
-                        <RadioGroup colorScheme="gray">
+                        <RadioGroup
+                          colorScheme="gray"
+                          value={priceFilter}
+                          onChange={setPriceFilter}
+                        >
                           <Stack spacing={5} direction={"column"}>
-                            <Radio value="0-100" variant="square">
-                              0 - 1000 DA
-                            </Radio>
-                            <Radio value="1000-1500">1000 - 1500 DA</Radio>
-                            <Radio value="1500-2000">1500 - 2000 DA</Radio>
-                            <Radio value="+2000">+ 2000 DA</Radio>
+                            <Radio value="0-100" defaultChecked>0 - 100 DA</Radio>
+                            <Radio value="100-150">100 - 150 DA</Radio>
+                            <Radio value="150-200">150 - 200 DA</Radio>
+                            <Radio value="200">+ 200 DA</Radio>
                           </Stack>
                         </RadioGroup>
                       </AccordionPanel>
@@ -88,9 +100,11 @@ const Categories = () => {
                         </Flex>
                       </h2>
                       <AccordionPanel>
-                        <RadioGroup colorScheme="gray">
+                        <RadioGroup
+                          colorScheme="gray"
+                        >
                           <Stack spacing={5} direction={"column"}>
-                            <Radio value="Men">Men</Radio>
+                            <Radio value="Men" defaultChecked>Men</Radio>
                             <Radio value="Women">Women</Radio>
                             <Radio value="Unisex">Unisex</Radio>
                           </Stack>
@@ -118,12 +132,14 @@ const Categories = () => {
                         </Flex>
                       </h2>
                       <AccordionPanel>
-                        <RadioGroup colorScheme="gray">
+                        <RadioGroup
+                          colorScheme="gray"
+                        >
                           <Stack spacing={5} direction={"column"}>
-                            <Radio value="0-100" variant="square">
+                            <Radio value="boys" variant="square" defaultChecked>
                               Boys
                             </Radio>
-                            <Radio value="1000-1500">Girls</Radio>
+                            <Radio value="girls">Girls</Radio>
                           </Stack>
                         </RadioGroup>
                       </AccordionPanel>
@@ -139,7 +155,6 @@ const Categories = () => {
                 <Box
                   key={product.id}
                   w={{ base: "100%", sm: "50%", md: "33%", lg: "25%" }}
-                  border={"1px solid #f2f2f2"}
                   p={2}
                 >
                   <Kard product={product} />
@@ -176,18 +191,18 @@ const Kard = ({ product }) => {
           aspectRatio={"1/1"}
           objectFit="contain"
         />
-        <Stack my={4} overflow={'hidden'}>
-        <Box  >
-          <h1 className="text-md whitespace-nowrap font-medium text-[#111111]">
-            {product.title.slice(0, 20) +
-              (product.title.length > 20 ? "..." : "")}
-          </h1>
-        </Box>
-        <Box>
-          <h1 className="text-md font-bold text-[#111111]">
-            {product.price} DA
-          </h1>
-        </Box>
+        <Stack my={4} overflow={"hidden"}>
+          <Box>
+            <h1 className="text-md whitespace-nowrap font-medium text-[#111111]">
+              {product.title.slice(0, 20) +
+                (product.title.length > 20 ? "..." : "")}
+            </h1>
+          </Box>
+          <Box>
+            <h1 className="text-md font-bold text-[#111111]">
+              {product.price} DA
+            </h1>
+          </Box>
         </Stack>
       </Card>
     </Link>

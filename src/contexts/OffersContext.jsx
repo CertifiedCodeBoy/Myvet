@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import offersData from "../offers.json"; // adjust the path as needed
 
 export const OffersContext = createContext();
 
@@ -7,18 +8,13 @@ const OffersProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchOffers = async () => {
-      try {
-        const response = await fetch("src/offers.json");
-        const data = await response.json();
-        setOffers(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching offers:", error);
-        setLoading(false);
-      }
-    };
-    fetchOffers();
+    try {
+      setOffers(offersData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching offers:", error);
+      setLoading(false);
+    }
   }, []);
 
   return (
