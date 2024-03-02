@@ -8,6 +8,7 @@ import Categories from "./components/Categories";
 import Footer from "./components/Footer";
 import OffersProvider from "./contexts/OffersContext";
 import Cart from "./components/Cart";
+import ProductPage from "./components/ProductPage";
 import { ChakraProvider } from "@chakra-ui/react";
 import Discounts from "./components/Discounts";
 import ProductsProvider from "./contexts/ProductsContext";
@@ -54,6 +55,13 @@ const App = () => {
                   </>
                 }
               ></Route>
+              <Route path="/Product/:id" element={
+            <>
+            <Navbar />
+            <ProductPage />
+            <Footer/>
+            </>
+          }></Route>
             </Routes>
           </div>
         </Router>
