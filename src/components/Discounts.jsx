@@ -23,12 +23,12 @@ const Discounts = () => {
   }, [offers]);
 
   return (
-    <div className="w-full">
+    <div className="w-full h-20 sm:h-16 my-2 bg-primary py-4 text-sm sm:text-md md:text-lg flex justify-center items-center shrink">
       {offers.length > 0 && (
         <div className="relative flex flex-col justify-center items-center ">
-          <h2 className="font-medium ">{offers[currentOffer].title}</h2>
-          <p className="text-lg">
-            <Link to="/SignUp" className="underline ">
+          <p className="font-semibold ">{offers[currentOffer].title}</p>
+          <p className="">
+            <Link to="/SignUp" className="underline">
               Sign up
             </Link>
             {" "} {offers[currentOffer].description}

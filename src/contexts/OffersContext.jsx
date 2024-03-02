@@ -1,15 +1,15 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 export const OffersContext = createContext();
 
-export const OffersProvider = ({ children }) => {
+const OffersProvider = ({ children }) => {
   const [offers, setOffers] = useState([]);
-    const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOffers = async () => {
       try {
-        const response = await fetch('src/offers.json');
+        const response = await fetch("src/offers.json");
         const data = await response.json();
         setOffers(data);
         setLoading(false);
@@ -22,8 +22,8 @@ export const OffersProvider = ({ children }) => {
   }, []);
 
   return (
-    <OffersContext.Provider value={offers}>
-      {children}
-    </OffersContext.Provider>
+    <OffersContext.Provider value={offers}>{children}</OffersContext.Provider>
   );
 };
+
+export default OffersProvider;

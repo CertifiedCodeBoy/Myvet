@@ -1,173 +1,93 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-
+import NavSmall from "./navSmall";
+import { Box, Flex, Button } from "@chakra-ui/react";
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  
-    // Clean up function
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isOpen]);
-
   return (
-    <nav className="bg-gray-200 sticky p-4 w-full top-0 flex justify-center z-50 font-main shadow-xl">
+    <nav className="bg-gray-200 sticky px-4 py-2 w-full top-0 flex justify-center items-center z-50 font-main shadow-xl min-h-[60px]">
       <div className="container">
-        <span className="hidden md:flex mx-auto container justify-between items-center w-full">
-          {/* Logo */}
-          <div className="flex items-center absolute">
-            <div className="align-middle">
-              <Link to="/">
-                <img
-                  src="src/Assets/blacklogo.png"
-                  alt="Logo"
-                  className="w-24"
-                />
-              </Link>
-            </div>
-          </div>
-          {/* Search bar */}
-          <div className="flex items-center ml-36 min-w-20 ">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="text-[#59595c] bg-gray-300 pr-5 py-2 rounded-3xl pl-10 outline-none md:w-40 lg:w-72 font-medium"
-              />
-              <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                <FontAwesomeIcon icon={faSearch} className="text-[#737276]" />
+          <span className="hidden md:flex mx-auto justify-between items-center w-full">
+            {/* Logo */}
+            <div className="flex justify-between items-center relative align-middle max-h-16 w-60 lg:w-[400px] ">
+            <Link to="/">
+              <img src="src/Assets/blacklogo.png" alt="Logo" className="w-[70px] absolute -top-[14px] left-0" />
+            </Link>
+            {/* Search bar */}
+            <div className=" min-w-10 ">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="text-[#59595c] bg-gray-300 pr-5 py-2 rounded-3xl pl-10 outline-none h-10 md:w-40 lg:w-60 font-medium"
+                  />
+                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                  <FontAwesomeIcon icon={faSearch} className="text-[#737276]" />
+                </div>
               </div>
             </div>
-          </div>
-          {/* Home, Login, Signup */}
-          <div className="flex items-center px-4" id="links">
-            <Link to="/" className="px-4 py-2 text-black font-medium">
-              Home
-            </Link>
-            <Link to="/Categories" className="px-4 py-2 text-black font-medium">
-              Categories
-            </Link>
-            <Link
-              to="/Login"
-              className="ml-2 px-4 py-2 rounded-3xl text-black border-2 border-black font-medium"
-            >
-              Login
-            </Link>
-            <Link
-              to="/SignUp"
-              className="mx-2 px-4 py-2 rounded-3xl text-white bg-black border-2 border-black font-medium"
-            >
-              Sign Up
-            </Link>
-          </div>
-        </span>
+                  </div>
+            {/* Home, Login, Signup */}
+            <div className="flex items-center px-4">
+              <div
+                className="flex items-center justify-center px-2"
+                id="categories"
+              >
+                <Link to={"/Categories/men's clothing"} className={`text-md pr-4 h-[20px] text-black font-medium`}>
+                  Men
+                </Link>
+                <Link to={"/Categories/jewelery"} className={`text-md px-4 h-[20px] text-black font-medium`}>
+                  Jewelry
+                </Link>
+                <Link to={"/Categories/women's clothing"} className={`text-md pl-4 h-[20px] text-black font-medium`}>
+                  Women
+                </Link>
+              </div>
+              <div className="flex flex-row-reverse items-center gap-4 ml-4">
+              <Link to="/SignUp">
+                <Button
+                  border={"1px"}
+                  bgColor={"#111"}
+                  py={4}
+                  color={"#F2F2F2"}
+                  _hover={{
+                    backgroundColor: "#111",
+                    color: "#F2F2F2",
+                    shadow: "md",
+                  }}
+                  h={8}
+                  fontSize={16}
+                  rounded={'full'}
+                >
+                  Sign Up
+                </Button>
+              </Link>
+              <Link to="/LogIn">
+                <Button
+                  border={"1px"}
+                  py={4}
+                  _hover={{
+                    shadow: "md",
+                  }}
+                  h={8}
+                  fontSize={16}
+                  rounded={'full'}
+                >
+                  Log in
+                </Button>
+              </Link>
+              </div>
+            </div>
+          </span>
         {/* Mobile Devices */}
         <div className="md:hidden flex items-center justify-between h-8">
           <div className="flex align-middle items-center -ml-4">
             <Link to="/">
-              <img src="src/Assets/blacklogo.png" alt="Logo" className="w-20" />
+              <img src="src/Assets/blacklogo.png" alt="Logo" className="w-[70px]" />
             </Link>
           </div>
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="flex px-2 py-1 rounded-md text-primary bg-white focus:outline-none focus:bg-gray-600 "
-          >
-            <FontAwesomeIcon icon={faBars} className="w-6 h-6 fill-current" />
-          </button>
-          {isOpen && (
-            <div className="">
-              <div className="fixed top-0 right-0 w-3/4 h-full flex items-center justify-center bg-primary overflow-auto z-50">
-                <div className="flex flex-col items-center overflow-hidden relative px-8 mx-4">
-                  <div className="mb-10 align-middle">
-                    <Link to="/" onClick={() => setIsOpen(!isOpen)}>
-                      <img
-                        src="src/Assets/whit_logo.png"
-                        alt="Logo"
-                        className="w-24"
-                      />
-                    </Link>
-                  </div>
-                  <div className="container flex flex-col items-center justify-evenly h-56">
-                    <div className="relative min-w-20 ">
-                      <input
-                        type="text"
-                        placeholder="Search..."
-                        className="text-[#59595c] pl-10 pr-5 py-2 rounded-3xl bg-white outline-none min-w-10 sm:w-40 font-medium w-36"
-                      />
-                      <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                        <FontAwesomeIcon
-                          icon={faSearch}
-                          className="text-[#737276]"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col items-center h-full justify-evenly">
-                      <div className="flex">
-                        <Link
-                          to="/"
-                          className="px-4 my-4 sm:my-0 text-white font-medium"
-                          onClick={() => setIsOpen(!isOpen)}
-                        >
-                          Home
-                        </Link>
-                      </div>
-                      <Link
-                        to="/Categories"
-                        className="px-4 text-white mb-4  sm:my-0 font-medium"
-                        onClick={() => setIsOpen(!isOpen)}
-                      >
-                        Categories
-                      </Link>
-                      <div className="flex flex-col gap-4 items-center sm:flex-row sm:w-60 sm:justify-evenly">
-                        <div className="flex">
-                          <Link
-                            to="/Login"
-                            className="sm:ml-2 px-4 py-2 rounded-3xl text-white border-2 border-white font-medium"
-                            onClick={() => setIsOpen(!isOpen)}
-                          >
-                            Login
-                          </Link>
-                        </div>
-                        <div className="flex">
-                          <Link
-                            to="/SignUp"
-                            className="sm:ml-2 px-4 py-2 rounded-3xl text-black bg-white border-2 border-white"
-                            onClick={() => setIsOpen(!isOpen)}
-                          >
-                            Sign Up
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className=" flex items-center justify-center w-20 mt-20">
-                    <button
-                      onClick={() => setIsOpen(false)}
-                      className="text-black focus:outline-none bottom-20 "
-                    >
-                      <FontAwesomeIcon
-                        icon={faTimes}
-                        className="w-6 h-6 fill-current bg-white p-2 rounded-full"
-                      />
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div
-                onClick={() => setIsOpen(!isOpen)}
-                className="fixed top-0 right-0 w-full h-full flex items-center justify-center backdrop-blur-[2px] overflow-hidden bg-black bg-opacity-50 z-20"
-              ></div>
-            </div>
-          )}
+          <NavSmall />
         </div>
       </div>
     </nav>

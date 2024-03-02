@@ -13,7 +13,7 @@ export default {
         bord: "rgba(255, 255, 255, .5)",  
       },
       fontFamily: {
-        main: ["Roboto"],
+        main: ["poppins", "sans-serif"],
       },
       boxShadow: {
         'custom-light': '0 0 30px rgba(255, 255, 255, .5)',

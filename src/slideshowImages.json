@@ -1,0 +1,22 @@
+[
+    {
+        "id":"1",
+        "src":"./src/Assets/slideshowImages/1.jpeg"
+    },
+    {
+        "id":"2",
+        "src":"./src/Assets/slideshowImages/2.jpeg"
+    },
+    {
+        "id":"3",
+        "src":"./src/Assets/slideshowImages/3.png"
+    },
+    {
+        "id":"4",
+        "src":"./src/Assets/slideshowImages/4.jpeg"
+    },
+    {
+        "id":"5",
+        "src":"./src/Assets/slideshowImages/5.jpeg"
+    }
+]

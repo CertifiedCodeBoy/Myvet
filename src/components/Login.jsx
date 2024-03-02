@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Eye, EyeSlash, At } from "phosphor-react";
+import { Button } from "@chakra-ui/react";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -22,16 +23,16 @@ const Login = () => {
   };
 
   return (
-    <div className="font-main h-auto min-h-[100vh] overflow-auto flex items-start bg-secondary">
-      <div className="w-full sm:w-10/12 flex justify-center mx-0 sm:mx-auto">
-        <div className="flex justify-center w-full">
-          <div className="w-96 sm:w-[600px] pt-[auto] px-0 sm:p-5 mt-10 mb-5 mx-2 border-solid shadow-2xl border-2 border-primary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-hidden">
+    <div className="font-main h-auto min-h-[100vh] overflow-auto flex items-start  bg-secondary">
+      <div className="w-full sm:w-10/12 mx-0 sm:mx-auto">
+        <div className="flex w-full">
+          <div className="w-96 sm:w-[561px] pt-[auto] px-0 sm:p-5 mt-10 mb-5 mx-2 border border-black shadow-2xl rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-hidden">
             <form
               className="flex justify-center align-middle"
               onSubmit={handleSubmit}
             >
               <div className="w-[90%] sm:w-[auto]">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl mb-10 pt-8 font-bold drop-shadow-xl text-center text-black">
+                <h1 className="text-3xl sm:text-4xl md:text-4xl mb-10 pt-8 font-bold drop-shadow-xl text-center text-black">
                   Login
                 </h1>
                 <div className="relative mb-4">

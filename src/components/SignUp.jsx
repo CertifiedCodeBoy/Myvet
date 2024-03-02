@@ -41,16 +41,16 @@ const SignUp = () => {
   return (
     <div className="font-main h-auto min-h-[100vh] overflow-auto flex items-start bg-secondary">
       <div className="w-full sm:w-10/12 flex justify-center mx-0 sm:mx-auto ">
-          <div className="w-96 sm:w-[600px] pt-[auto] px-2 mx-2 sm:p-5 sm:mt-10 my-5 lg:mt-20 sm:mb-10 border-solid shadow-2xl border-2 border-primary rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light overflow-auto">
+          <div className="w-96 sm:w-[560px] pt-[auto] px-2 mx-2 sm:p-5 sm:mt-10 my-5 lg:mt-20 sm:mb-10 border-solid shadow-2xl rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light overflow-auto">
             <form
               className="flex justify-center align-middle"
               onSubmit={handleSubmit}
             >
               <div className="sm:w-[450px]">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl mb-12 pt-8 font-bold drop-shadow-xl text-center text-black">
+                <h1 className="text-xl sm:text-3xl md:text-4xl mb-12 pt-8 font-bold drop-shadow-xl text-center text-black">
                   Sign Up
                 </h1>
-                <div className="flex flex-row gap-4 relative justify-center items-center">
+                <div className="flex sm:flex-row flex-col sm:gap-4 gap-0 relative justify-center items-center">
                   <div className="relative mb-4">
                     <input
                       type="text"

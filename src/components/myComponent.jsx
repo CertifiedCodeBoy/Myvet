@@ -1,54 +1,52 @@
 import {
-  ButtonGroup,
-  Button,
-  useBreakpointValue,
-  Flex,
   Stack,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Flex,
 } from "@chakra-ui/react";
-import { ChevronDownIcon, ChevronRightIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import { Bag } from "phosphor-react";
 import { Link } from "react-router-dom";
 
 function MyComponent() {
-  const direction = useBreakpointValue({ base: "column", sm: "row" });
-  const width = useBreakpointValue({ base: "100%", sm: "auto" });
-
   return (
-    <Stack placeItems={"center"}>
-      <Menu isLazy placement="bottom" >
-        {({isOpen}) => (
-          <>
-            <MenuButton w={"100%"} isActive={isOpen} _hover={
-              {
-                color: "white",
-              }
-            }  
-            >
-              Categories
-              {!isOpen ? <ChevronDownIcon ml={1} /> : <ChevronUpIcon ml={1} />}
-            </MenuButton>
-            <Stack  display={isOpen ? 'block' : 'none'} >
-              <Flex direction={'column'} gap={2} >
-              <Link className="hover:text-white">
-              Men's
-              <ChevronRightIcon />
-              </Link>
-              <Link className="hover:text-white">
-              Women's
-              <ChevronRightIcon />
-              </Link>
-              <Link className="hover:text-white">
-              kids
-              <ChevronRightIcon />
-              </Link>
-              </Flex>
-            </Stack>
-          </>
-        )}
-      </Menu>
+    <Stack placeItems={"start"}>
+      <Accordion allowToggle>
+        <AccordionItem border={"none"}>
+          {({ isExpanded }) => (
+            <>
+              <h2>
+                <Flex placeItems={"center"} direction={"row"} gap={3}>
+                  <Bag size={38} />
+                  <AccordionButton
+                    _expanded={{ border: "none" }}
+                    textAlign={"center"}
+                    _hover={{ color: "white" }}
+                  >
+                    <h1 className="text-lg font-medium">Categories</h1>
+                    <AccordionIcon ml={8} />
+                  </AccordionButton>
+                </Flex>
+              </h2>
+              <AccordionPanel>
+                <Stack placeItems={"start"} ml={8}>
+                <Link to={"/Categories/men's clothing"} className={`text-black hover:text-white`}>
+                  Men
+                </Link>
+                <Link to={"/Categories/jewelery"} className={`text-black hover:text-white`}>
+                  Jewelry
+                </Link>
+                <Link to={"/Categories/women's clothing"} className={`text-black hover:text-white`}>
+                  Women
+                </Link>
+                </Stack>
+              </AccordionPanel>
+            </>
+          )}
+        </AccordionItem>
+      </Accordion>
     </Stack>
   );
 }

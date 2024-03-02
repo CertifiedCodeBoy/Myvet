@@ -11,7 +11,7 @@ const Footer = () => {
   const [showPromotions, setShowPromotions] = useState(false);
 
   return (
-    <div className="flex flex-col bg-[#111111] text-[#7e7e7e] pt-4 pb-2 px-4 sm:pt-10 gap-4 sm:gap-10 overflow-hidden relative bottom-0 text-">
+    <div className="flex flex-col bg-[#111111] text-[#7e7e7e] pt-4 pb-2 px-4 sm:pt-10 gap-4 sm:gap-10 overflow-hidden relative bottom-0">
       <div className="w-full 2xl:justify-center flex flex-col gap-4 sm:gap-20 sm:flex-row">
         {/* help */}
         <div className="relative">

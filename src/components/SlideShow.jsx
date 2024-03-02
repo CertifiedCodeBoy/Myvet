@@ -1,92 +1,76 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ProductsContext } from "../contexts/ProductsContext";
+import { Box, Button, Flex, Image, Skeleton } from "@chakra-ui/react";
 import { CaretLeft, CaretRight } from "phosphor-react";
-import "./all.css";
-import { Image } from "@chakra-ui/react";
-import { useBreakpointValue } from "@chakra-ui/react";
+import slideshowImages from "../slideshowImages.json";
 
-const Slideshow = ({filter}) => {
-  const { products } = useContext(ProductsContext);
-  const filteredProducts = products.filter(
-    (product) => product.category !== "electronics" && filter(product)
-    );
-    const [currentImage, setCurrentImage] = useState(filteredProducts.id);
-    const [prevImageIndex, setPrevImageIndex] = useState(filteredProducts.id);
-    const imageMaxHeight = useBreakpointValue({ base: 72, sm: 96 });
-    const imageMinHeight = useBreakpointValue({ base: 60, sm: 80 });
-  
+const Slideshow = () => {
+  const { products, loading } = useContext(ProductsContext);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   useEffect(() => {
-    setPrevImageIndex(currentImage);
     const interval = setInterval(() => {
-      setCurrentImage((prevImageId) => {
-        const currentIndex = filteredProducts.findIndex(product => product.id === prevImageId);
-        return filteredProducts[(currentIndex + 1) % filteredProducts.length].id;
-      });
+      setCurrentImageIndex(
+        (prevIndex) => (prevIndex + 1) % slideshowImages.length
+      );
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [filteredProducts, currentImage]);
+  }, [slideshowImages]);
 
   const nextImage = () => {
-    setCurrentImage((prevImageId) => {
-      const currentIndex = filteredProducts.findIndex(product => product.id === prevImageId);
-      return filteredProducts[(currentIndex + 1) % filteredProducts.length].id;
-    });
+    setCurrentImageIndex(
+      (prevIndex) => (prevIndex + 1) % slideshowImages.length
+    );
   };
 
   const prevImage = () => {
-    setCurrentImage((prevImageId) => {
-      const currentIndex = filteredProducts.findIndex(product => product.id === prevImageId);
-      return filteredProducts[(currentIndex - 1 + filteredProducts.length) % filteredProducts.length].id;
-    });
+    setCurrentImageIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + slideshowImages.length) % slideshowImages.length
+    );
   };
 
+  if (loading || !products) {
+    return (<Skeleton isLoaded={!loading} startColor="gray.200" endColor="gray.400" height="90px" />);
+  }
+
   return (
-    <div className="relative w-full h-96 shrink">
-      <div className="absolute inset-0 flex justify-center items-center">
-        <div className="flex">
-          {filteredProducts
-            .map((product) => (
-              <Image
-              key={product.id}
-              src={product.image}
-              alt={`Image ${product.id}`}
-              className={`${
-                product.id === currentImage ? "" : "hidden"
-              }`}
-              maxH={imageMaxHeight}
-              minH={imageMinHeight}
-            />
-            ))}
-        </div>
-      </div>
-      <div className="flex justify-center items-center h-full">
-        <div className="relative w-full flex items-center">
-          <button
-            onClick={prevImage}
-            className="absolute left-4"
-          >
-            <CaretLeft size={52} weight="bold" />
-          </button>
-          <button
-            onClick={nextImage}
-            className="absolute right-4"
-          >
-            <CaretRight size={52} weight="bold" />
-          </button>
-        </div>
-        <div className="flex space-x-2 absolute bottom-0 align-middle hover:bg-gray-50 p-2 px-4 rounded-full">
-          {filteredProducts.map((product) => (
-            <button
-              key={product.id}
-              onClick={() => setCurrentImage(product.id)}
-              className={`rounded-full h-2 w-2 ${
-                product.id === currentImage ? "bg-primary " : "bg-gray-200"
-              }`}
-            ></button>
-          ))}
-        </div>
-      </div>
+    <div className="relative flex justify-center items-center container">
+      <Box position="relative" maxH="500px" maxW="500px" overflow="hidden">
+        <Image
+          src={slideshowImages[currentImageIndex].src}
+          alt={`Image ${currentImageIndex}`}
+          maxH="50%"
+          maxW="50% "
+          objectFit="cover"
+          aspectRatio={'1/1'}
+        />
+      </Box>
+      <Flex position="absolute" w="100%" h="100%">
+        <Button
+          onClick={prevImage}
+          variant="none"
+          size="sm"
+          position="absolute"
+          left="0"
+          top="50%"
+          transform="translateY(-50%)"
+        >
+          <CaretLeft size={38} weight="bold" />
+        </Button>
+        <Button
+          onClick={nextImage}
+          variant="none"
+          size="sm"
+          position="absolute"
+          right="0"
+          top="50%"
+          transform="translateY(-50%)"
+        >
+          <CaretRight size={38} weight="bold" />
+        </Button>
+      </Flex>
     </div>
   );
 };
