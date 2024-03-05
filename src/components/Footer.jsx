@@ -4,6 +4,7 @@ import { TwitterLogo } from "phosphor-react";
 import { InstagramLogo } from "phosphor-react";
 import { Plus } from "phosphor-react";
 import { Minus } from "phosphor-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const [showHelp, setShowHelp] = useState(false);
@@ -11,8 +12,8 @@ const Footer = () => {
   const [showPromotions, setShowPromotions] = useState(false);
 
   return (
-    <div className="flex flex-col bg-[#111111] text-[#7e7e7e] pt-4 pb-2 px-4 sm:pt-10 gap-4 sm:gap-10 overflow-hidden relative bottom-0">
-      <div className="w-full 2xl:justify-center flex flex-col gap-4 sm:gap-20 sm:flex-row">
+    <div className="flex flex-col bg-[#111111] text-[#7e7e7e] pt-10 pb-2 px-4 sm:pt-10 gap-4 sm:gap-10 overflow-hidden relative bottom-0">
+      <div className="w-full justify-center flex flex-col gap-4 sm:gap-20 sm:flex-row">
         {/* help */}
         <div className="relative">
         <h1 className="text-2xl text-white mb-2 sm:mb-4 cursor-pointer sm:cursor-default" onClick={() => {
@@ -23,9 +24,9 @@ const Footer = () => {
               showHelp ? `flex` : `hidden sm:flex`
             }`}
           >
-            <a href="#" className="hover:text-white text-sm sm:text-md">
+            <Link to="/Help" className="hover:text-white text-sm sm:text-md">
               Get help
-            </a>
+            </Link>
             <a href="#" className="hover:text-white text-sm sm:text-md">
               Order Status
             </a>
@@ -141,7 +142,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="flex sm:w-full flex-col-reverse sm:flex-row gap-10 items-center sm:justify-around 2xl:justify-center 2xl:gap-44">
+      <div className="flex sm:w-full flex-col-reverse sm:flex-row gap-40 items-center justify-center">
         <div className="">
           <p className="text-[10px] sm:text-md cursor-default">©Myvet 2024 All Rights Reserved.</p>
         </div>

@@ -9,7 +9,7 @@ const ProductPage = () => {
     name: 'Nike Air Zoom Pegasus 38',
     price: 120,
     description: 'The Nike Air Zoom Pegasus 38 continues to put a spring in your step, using the same responsive foam as its predecessor. Mesh in the upper combines the comfort and durability you want with a fit that nods to the fast.',
-    sizes: ['S', 'M', 'L', 'XL', '2XL', '3XL'],
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
     colors: ['Black', 'White', 'Blue'],
     image: 'https://via.placeholder.com/500x850', // Adjusted image height
   };

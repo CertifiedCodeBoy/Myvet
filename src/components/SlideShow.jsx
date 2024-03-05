@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ProductsContext } from "../contexts/ProductsContext";
-import { Box, Button, Flex, Image, Skeleton } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Skeleton,Stack } from "@chakra-ui/react";
 import { CaretLeft, CaretRight } from "phosphor-react";
 import slideshowImages from "../slideshowImages.json";
 
@@ -32,21 +32,39 @@ const Slideshow = () => {
   };
 
   if (loading || !products) {
-    return (<Skeleton isLoaded={!loading} startColor="gray.200" endColor="gray.400" height="90px" />);
+    return (
+      <Skeleton
+        isLoaded={!loading}
+        startColor="gray.200"
+        endColor="gray.400"
+        height="200px"
+      />
+    );
   }
 
   return (
     <div className="relative flex justify-center items-center container">
-      <Box position="relative" maxH="500px" maxW="500px" overflow="hidden">
-        <Image
-          src={slideshowImages[currentImageIndex].src}
-          alt={`Image ${currentImageIndex}`}
-          maxH="50%"
-          maxW="50% "
-          objectFit="cover"
-          aspectRatio={'1/1'}
-        />
-      </Box>
+      <Stack
+        position="relative"
+        maxW="100%"
+        maxH={{ base: "250px", sm: "500px" }}
+        minH={{ base: "250px", sm: "500px" }}
+        p={4}
+        overflow="hidden"
+        align={'center'}
+        justify={'center'}
+      >
+        <Box ratio={1}>
+          <Image
+            src={slideshowImages[currentImageIndex].src}
+            alt={`Image ${currentImageIndex}`}
+            objectFit="cover"
+            mx="auto"
+            aspectRatio={'1/1'}
+            w="65%"
+          />
+        </Box>
+      </Stack>
       <Flex position="absolute" w="100%" h="100%">
         <Button
           onClick={prevImage}

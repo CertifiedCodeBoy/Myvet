@@ -12,13 +12,16 @@ import ProductPage from "./components/ProductPage";
 import { ChakraProvider } from "@chakra-ui/react";
 import Discounts from "./components/Discounts";
 import ProductsProvider from "./contexts/ProductsContext";
+import Help from "./components/Help";
+import Contact from "./components/Contact";
+import HelpNav from "./components/HelpNav";
 const App = () => {
   return (
     <ChakraProvider>
         <ProductsProvider>
       <OffersProvider>
+          <div className="sm:flex-1">
         <Router>
-          <div className="">
             <Routes>
               <Route path="/Login" element={<Login />}></Route>
               <Route path="/Signup" element={<SignUp />}></Route>
@@ -62,9 +65,24 @@ const App = () => {
             <Footer/>
             </>
           }></Route>
+          <Route path="/Help" element={
+            <>
+            <HelpNav />
+            <Help />
+            <Footer/>
+            </>
+          }></Route>
+          <Route path="/Contact" element={
+            <>
+            <HelpNav />
+            <Contact />
+            <Footer/>
+            </>
+          }></Route>
+              <Route path="*" element={<h1>Not Found</h1>}></Route>
             </Routes>
-          </div>
         </Router>
+          </div>
       </OffersProvider>
       </ProductsProvider>
     </ChakraProvider>

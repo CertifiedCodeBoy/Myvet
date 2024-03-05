@@ -18,6 +18,10 @@ export default {
       boxShadow: {
         'custom-light': '0 0 30px rgba(255, 255, 255, .5)',
       },
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
+      },
     },
   },
   plugins: [],

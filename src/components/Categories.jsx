@@ -22,7 +22,7 @@ const Categories = () => {
   const useProducts = useContext(ProductsContext);
   const { products, loading } = useProducts;
 
-  const [priceFilter, setPriceFilter] = useState(null);
+  const [priceFilter, setPriceFilter] = useState("All");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -33,8 +33,9 @@ const Categories = () => {
     }
   
     if (priceFilter) {
-      const [min] = priceFilter.split("-");
-      filtered = filtered.filter((product) => product.price >= min);
+      const min = parseInt(priceFilter.substring(0,priceFilter.indexOf("-")));
+      const max = parseInt(priceFilter.substring(priceFilter.indexOf("-")+1));
+      filtered = filtered.filter((product) => product.price >= min && product.price <= max);
     }
   
     setFilteredProducts(filtered);
@@ -45,9 +46,9 @@ const Categories = () => {
   }
   return (
     <>
-      <Box w={"100%"} overflow={"hidden"}>
+      <Box w={"100%"} overflow={"hidden"} my={8}>
         <Flex gap={4} direction={{ base: "column", md: "row" }}>
-          <Box w={{ base: "100%", md: "15%" }} p={4}>
+          <Box w={{ base: "100%", md: "20%" }} p={4} >
             <Stack placeItems={"start"}>
               <Accordion allowToggle w={"100%"} mb={4}>
                 <AccordionItem W={"100%"} border={"none"} position={"relative"}>
@@ -71,7 +72,8 @@ const Categories = () => {
                           onChange={setPriceFilter}
                         >
                           <Stack spacing={5} direction={"column"}>
-                            <Radio value="0-100" defaultChecked>0 - 100 DA</Radio>
+                            <Radio value="" defaultChecked>All</Radio>
+                            <Radio value="0-100">0 - 100 DA</Radio>
                             <Radio value="100-150">100 - 150 DA</Radio>
                             <Radio value="150-200">150 - 200 DA</Radio>
                             <Radio value="200">+ 200 DA</Radio>
