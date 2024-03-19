@@ -15,6 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Link as RouterLink } from "react-router-dom";
+import whitelogo from "../Assets/whit_logo.png";
 
 const HelpNav = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -30,9 +31,9 @@ const HelpNav = () => {
         mx={"auto"}
       >
         <Flex align="center" position={"relative"} gap={12}>
-          <Link as={RouterLink} to="/">
+          <Link as={RouterLink} to="/" onClick={() => window.scrollTo(0, 0)}>
             <Image
-              src="src/Assets/whit_logo.png"
+              src={whitelogo}
               boxSize="60px"
               position={"absolute"}
               top={"-4"}
@@ -45,21 +46,26 @@ const HelpNav = () => {
             ml={4}
             pl={4}
             borderLeft={"1px"}
+            onClick={() => window.scrollTo(0, 0)}
           >
             Help Center
           </Link>
         </Flex>
         <Flex align="center" display={{ base: "none", md: "flex" }}>
-          <Button
-            colorScheme="gray"
-            color={"white"}
-            _hover={{ color: "white" }}
-            variant="outline"
-            mr={4}
-          >
-            Sign Up
-          </Button>
-          <Button colorScheme="gray">Sign In</Button>
+          <Link as={RouterLink} to="/SignUp">
+            <Button
+              colorScheme="gray"
+              color={"white"}
+              _hover={{ color: "white" }}
+              variant="outline"
+              mr={4}
+            >
+              Sign Up
+            </Button>
+          </Link>
+          <Link as={RouterLink} to="/Login">
+            <Button colorScheme="gray">Sign In</Button>
+          </Link>
         </Flex>
         <IconButton
           display={{ base: "flex", md: "none" }}
@@ -73,25 +79,27 @@ const HelpNav = () => {
       </Flex>
       <Drawer isOpen={isOpen} placement="top" onClose={onClose}>
         <DrawerOverlay>
-          <DrawerContent bg={'black'} p={4}>
+          <DrawerContent bg={"black"} p={4}>
             <DrawerCloseButton />
-            <DrawerHeader color={'white'}>Menu</DrawerHeader>
+            <DrawerHeader color={"white"}>Menu</DrawerHeader>
             <DrawerBody>
               <Flex align="center">
                 <Link as={RouterLink} to="/SignUp">
-                <Button
-                  colorScheme="gray"
-                  color={"white"}
-                  _hover={{ color: "white" }}
-                  onClick={onClose}
-                  variant="outline"
-                  mr={4}
-                >
-                  Sign Up
-                </Button>
+                  <Button
+                    colorScheme="gray"
+                    color={"white"}
+                    _hover={{ color: "white" }}
+                    onClick={onClose}
+                    variant="outline"
+                    mr={4}
+                  >
+                    Sign Up
+                  </Button>
                 </Link>
                 <Link as={RouterLink} to="/Login">
-                <Button colorScheme="gray" onClick={onClose}>Sign In</Button>
+                  <Button colorScheme="gray" onClick={onClose}>
+                    Sign In
+                  </Button>
                 </Link>
               </Flex>
             </DrawerBody>

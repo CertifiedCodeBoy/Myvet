@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShoppingCart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
 
 const ProductPage = () => {
   // Sample product data (replace it with your actual data)
@@ -109,7 +110,7 @@ const ProductPage = () => {
               {product.colors.map((color) => (
                 <button
                   key={color}
-                  className={`w-8 h-8 rounded-full border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${selectedColor === color ? 'ring-2 ring-amber-900' : ''}`}
+                  className={`w-8 h-8 rounded-full border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${selectedColor === color ? 'ring-2 ring-primarybg-primary' : ''}`}
                   style={{ backgroundColor: color.toLowerCase(), cursor: 'pointer' }}
                   onClick={() => handleColorChange(color)}
                 ></button>
@@ -123,7 +124,7 @@ const ProductPage = () => {
               {product.sizes.map((size) => (
                 <button
                   key={size}
-                  className={`w-10 h-10 rounded-md border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${!isAvailableSize(size) ? 'bg-gray-200 cursor-not-allowed' : selectedSize === size ? 'bg-amber-900 text-white' : 'bg-white text-gray-700'}`}
+                  className={`w-10 h-10 rounded-md border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${!isAvailableSize(size) ? 'bg-gray-200 cursor-not-allowed' : selectedSize === size ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
                   style={{ minWidth: '2.5rem', textAlign: 'center' }}
                   onClick={() => isAvailableSize(size) && handleSizeChange(size)}
                   disabled={!isAvailableSize(size)}
@@ -138,14 +139,14 @@ const ProductPage = () => {
             <button
               onClick={handleAddToCart}
               disabled={!selectedSize || !selectedColor}
-              className="bg-amber-900 text-white px-6 py-4 rounded-3xl hover:bg-amber-950"
+              className="bg-primary text-white px-6 py-4 rounded-3xl hover:bg-amber-950 cursor-pointer"
             >
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
               Add to Cart
             </button>
             <button
               onClick={handleAddToFavorites}
-              className="bg-transparent text-amber-900 border border-amber-950 px-6 py-4 rounded-3xl hover:bg-gray-100 hover:text-amber-950"
+              className="bg-transparent text-primarybg-primary border border-amber-950 px-6 py-4 rounded-3xl hover:bg-gray-100 hover:text-amber-950"
             >
               <FontAwesomeIcon icon={faHeart} className="mr-2" />
               Add to Favorites
@@ -160,7 +161,7 @@ const ProductPage = () => {
         <div className="mb-4">
           <button
             onClick={handleToggleReviewForm}
-            className="bg-transparent text-amber-900 border border-amber-900 px-4 py-2 rounded-md hover:bg-amber-900 hover:text-white focus:outline-none"
+            className="bg-transparent text-primarybg-primary border border-primarybg-primary px-4 py-2 rounded-md hover:bg-primary hover:text-white focus:outline-none"
           >
             Write a Review
           </button>
@@ -196,7 +197,7 @@ const ProductPage = () => {
             ></textarea>
             <button
               onClick={handleSubmitReview}
-              className="bg-amber-900 text-white px-4 py-2 rounded-md mt-2 hover:bg-amber-800"
+              className="bg-primary text-white px-4 py-2 rounded-md mt-2 hover:bg-amber-800"
             >
               Submit Review
             </button>

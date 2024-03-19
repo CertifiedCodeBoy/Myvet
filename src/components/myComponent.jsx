@@ -10,7 +10,7 @@ import {
 import { Bag } from "phosphor-react";
 import { Link } from "react-router-dom";
 
-function MyComponent() {
+function MyComponent({ onClose }) {
   return (
     <Stack placeItems={"start"}>
       <Accordion allowToggle>
@@ -21,7 +21,7 @@ function MyComponent() {
                 <Flex placeItems={"center"} direction={"row"} gap={3}>
                   <Bag size={38} />
                   <AccordionButton
-                    _expanded={{ border: "none" }}
+                    _expanded={{ border: "none", color: "white"}}
                     textAlign={"center"}
                     _hover={{ color: "white" }}
                   >
@@ -32,15 +32,27 @@ function MyComponent() {
               </h2>
               <AccordionPanel>
                 <Stack placeItems={"start"} ml={8}>
-                <Link to={"/Categories/men's clothing"} className={`text-black hover:text-white`}>
-                  Men
-                </Link>
-                <Link to={"/Categories/jewelery"} className={`text-black hover:text-white`}>
-                  Jewelry
-                </Link>
-                <Link to={"/Categories/women's clothing"} className={`text-black hover:text-white`}>
-                  Women
-                </Link>
+                  <Link
+                    to={"/Categories/men's clothing"}
+                    className={`text-black hover:text-white`}
+                    onClick={onClose}
+                  >
+                    Men
+                  </Link>
+                  <Link
+                    to={"/Categories/jewelery"}
+                    className={`text-black hover:text-white`}
+                    onClick={onClose}
+                  >
+                    Jewelry
+                  </Link>
+                  <Link
+                    to={"/Categories/women's clothing"}
+                    className={`text-black hover:text-white`}
+                    onClick={onClose}
+                  >
+                    Women
+                  </Link>
                 </Stack>
               </AccordionPanel>
             </>

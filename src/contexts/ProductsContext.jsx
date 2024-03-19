@@ -14,10 +14,14 @@ const ProductsProvider = ({ children }) => {
         const response = await fetch("https://fakestoreapi.com/products");
         const data = await response.json();
         setProducts(data.filter((p) => p.category !== "electronics"));
-        setLoading(false);
+        if (loading) { 
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Error fetching products:", error);
-        setLoading(false);
+        if (!loading) { 
+          setLoading(false);
+        }
       }
     };
     fetchProducts();

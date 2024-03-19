@@ -5,6 +5,7 @@ import { InstagramLogo } from "phosphor-react";
 import { Plus } from "phosphor-react";
 import { Minus } from "phosphor-react";
 import { Link } from "react-router-dom";
+import whitelogo from "../Assets/whit_logo.png";
 
 const Footer = () => {
   const [showHelp, setShowHelp] = useState(false);
@@ -24,7 +25,7 @@ const Footer = () => {
               showHelp ? `flex` : `hidden sm:flex`
             }`}
           >
-            <Link to="/Help" className="hover:text-white text-sm sm:text-md">
+            <Link to="/Help" onClick={() => window.scrollTo(0, 0)} className="hover:text-white text-sm sm:text-md">
               Get help
             </Link>
             <a href="#" className="hover:text-white text-sm sm:text-md">
@@ -125,10 +126,10 @@ const Footer = () => {
           </button>
         </div>
         {/* social */}
-        <div className="relative mt-8 sm:mt-0">
-            <h1 className="text-2xl text-white mb-2 sm:mb-4 hidden sm:block cursor-default">Social</h1>
+        <div className="relative mt-8 sm:mt-0 flex flex-col items-center justify-center ">
+            <h1 className="text-xl text-white mb-2 sm:mb-4 mt-4 sm:block cursor-default">Follow Myvet :</h1>
           <div
-            className={`flex sm:flex-col justify-center pl-8 sm:pl-0 gap-4 mb-8 sm:mb-0 `}
+            className={`flex sm:flex-row items-center justify-center gap-4 mb-8 sm:mb-0 `}
           >
             <a href="#">
               <FacebookLogo size={32} color="#fafafa" />
@@ -140,9 +141,12 @@ const Footer = () => {
               <InstagramLogo size={32} color="#fafafa" />
             </a>
           </div>
+          <div className="">
+          <img src={whitelogo} alt="MyvetLogo" className="aspect-square w-40" />
+          </div>
         </div>
       </div>
-      <div className="flex sm:w-full flex-col-reverse sm:flex-row gap-40 items-center justify-center">
+      <div className="flex sm:w-full flex-col-reverse sm:flex-row sm:gap-40 gap-4 items-center justify-center">
         <div className="">
           <p className="text-[10px] sm:text-md cursor-default">©Myvet 2024 All Rights Reserved.</p>
         </div>

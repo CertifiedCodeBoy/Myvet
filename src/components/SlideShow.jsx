@@ -49,6 +49,7 @@ const Slideshow = () => {
         maxW="100%"
         maxH={{ base: "250px", sm: "500px" }}
         minH={{ base: "250px", sm: "500px" }}
+        height={{ base: "250px", sm: "500px" }}
         p={4}
         overflow="hidden"
         align={'center'}

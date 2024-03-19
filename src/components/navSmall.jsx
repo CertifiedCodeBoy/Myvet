@@ -16,6 +16,7 @@ import { Link as ReactRouterLink } from "react-router-dom";
 import { Link as ChakraLink } from "@chakra-ui/react";
 import MyComponent from "./myComponent";
 import { List, House } from "phosphor-react";
+import blacklogo from "../Assets/blacklogo.png";
 
 const NavSmall = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,9 +48,12 @@ const NavSmall = () => {
           <DrawerCloseButton />
           <DrawerHeader>
             <Flex justify={"center"}>
-              <ChakraLink as={ReactRouterLink} to="/" onClick={onClose}>
+              <ChakraLink as={ReactRouterLink} to="/" onClick={() => {
+                onClose()
+                window.scrollTo(0, 0)
+              }}>
                 <img
-                  src="src/Assets/blacklogo.png"
+                  src={blacklogo}
                   alt="Logo"
                   className="w-24"
                 />
@@ -66,13 +70,16 @@ const NavSmall = () => {
                     as={ReactRouterLink}
                     to="/"
                     _hover={{ color: "white" }}
-                    onClick={onClose}
+                    onClick={() => {
+                      onClose()
+                      window.scrollTo(0, 0)
+                    }}
                   >
                     <h1 className="text-lg font-medium">Home</h1>
                   </ChakraLink>
                 </Flex>
               </h2>
-              <MyComponent />
+              <MyComponent onClose={onClose}  />
             </Flex>
           </DrawerBody>
           <DrawerFooter>

@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Categories from "./components/Categories";
+import Categories, { theme } from "./components/Categories";
 import Footer from "./components/Footer";
 import OffersProvider from "./contexts/OffersContext";
 import Cart from "./components/Cart";
@@ -15,75 +15,110 @@ import ProductsProvider from "./contexts/ProductsContext";
 import Help from "./components/Help";
 import Contact from "./components/Contact";
 import HelpNav from "./components/HelpNav";
+import Loginsignupnav from "./components/Loginsignupnav";
+import Chat from "./components/Chat";
 const App = () => {
   return (
-    <ChakraProvider>
-        <ProductsProvider>
-      <OffersProvider>
+    <ChakraProvider theme={theme}>
+      <ProductsProvider>
+        <OffersProvider>
           <div className="sm:flex-1">
-        <Router>
-            <Routes>
-              <Route path="/Login" element={<Login />}></Route>
-              <Route path="/Signup" element={<SignUp />}></Route>
-              <Route
-                path="/"
-                element={
-                  <>
-                    <Navbar />
-                    <Discounts/>
-                    <Home />
-                    <Footer />
-                  </>
-                }
-                exact
-              ></Route>
-              <Route
-                path="/Categories/:category"
-                element={
-                  <>
-                    <Navbar />
-                    <Discounts/>
-                    <Categories />
-                    <Footer />
-                  </>
-                }
-              ></Route>
-              <Route
-                path="/Cart"
-                element={
-                  <>
-                    <Navbar />
-                    <Cart />
-                    <Footer />
-                  </>
-                }
-              ></Route>
-              <Route path="/Product/:id" element={
-            <>
-            <Navbar />
-            <ProductPage />
-            <Footer/>
-            </>
-          }></Route>
-          <Route path="/Help" element={
-            <>
-            <HelpNav />
-            <Help />
-            <Footer/>
-            </>
-          }></Route>
-          <Route path="/Contact" element={
-            <>
-            <HelpNav />
-            <Contact />
-            <Footer/>
-            </>
-          }></Route>
-              <Route path="*" element={<h1>Not Found</h1>}></Route>
-            </Routes>
-        </Router>
+            <Router>
+              <Routes>
+                <Route
+                  path="/Login"
+                  element={
+                    <>
+                      <Loginsignupnav />
+                      <Login />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/Signup"
+                  element={
+                    <>
+                      <Loginsignupnav />
+                      <SignUp />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <Navbar />
+                      <Discounts />
+                      <Home />
+                      <Footer />
+                    </>
+                  }
+                  exact
+                ></Route>
+                <Route
+                  path="/Categories/:category"
+                  element={
+                    <>
+                      <Navbar />
+                      <Discounts />
+                      <Categories />
+                      <Footer />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/Cart"
+                  element={
+                    <>
+                      <Navbar />
+                      <Cart />
+                      <Footer />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/Product/:id"
+                  element={
+                    <>
+                      <Navbar />
+                      <ProductPage />
+                      <Footer />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/Help"
+                  element={
+                    <>
+                      <HelpNav />
+                      <Help />
+                      <Footer />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/Contact"
+                  element={
+                    <>
+                      <HelpNav />
+                      <Contact />
+                      <Footer />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/a"
+                  element={
+                    <>
+                      <Chat />
+                    </>
+                  }
+                ></Route>
+                <Route path="*" element={<h1>Not Found</h1>}></Route>
+              </Routes>
+            </Router>
           </div>
-      </OffersProvider>
+        </OffersProvider>
       </ProductsProvider>
     </ChakraProvider>
   );

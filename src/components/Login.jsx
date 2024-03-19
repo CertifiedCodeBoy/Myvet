@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Eye, EyeSlash, At } from "phosphor-react";
 import { Button } from "@chakra-ui/react";
 const Login = () => {
@@ -12,9 +12,11 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your login logic here
+    navigate("/");
     console.log(formData);
     setFormData({
       email: "",
@@ -22,11 +24,11 @@ const Login = () => {
     });
   };
 
+
   return (
-    <div className="font-main h-auto min-h-[100vh] overflow-auto flex items-center  bg-secondary">
-      <div className="w-full sm:w-10/12 mx-0 sm:mx-auto">
-        <div className="flex w-full justify-center">
-          <div className="w-96 sm:w-[561px] pt-[auto] px-0 sm:p-5 mt-10 mb-5 mx-2 border border-black shadow-2xl rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-hidden">
+    <div className="font-main h-auto flex pb-12 sm:pt-4 pt-16 bg-secondary">
+      <div className="w-full sm:w-10/12 mx-0 sm:mx-auto flex justify-center  ">
+          <div className="w-96 sm:w-[561px] px-0 sm:p-5 mx-4 border border-black shadow-2xl rounded-3xl bg-transparent backdrop-blur-[20px] box-shadow-custom-light h-[auto] overflow-hidden">
             <form
               className="flex justify-center align-middle"
               onSubmit={handleSubmit}
@@ -135,7 +137,6 @@ const Login = () => {
               </div>
             </form>
           </div>
-        </div>
       </div>
     </div>
   );

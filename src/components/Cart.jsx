@@ -98,7 +98,7 @@ const Cart = () => {
                     />
                   </div>
                   <div className='absolute bottom-0 left-0 flex items-center space-x-4 ml-40 mb-6 ' style={{ left: '-1rem' }}> {/* Adjusted icon position */}
-                    <FontAwesomeIcon icon={faHeart} className='text-amber-950 cursor-pointer' />
+                    <FontAwesomeIcon icon={faHeart} className='cursor-pointer' />
                     <FontAwesomeIcon icon={faTrashAlt} className='text-amber-0 cursor-pointer' />
                   </div>
                 </div>
@@ -122,7 +122,7 @@ const Cart = () => {
                 <span>Total:</span>
                 <span>${totalPrice + 10}</span>
               </div>
-              <button className='bg-amber-950 text-white px-4 py-2 mt-4 w-full rounded-2xl'>
+              <button className='bg-primary text-white px-4 py-2 mt-4 w-full rounded-2xl'>
                 Buy Now
               </button>
             </div>

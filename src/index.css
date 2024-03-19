@@ -2,3 +2,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .inputStyle {
+      @apply transition-all duration-500;
+      @apply w-20 cursor-pointer shadow-none;
+    }
+  
+    .inputStyle.expanded {
+      @apply w-44 cursor-auto shadow-md;
+    }
+  
+    @screen md {
+      .inputStyle {
+        @apply w-20;
+      }
+  
+      .inputStyle.expanded {
+        @apply w-44;
+      }
+    }
+  }

@@ -16,28 +16,36 @@ import {
 import { useParams } from "react-router-dom";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { Link } from "react-router-dom";
+import { extendTheme } from '@chakra-ui/react'
+import  {radioTheme}  from './Styles/radio.ts'
+
+export const theme = extendTheme({
+  components: { Radio: radioTheme },
+})
 
 const Categories = () => {
   const { category } = useParams();
   const useProducts = useContext(ProductsContext);
   const { products, loading } = useProducts;
 
-  const [priceFilter, setPriceFilter] = useState("All");
+  const [priceFilter, setPriceFilter] = useState();
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     let filtered = products;
-  
+
     if (category) {
       filtered = filtered.filter((product) => product.category === category);
     }
-  
+
     if (priceFilter) {
-      const min = parseInt(priceFilter.substring(0,priceFilter.indexOf("-")));
-      const max = parseInt(priceFilter.substring(priceFilter.indexOf("-")+1));
-      filtered = filtered.filter((product) => product.price >= min && product.price <= max);
+      const min = parseInt(priceFilter.substring(0, priceFilter.indexOf("-")));
+      const max = parseInt(priceFilter.substring(priceFilter.indexOf("-") + 1));
+      filtered = filtered.filter(
+        (product) => product.price >= min && product.price <= max
+      );
     }
-  
+
     setFilteredProducts(filtered);
   }, [products, priceFilter, category]);
 
@@ -46,12 +54,12 @@ const Categories = () => {
   }
   return (
     <>
-      <Box w={"100%"} overflow={"hidden"} my={8}>
+      <Box width={"100%"} overflow={"hidden"} my={8}>
         <Flex gap={4} direction={{ base: "column", md: "row" }}>
-          <Box w={{ base: "100%", md: "20%" }} p={4} >
+          <Box width={{ base: "100%", md: "20%" }} p={4}>
             <Stack placeItems={"start"}>
-              <Accordion allowToggle w={"100%"} mb={4}>
-                <AccordionItem W={"100%"} border={"none"} position={"relative"}>
+              <Accordion allowToggle width={"100%"} mb={4}>
+                <AccordionItem width={"100%"} border={"none"} position={"relative"}>
                   {({ isExpanded }) => (
                     <>
                       <h2>
@@ -67,12 +75,13 @@ const Categories = () => {
                       </h2>
                       <AccordionPanel>
                         <RadioGroup
-                          colorScheme="gray"
                           value={priceFilter}
                           onChange={setPriceFilter}
                         >
-                          <Stack spacing={5} direction={"column"}>
-                            <Radio value="" defaultChecked>All</Radio>
+                          <Stack spacing={5} direction={"column"} >
+                            <Radio  value="" defaultChecked={"true"}>
+                              All
+                            </Radio>
                             <Radio value="0-100">0 - 100 DA</Radio>
                             <Radio value="100-150">100 - 150 DA</Radio>
                             <Radio value="150-200">150 - 200 DA</Radio>
@@ -86,8 +95,8 @@ const Categories = () => {
               </Accordion>
             </Stack>
             <Stack placeItems={"start"}>
-              <Accordion allowToggle w={"100%"} mb={4}>
-                <AccordionItem W={"100%"} border={"none"} position={"relative"}>
+              <Accordion allowToggle width={"100%"} mb={4}>
+                <AccordionItem width={"100%"} border={"none"} position={"relative"}>
                   {({ isExpanded }) => (
                     <>
                       <h2>
@@ -96,19 +105,17 @@ const Categories = () => {
                             _expanded={{ border: "none" }}
                             textAlign={"center"}
                           >
-                            <h1 className="text-lg font-medium">Gender</h1>
+                            <h1 className="text-lg font-medium">Color</h1>
                             <AccordionIcon position={"absolute"} right={2} />
                           </AccordionButton>
                         </Flex>
                       </h2>
                       <AccordionPanel>
-                        <RadioGroup
-                          colorScheme="gray"
-                        >
+                        <RadioGroup colorScheme="gray">
                           <Stack spacing={5} direction={"column"}>
-                            <Radio value="Men" defaultChecked>Men</Radio>
-                            <Radio value="Women">Women</Radio>
-                            <Radio value="Unisex">Unisex</Radio>
+                            <Radio value="Men">Red</Radio>
+                            <Radio value="Unisex">Green</Radio>
+                            <Radio value="Women">Blue</Radio>
                           </Stack>
                         </RadioGroup>
                       </AccordionPanel>
@@ -118,8 +125,8 @@ const Categories = () => {
               </Accordion>
             </Stack>
             <Stack placeItems={"start"}>
-              <Accordion allowToggle w={"100%"} mb={4}>
-                <AccordionItem W={"100%"} border={"none"} position={"relative"}>
+              <Accordion allowToggle width={"100%"} mb={4}>
+                <AccordionItem width={"100%"} border={"none"} position={"relative"}>
                   {({ isExpanded }) => (
                     <>
                       <h2>
@@ -128,20 +135,24 @@ const Categories = () => {
                             _expanded={{ border: "none" }}
                             textAlign={"center"}
                           >
-                            <h1 className="text-lg font-medium">Children</h1>
+                            <h1 className="text-lg font-medium">Size</h1>
                             <AccordionIcon position={"absolute"} right={2} />
                           </AccordionButton>
                         </Flex>
                       </h2>
                       <AccordionPanel>
-                        <RadioGroup
-                          colorScheme="gray"
-                        >
+                        <RadioGroup colorScheme={'brown'}>
                           <Stack spacing={5} direction={"column"}>
-                            <Radio value="boys" variant="square" defaultChecked>
-                              Boys
+                            <Radio value="XS" defaultChecked>
+                              XS
                             </Radio>
-                            <Radio value="girls">Girls</Radio>
+                            <Radio value="S">S</Radio>
+                            <Radio value="M">
+                              M
+                            </Radio>
+                            <Radio value="L">L</Radio>
+                            <Radio value="XL">XL</Radio>
+                            <Radio value="XXL">XXL</Radio>
                           </Stack>
                         </RadioGroup>
                       </AccordionPanel>
@@ -174,8 +185,7 @@ const Kard = ({ product }) => {
   return (
     <Link to={`/Product/${product.id}`}>
       <Card
-        px={4}
-        pt={4}
+        p={4}
         float={"none"}
         sx={{
           boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.2)",
@@ -183,25 +193,25 @@ const Kard = ({ product }) => {
         }}
         justify={"center"}
         align={"center"}
-        maxH={"400px"}
+        maxH={"fit-content"}
         overflow={"hidden"}
       >
         <Image
           src={product.image}
           alt={`Image`}
-          w={"auto"}
+          width={{base:"auto",xxl:"20%"}}
           aspectRatio={"1/1"}
           objectFit="contain"
         />
-        <Stack my={4} overflow={"hidden"}>
-          <Box>
-            <h1 className="text-md whitespace-nowrap font-medium text-[#111111]">
+        <Stack maxWidth={'100%'} overflow={"hidden"} mt={4}>
+          <Box >
+            <h1 className="text-sm lg:text-md 2xl:text-lg whitespace-nowrap font-semibold text-[#111111]">
               {product.title.slice(0, 20) +
                 (product.title.length > 20 ? "..." : "")}
             </h1>
           </Box>
           <Box>
-            <h1 className="text-md font-bold text-[#111111]">
+            <h1 className="text-sm lg:text-md 2xl:text-lg font-medium text-[#111111]">
               {product.price} DA
             </h1>
           </Box>

@@ -1,79 +1,84 @@
 import React from "react";
 import {
-    EmailIcon,
-    LockIcon,
-    QuestionIcon,
-    AddIcon,
-    ArrowForwardIcon,
+  EmailIcon,
+  LockIcon,
+  QuestionIcon,
+  AddIcon,
+  ArrowForwardIcon,
 } from "@chakra-ui/icons";
 import {
-    Box,
-    Heading,
-    Text,
-    VStack,
-    FormControl,
-    FormLabel,
-    Input,
-    Divider,
-    Textarea,
-    Button,
-    UnorderedList,
-    ListItem,
-    Link,
-    Stack,
-    Flex, // Added Flex component
+  Box,
+  Heading,
+  Text,
+  VStack,
+  FormControl,
+  FormLabel,
+  Input,
+  Divider,
+  Textarea,
+  Button,
+  UnorderedList,
+  ListItem,
+  Link,
+  Stack,
+  Flex, // Added Flex component
 } from "@chakra-ui/react";
 import { BellIcon } from "@chakra-ui/icons";
 
+
 const Contact = () => {
-    return (
-        <>
-        <Box
-        bgColor="#eaeae6"
-        p={6}
-        borderRadius="md"
-        display="flex"
-        alignItems="center"
+    const [formData, setFormData] = React.useState({
+        email: "",
+          name: "",
+          message: ""
+      });
+      const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+      };
+    const handlesubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
+        setFormData({
+          email: "",
+          name: "",
+          message: ""
+        });
+      };
+  return (
+    <Stack >
+      <Heading color="black" mt={8} textAlign={"start"} fontWeight={'middle'}>
+        Contact Us
+      </Heading>
+      <Text> Tell us more about your issue.</Text>
+      <Divider borderColor={"black"} mb={4} />
+      <Flex
+        direction="column"
+        mx={"auto"}
+        align="center"
+        justify="center"
+        my={8}
+        width={{ base: "80%", md:'50%'}}
       >
-        <Box boxSize={6} color="gray.500" ml={36} />{" "}
-        <BellIcon color="gray.500" mr={2} fontSize={28} />
-        <Flex direction="column" ml={2}>
-          <Heading fontSize="medium">
-            Wait times for chat support are longer than usual
-          </Heading>
-          <Text>Check back later, or search our Help Center for answers.</Text>
-        </Flex>
-      </Box>
-        <Flex direction="column" w={'50%'} mx={'auto'} align="center" justify="center" my={8} >
-            <Heading color="black" m={8}>Contact Us</Heading>
-            <Box
-                as="form"
-                w="sm"
-                m={8}
+        <Box as="form" onSubmit={handlesubmit} width={"100%"}>
+          <Stack spacing={3}>
+            <FormControl id="name">
+              <Input type="text" placeholder="Name" onChange={handleChange} name="name" value={formData.name} required/>
+            </FormControl>
+            <FormControl id="email">
+              <Input type="email" placeholder="Email" onChange={handleChange} name="email" value={formData.email} required/>
+            </FormControl>
+            <FormControl id="message">
+              <Textarea placeholder="Message " onChange={handleChange} name="message" value={formData.message} required/>
+            </FormControl>
+            <button
+              type="submit"
+              className="bg-primary py-2 rounded-md text-[#111] font-semibold hover:bg-gray-300 transition duration-300 ease-in-out w-full"
             >
-                <Heading size="md" fontWeight={'medium'} mb={2} >
-                    Tell us more about your issue
-                </Heading>
-                <Stack spacing={3}>
-                    <FormControl id="name">
-                        <Input type="text" placeholder="Name" />
-                    </FormControl>
-                    <FormControl id="email">
-                        <Input type="email" placeholder="Email" />
-                    </FormControl>
-                    <FormControl id="message">
-                        <Textarea placeholder="Message " />
-                    </FormControl>
-                    <Button
-                        type="submit"
-                        justifyContent={'center'}
-                        alignContent={'center'}
-                    >
-                        Submit
-                    </Button>
-                </Stack>
-            </Box>
-                {/* <Box
+              Submit
+            </button>
+          </Stack>
+        </Box>
+        {/* <Box
                     align="start"
                     p={5}
                 >
@@ -110,9 +115,9 @@ const Contact = () => {
                         </ListItem>
                     </UnorderedList>
                 </Box> */}
-        </Flex>
-        </>
-    );
+      </Flex>
+    </Stack>
+  );
 };
 
 export default Contact;
