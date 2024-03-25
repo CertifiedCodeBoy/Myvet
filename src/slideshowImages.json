@@ -2,13 +2,5 @@
     {
         "id":"1",
         "src":"./src/Assets/slideshowImages/1.jpeg"
-    },
-    {
-        "id":"3",
-        "src":"./src/Assets/slideshowImages/3.png"
-    },
-    {
-        "id":"4",
-        "src":"./src/Assets/slideshowImages/4.jpeg"
     }
 ]

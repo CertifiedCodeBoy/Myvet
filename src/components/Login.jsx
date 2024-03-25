@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import { Eye, EyeSlash, At } from "phosphor-react";
 import { Button } from "@chakra-ui/react";
+import { UserContext } from "../contexts/UserContext";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -12,10 +13,14 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const useUser = () => useContext(UserContext);
+  const { isLoggedIn, setIsLoggedIn } = useUser();
+
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) =>{
     e.preventDefault();
     // Add your login logic here
+    setIsLoggedIn(true);
     navigate("/");
     console.log(formData);
     setFormData({

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -17,7 +17,12 @@ import Contact from "./components/Contact";
 import HelpNav from "./components/HelpNav";
 import Loginsignupnav from "./components/Loginsignupnav";
 import Chat from "./components/Chat";
+import { UserContext } from "./contexts/UserContext";
+import LoggedInNav from "./components/LoggedInNav";
+import BuyerProfile from "./components/BuyerProfile";
 const App = () => {
+  const { isLoggedIn } = useContext(UserContext);
+
   return (
     <ChakraProvider theme={theme}>
       <ProductsProvider>
@@ -47,7 +52,7 @@ const App = () => {
                   path="/"
                   element={
                     <>
-                      <Navbar />
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <Discounts />
                       <Home />
                       <Footer />
@@ -59,7 +64,7 @@ const App = () => {
                   path="/Categories/:category"
                   element={
                     <>
-                      <Navbar />
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <Discounts />
                       <Categories />
                       <Footer />
@@ -70,7 +75,7 @@ const App = () => {
                   path="/Cart"
                   element={
                     <>
-                      <Navbar />
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <Cart />
                       <Footer />
                     </>
@@ -80,7 +85,7 @@ const App = () => {
                   path="/Product/:id"
                   element={
                     <>
-                      <Navbar />
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <ProductPage />
                       <Footer />
                     </>
@@ -111,6 +116,22 @@ const App = () => {
                   element={
                     <>
                       <Chat />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/SellerProfile"
+                  element={
+                    <>
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/BuyerProfile"
+                  element={
+                    <>
+                    <LoggedInNav />
+                    <BuyerProfile />
                     </>
                   }
                 ></Route>
