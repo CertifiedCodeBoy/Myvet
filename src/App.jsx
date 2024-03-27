@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import { OffersProvider } from "./contexts/OffersContext";
 import Cart from "./components/Cart";
 import ProductPage from "./components/ProductPage";
+import ItemPage from "./components/ItemPage";
 
 
 const App = () => {
@@ -43,6 +44,9 @@ const App = () => {
             <Footer/>
             </>
           }></Route>
+          <Route path="/ItemPage" element={<ItemPage />}>
+
+          </Route>
         </Routes>
       </div>
     </Router>
