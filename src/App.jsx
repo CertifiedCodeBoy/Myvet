@@ -119,19 +119,13 @@ const App = () => {
                     </>
                   }
                 ></Route>
-                <Route
-                  path="/SellerProfile"
-                  element={
-                    <>
-                    </>
-                  }
-                ></Route>
+                <Route path="/SellerProfile" element={<></>}></Route>
                 <Route
                   path="/BuyerProfile"
                   element={
                     <>
-                    <LoggedInNav />
-                    <BuyerProfile />
+                      <LoggedInNav />
+                      <BuyerProfile />
                     </>
                   }
                 ></Route>

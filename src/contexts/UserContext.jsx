@@ -1,8 +1,8 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState } from "react";
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('isLoggedIn') === 'true');
 
   return (
     <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>

@@ -21,7 +21,6 @@ const Home = () => {
   if (loading || !products) {
     return (
       <>
-       
         <Flex direction={"column"} gap={8} my={8} scrollBehavior={"smooth"}>
           <Skeleton
             isLoaded={!loading}
@@ -283,9 +282,7 @@ const Home = () => {
   return (
     <div className="font-main bg-white h-full pb-4">
       <div className="w-full">
-        <section className="bg-secondary flex items-center justify-center w-full overflow-hidden shrink">
-          <Slideshow />
-        </section>
+        <Slideshow />
         <Section title="Men" filter={(p) => p.category === "men's clothing"} />
         <Section title="Jewlery" filter={(p) => p.category === "jewelery"} />
         <Section title="Most Bought" filter={(p) => p.rating.count >= 120} />

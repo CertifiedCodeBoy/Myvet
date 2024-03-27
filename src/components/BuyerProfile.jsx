@@ -1,6 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@chakra-ui/button";
-import { Badge, Box, Divider, Flex, Heading } from "@chakra-ui/layout";
+import { Badge, Box, Divider, Flex, Heading, Spacer } from "@chakra-ui/layout";
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+} from "@chakra-ui/react";
+import { useDisclosure } from "@chakra-ui/hooks";
 import {
   ArrowUp,
   CaretLeft,
@@ -9,16 +19,18 @@ import {
   Gear,
   Heart,
   ShoppingBag,
+  SignOut,
   User,
 } from "phosphor-react";
 import { Avatar } from "@chakra-ui/avatar";
 import { useToast } from "@chakra-ui/toast";
 import Favorites from "./Favorites";
+import { UserContext } from "../contexts/UserContext";
+import { SellerContext } from "../contexts/SellerContext";
 
 const BuyerProfile = () => {
   const toast = useToast();
   const [selected, setSelected] = useState(1);
-  const [isSeller, setIsSeller] = useState(false);
   const [isExpanded, setIsExpanded] =
     window.innerWidth > 768 ? useState(true) : useState(false);
   const [focused, setFocused] = useState(false);
@@ -28,6 +40,19 @@ const BuyerProfile = () => {
   const [p4, setP4] = useState(false);
   const [p5, setP5] = useState(false);
   const email = " ahmedahmed@gmail.com ";
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
+  const { setIsLoggedIn } = useContext(UserContext);
+  const { isSeller } = useContext(SellerContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
+    navigate("/");
+    window.location.reload();
+    onClose();
+  };
   return (
     <Box
       display={"flex"}
@@ -39,12 +64,16 @@ const BuyerProfile = () => {
       <Box
         width={{ base: "100%", md: isExpanded ? "20%" : "90px" }}
         bg={"#F2F2F2"}
-        height={{ base: isExpanded ? "90%" : "10px", md: "100%" }}
+        height={{ base: isExpanded ? "100%" : "10px", md: "100%" }}
         borderRight={"2px"}
         borderColor={"#E5E5E5"}
         pt={20}
+        border={"2px"}
         pb={isExpanded ? 20 : 0}
         overflow={"hidden"}
+        textAlign={"center"}
+        display={"flex"}
+        flexDirection={"column"}
       >
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
@@ -54,112 +83,140 @@ const BuyerProfile = () => {
         >
           {isExpanded ? <CaretLeft size={20} /> : <CaretRight size={20} />}
         </Button>
+        <Box>
+          <Flex
+            cursor={"pointer"}
+            gap={8}
+            align={"center"}
+            mb={4}
+            pl={8}
+            py={4}
+            onClick={() => {
+              setSelected(1);
+              setP1(true);
+              setP2(false);
+              setP3(false);
+              setP4(false);
+              setIsExpanded(false);
+            }}
+            bg={selected === 1 ? "#BBB" : "initial"}
+            borderRight={selected === 1 ? "2px solid black" : "none"}
+          >
+            <User size={20} weight="bold" />
+            <Heading
+              fontSize={20}
+              fontWeight={"regular"}
+              display={isExpanded ? "" : "none"}
+            >
+              User Info
+            </Heading>
+          </Flex>
+          <Flex
+            cursor={"pointer"}
+            onClick={() => {
+              setSelected(2);
+              setP1(false);
+              setP2(true);
+              setP3(false);
+              setP4(false);
+              setIsExpanded(false);
+            }}
+            gap={8}
+            align={"center"}
+            mb={4}
+            pl={8}
+            py={4}
+            bg={selected === 2 ? "#BBB" : "initial"}
+            borderRight={selected === 2 ? "2px solid black" : "none"}
+          >
+            <Heart size={20} weight="bold" />
+            <Heading
+              fontSize={20}
+              fontWeight={"regular"}
+              display={isExpanded ? "" : "none"}
+            >
+              Favorites
+            </Heading>
+          </Flex>
+          <Flex
+            cursor={"pointer"}
+            onClick={() => {
+              setSelected(3);
+              setP1(false);
+              setP2(false);
+              setP3(true);
+              setP4(false);
+              setIsExpanded(false);
+            }}
+            gap={8}
+            align={"center"}
+            mb={4}
+            pl={8}
+            py={4}
+            bg={selected === 3 ? "#BBB" : "initial"}
+            borderRight={selected === 3 ? "2px solid black" : "none"}
+          >
+            <ShoppingBag size={20} weight="bold" />
+            <Heading
+              fontSize={20}
+              fontWeight={"regular"}
+              display={isExpanded ? "" : "none"}
+            >
+              My Cart
+            </Heading>
+          </Flex>
+          <Flex
+            cursor={"pointer"}
+            onClick={() => {
+              setSelected(4);
+              setP1(false);
+              setP2(false);
+              setP3(false);
+              setP4(true);
+              setIsExpanded(false);
+            }}
+            gap={8}
+            align={"center"}
+            mb={4}
+            pl={8}
+            py={4}
+            bg={selected === 4 ? "#BBB" : "initial"}
+            borderRight={selected === 4 ? "2px solid black" : "none"}
+          >
+            <CaretUp size={20} weight="bold" />
+            <Heading
+              fontSize={20}
+              fontWeight={"regular"}
+              display={isExpanded ? "" : "none"}
+            >
+              Upgrade to Seller
+            </Heading>
+          </Flex>
+        </Box>
+        <Spacer />
         <Flex
           cursor={"pointer"}
+          onClick={onOpen}
           gap={8}
           align={"center"}
-          mb={4}
+          mb={8}
           pl={8}
           py={4}
-          onClick={() => {
-            setSelected(1);
-            setP1(true);
-            setP2(false);
-            setP3(false);
-            setP4(false);
-            setIsExpanded(false);
-          }}
-          bg={selected === 1 ? "#BBB" : "initial"}
-          borderRight={selected === 1 ? "2px solid black" : "none"}
+          display={{ base: "none", md: "flex" }}
+          bg={"red.600"}
+          _hover={{ bg: "red.500" }}
+          color={"white"}
+          rounded={isExpanded ? "md" : "0"}
+          width={isExpanded ? "80%" : "100%"}
+          mx={isExpanded ? "auto" : "0"}
         >
-          <User size={20} weight="bold" />
+          <SignOut size={20} weight="bold" />
           <Heading
             fontSize={20}
             fontWeight={"regular"}
             display={isExpanded ? "" : "none"}
           >
-            User Info
-          </Heading>
-        </Flex>
-        <Flex
-          cursor={"pointer"}
-          onClick={() => {
-            setSelected(2);
-            setP1(false);
-            setP2(true);
-            setP3(false);
-            setP4(false);
-            setIsExpanded(false);
-          }}
-          gap={8}
-          align={"center"}
-          mb={4}
-          pl={8}
-          py={4}
-          bg={selected === 2 ? "#BBB" : "initial"}
-          borderRight={selected === 2 ? "2px solid black" : "none"}
-        >
-          <Heart size={20} weight="bold" />
-          <Heading
-            fontSize={20}
-            fontWeight={"regular"}
-            display={isExpanded ? "" : "none"}
-          >
-            Favorites
-          </Heading>
-        </Flex>
-        <Flex
-          cursor={"pointer"}
-          onClick={() => {
-            setSelected(3);
-            setP1(false);
-            setP2(false);
-            setP3(true);
-            setP4(false);
-            setIsExpanded(false);
-          }}
-          gap={8}
-          align={"center"}
-          mb={4}
-          pl={8}
-          py={4}
-          bg={selected === 3 ? "#BBB" : "initial"}
-          borderRight={selected === 3 ? "2px solid black" : "none"}
-        >
-          <ShoppingBag size={20} weight="bold" />
-          <Heading
-            fontSize={20}
-            fontWeight={"regular"}
-            display={isExpanded ? "" : "none"}
-          >
-            My Cart
-          </Heading>
-        </Flex>
-        <Flex
-          cursor={"pointer"}
-          onClick={() => {
-            setSelected(4);
-            setP1(false);
-            setP2(false);
-            setP3(false);
-            setP4(true);
-            setIsExpanded(false);
-          }}
-          gap={8}
-          align={"center"}
-          mb={4}
-          pl={8}
-          py={4}
-          bg={selected === 4 ? "#BBB" : "initial"}
-          borderRight={selected === 4 ? "2px solid black" : "none"}
-        >
-          <CaretUp size={20} weight="bold" />
-          <Heading
-            fontSize={20}
-            fontWeight={"regular"}
-            display={isExpanded ? "" : "none"}
-          >
-            Upgrade to Seller
+            Log Out
           </Heading>
         </Flex>
       </Box>
@@ -463,6 +520,32 @@ const BuyerProfile = () => {
         {p3 && <Heading>My Cart</Heading>}
         {p4 && <Heading>Upgrade to Seller</Heading>}
       </Box>
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Log Out
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure? You are about to be logged out.
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={handleLogout} ml={3}>
+                Logout
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </Box>
   );
 };
