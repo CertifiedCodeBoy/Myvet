@@ -5,11 +5,14 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
+  Avatar,
 } from "@chakra-ui/react";
 import blacklogo from "../Assets/blacklogo.png";
 import { Link } from "react-router-dom";
 import NavSmall from "./navSmall";
+//contexts
 import { SellerContext } from "../contexts/SellerContext";
+import { UserContext } from "../contexts/UserContext";
 //icons
 import {
   Heart,
@@ -20,7 +23,7 @@ import {
 
 const LoggedInNav = () => {
   const { isSeller } = useContext(SellerContext);
-
+  const { user } = useContext(UserContext);
   const [search, setSearch] = useState("");
   useEffect(() => {
     //search logic
@@ -152,8 +155,17 @@ const LoggedInNav = () => {
               <div className="flex items-center">
                 <Link to={`/${isSeller ? "SellerProfile" : "BuyerProfile"}`}>
                   <div className="flex items-center gap-2 ml-4">
-                    <UserCircle size={34} color="#111" weight="fill" />
-                    <span>{"userName"}</span>
+                    {user ? (
+                      <Avatar
+                        name={user.name}
+                        src={user.avatar}
+                        size='md'
+                        bg="primary"
+                      />
+                    ) : (
+                      <UserCircle size={34} />
+                    )}
+                    <span>{user ? user.name : "Profile"}</span>
                   </div>
                 </Link>
               </div>

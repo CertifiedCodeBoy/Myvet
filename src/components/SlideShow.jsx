@@ -5,6 +5,9 @@ import slideshowImages from "../slideshowImages.json";
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
 
+//splidejs
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+
 const Slideshow = () => {
   const swiper = new Swiper(".swiper", {
     // Optional parameters
@@ -49,7 +52,7 @@ const Slideshow = () => {
     <Box
       overflow="hidden"
       position="relative"
-      h="600px"
+      h={{ base: "200px", md: "500px" }}
       w="100%"
       className="swiper-container"
       display={"flex"}
@@ -68,7 +71,9 @@ const Slideshow = () => {
                 height={40}
                 textAlign={"center"}
               >
-                <Heading color={"white"} mt={10}>{image.title}</Heading>
+                <Heading color={"white"} mt={10}>
+                  {image.title}
+                </Heading>
               </Box>
             </div>
           ))}
@@ -84,4 +89,63 @@ const Slideshow = () => {
   );
 };
 
+const SlideshowMobile = () => {
+  const images = [
+    "src/Assets/slideshowImages/1.png",
+    "src/Assets/slideshowImages/3.png",
+    "src/Assets/slideshowImages/4.png",
+  ];
+
+  const titles = ["We Have the Best Products !", "The best Deals ...", "And the Best Prices !"];
+
+  return (
+    //using splidejs
+    <Box pos={"relative"} overflow={"hidden"}>
+      <Splide
+        options={{
+          type: "loop",
+          perPage: 1,
+          perMove: 1,
+          gap: "0",
+          pagination: true,
+          autoWidth: true,
+          autoplay: true,
+          interval: 3000,
+          pauseOnHover: true,
+        }}
+      >
+        {images.map((image, index) => (
+          <SplideSlide key={index}>
+            <Flex justify={"center"} align={"center"} bg={"gray.200"}>
+              <Image
+                src={image}
+                alt={`Slide ${index + 1}`}
+                width={"400px"}
+                aspectRatio={"1/1"}
+              />
+              <Box
+                position={"absolute"}
+                top={40}
+                left={0}
+                right={0}
+                bottom={-20}
+                zIndex={10}
+                bgGradient={"linear(to-t, black, transparent)"}
+                pointerEvents="none"
+              >
+                {titles[index] && (
+                  <Heading color={"white"} textAlign={"center"} size={'lg'} mt={"36"}>
+                    {titles[index]}
+                  </Heading>
+                )}
+              </Box>
+            </Flex>
+          </SplideSlide>
+        ))}
+      </Splide>
+    </Box>
+  );
+};
+
 export default Slideshow;
+export { SlideshowMobile };

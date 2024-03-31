@@ -26,13 +26,16 @@ import { Avatar } from "@chakra-ui/avatar";
 import { useToast } from "@chakra-ui/toast";
 import Favorites from "./Favorites";
 import { UserContext } from "../contexts/UserContext";
+import { Skeleton } from "@chakra-ui/react";
 import { SellerContext } from "../contexts/SellerContext";
 
 const BuyerProfile = () => {
   const toast = useToast();
   const [selected, setSelected] = useState(1);
-  const [isExpanded, setIsExpanded] =
-    window.innerWidth > 768 ? useState(true) : useState(false);
+  const { user, isLoading } = useContext(UserContext);
+  const [isExpanded, setIsExpanded] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth > 768 : false
+  );
   const [focused, setFocused] = useState(false);
   const [p1, setP1] = useState(true);
   const [p2, setP2] = useState(false);
@@ -48,11 +51,16 @@ const BuyerProfile = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
     navigate("/");
     window.location.reload();
     onClose();
   };
+
+  if (isLoading || !user) {
+    return <Skeleton height="20px" />;
+  }
+
   return (
     <Box
       display={"flex"}
@@ -68,7 +76,6 @@ const BuyerProfile = () => {
         borderRight={"2px"}
         borderColor={"#E5E5E5"}
         pt={20}
-        border={"2px"}
         pb={isExpanded ? 20 : 0}
         overflow={"hidden"}
         textAlign={"center"}
@@ -231,15 +238,15 @@ const BuyerProfile = () => {
                 gap={{ base: "0", md: "2" }}
                 direction={{ base: "column", md: "row" }}
               >
-                <Avatar size="2xl" />
+                <Avatar size="2xl" name={user.name} src={user.avatar} />
                 <Flex direction={"column"}>
                   <Heading mt={{ base: 8, md: 0 }} ml={{ base: 0, md: 8 }}>
-                    Ahmed Ahmed
+                    {user.name}
                   </Heading>
                 </Flex>
-                {!isSeller ? (
+                {user.role == "customer" ? (
                   <Badge mt={{ base: 0, md: 4 }} colorScheme="green">
-                    Buyer
+                    {user.role}
                   </Badge>
                 ) : (
                   <Badge mt={{ base: 0, md: 4 }} colorScheme="red">
@@ -359,7 +366,7 @@ const BuyerProfile = () => {
                         type="text"
                         id="firstName"
                         name="firstName"
-                        placeholder="Ahmed Ahmed"
+                        placeholder={user.name}
                         style={{
                           width: "100%",
                           padding: "10px",
@@ -381,7 +388,7 @@ const BuyerProfile = () => {
                         type="text"
                         id="LastName"
                         name="LastName"
-                        placeholder="Ahmed Ahmed"
+                        placeholder={user.name}
                         style={{
                           width: "100%",
                           padding: "10px",
@@ -405,7 +412,7 @@ const BuyerProfile = () => {
                         type="email"
                         id="email"
                         name="email"
-                        placeholder={`${email}`}
+                        placeholder={user.email}
                         style={{
                           width: "100%",
                           padding: "10px",

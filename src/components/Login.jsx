@@ -18,16 +18,32 @@ const Login = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    let authToken;
     // Add your login logic here
-    setIsLoggedIn(true);
-    localStorage.setItem("isLoggedIn", "true");
-    navigate("/");
-    window.location.reload();
-    console.log(formData);
-    setFormData({
-      email: "",
-      password: "",
-    });
+    fetch("https://api.escuelajs.co/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        authToken = data.access_token;
+        if (authToken) {
+          localStorage.setItem("token", authToken);
+          setIsLoggedIn(true);
+          localStorage.setItem("user", JSON.stringify(formData));
+          navigate("/");
+          window.location.reload();
+          setFormData({
+            email: "",
+            password: "",
+          });
+        } else {
+          alert("Invalid email or password");
+        }
+      });
   };
 
   return (
