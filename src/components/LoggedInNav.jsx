@@ -159,8 +159,9 @@ const LoggedInNav = () => {
                       <Avatar
                         name={user.name}
                         src={user.avatar}
-                        size='md'
+                        size='sm'
                         bg="primary"
+                        mr={2}
                       />
                     ) : (
                       <UserCircle size={34} />

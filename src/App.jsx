@@ -20,7 +20,6 @@ import Chat from "./components/Chat";
 import { UserContext } from "./contexts/UserContext";
 import LoggedInNav from "./components/LoggedInNav";
 import BuyerProfile from "./components/BuyerProfile";
-import UserProfile from "./components/UserProfile";
 const App = () => {
   const { isLoggedIn } = useContext(UserContext);
 
@@ -53,8 +52,8 @@ const App = () => {
                   path="/"
                   element={
                     <>
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <Discounts />
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <Home />
                       <Footer />
                     </>
@@ -127,14 +126,6 @@ const App = () => {
                     <>
                       <LoggedInNav />
                       <BuyerProfile />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/UserProfile"
-                  element={
-                    <>
-                      <UserProfile />
                     </>
                   }
                 ></Route>

@@ -96,7 +96,11 @@ const SlideshowMobile = () => {
     "src/Assets/slideshowImages/4.png",
   ];
 
-  const titles = ["We Have the Best Products !", "The best Deals ...", "And the Best Prices !"];
+  const titles = [
+    "We Have the Best Products !",
+    "The best Deals ...",
+    "And the Best Prices !",
+  ];
 
   return (
     //using splidejs
@@ -134,7 +138,12 @@ const SlideshowMobile = () => {
                 pointerEvents="none"
               >
                 {titles[index] && (
-                  <Heading color={"white"} textAlign={"center"} size={'lg'} mt={"36"}>
+                  <Heading
+                    color={"white"}
+                    textAlign={"center"}
+                    size={"lg"}
+                    mt={"36"}
+                  >
                     {titles[index]}
                   </Heading>
                 )}
