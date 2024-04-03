@@ -7,34 +7,12 @@ import "swiper/css/bundle";
 
 //splidejs
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
+
+import Slide from "./TitleMaker";
+import { ArrowSquareOut } from "phosphor-react";
 
 const Slideshow = () => {
-  const swiper = new Swiper(".swiper", {
-    // Optional parameters
-    loop: true,
-    centeredSlides: true,
-
-    // If we need pagination
-    pagination: {
-      el: ".swiper-pagination",
-    },
-
-    // Navigation arrows
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-
-    // And if we need scrollbar
-    scrollbar: {
-      el: ".swiper-scrollbar",
-    },
-
-    autoplay: {
-      delay: 3000,
-      pauseOnMouseEnter: true,
-    },
-  });
   const { products, loading } = useContext(ProductsContext);
 
   if (loading || !products) {
@@ -49,43 +27,88 @@ const Slideshow = () => {
   }
 
   return (
-    <Box
-      overflow="hidden"
-      position="relative"
-      h={{ base: "200px", md: "500px" }}
-      w="100%"
-      className="swiper-container"
-      display={"flex"}
-    >
-      <div className="swiper bg-gray-200 flex align-top justify-center">
-        <div className="swiper-wrapper">
-          {slideshowImages.map((image, index) => (
-            <div className="swiper-slide relative" key={index}>
-              <Image src={image.src} alt={image.alt} width={"100%"} />
-              <Box
-                bgGradient={"linear(to-t, black, transparent)"}
-                position={"absolute"}
-                zIndex={"50"}
-                bottom={0}
-                w={"100%"}
-                height={40}
-                textAlign={"center"}
-              >
-                <Heading color={"white"} mt={10}>
-                  {image.title}
-                </Heading>
-              </Box>
-            </div>
-          ))}
-        </div>
-        <div className="swiper-pagination"></div>
+    <div className="relative">
+      <Splide
+        options={{
+          type: "loop",
+          perPage: 1,
+          perMove: 1,
+          gap: "0",
+          width: "100%",
+          height: "500px",
+          direction: "ltr",
+          pagination: false,
+          arrows: false,
+          autoScroll: {
+            pauseOnHover: false,
+            pauseOnFocus: false,
+            rewind: false,
+            speed: 2,
+          },
+        }}
+        extensions={{ AutoScroll }}
+      >
+        {slideshowImages.map((image, index) => (
+          <SplideSlide key={index}>
+            <Slide image={image.src} />
+          </SplideSlide>
+        ))}
+      </Splide>
+      <Box
+        position={"absolute"}
+        top={0}
+        left={0}
+        right={0}
+        bottom={0}
+        zIndex={10}
+        bgGradient={"linear(to-t, black, transparent)"}
+        display={'flex'}
+        flexDir={'column'}
+        gap={8}
+      >
+        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+          <Heading
+            color={"white"}
+            textAlign={"center"}
+            fontWeight={"bold"}
+            size={"2xl"}
+            mt={"60"}
+          >
+            <p>SUMMER SALE</p>
+            UP TO 50% OFF!
+          </Heading>
+        </Box>
+        <Box 
+          display={"flex"} 
+          justifyContent={"center"} 
+          alignItems={"center"}
+        >
+          <Button
+            colorScheme={"red"}
+            size={"lg"}
+            rounded={"full"}
+          >
+            SHOP NOW
+          </Button>
+          <Button
+            colorScheme={"gray"}
+            size={"lg"}
+            rounded={"full"}
+            ml={5}
+            gap={4}
 
-        <div className="swiper-button-prev"></div>
-        <div className="swiper-button-next"></div>
-
-        <div className="swiper-scrollbar"></div>
-      </div>
-    </Box>
+          >
+            LEARN MORE
+            <ArrowSquareOut size={24} />  
+          </Button>
+        </Box>
+        <Box>
+          <p className="text-center text-white text-sm font-extralight">
+            *Terms and conditions apply, see website for details.
+          </p>
+        </Box>
+      </Box>
+    </div>
   );
 };
 

@@ -64,8 +64,8 @@ const App = () => {
                   path="/Categories/:category"
                   element={
                     <>
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <Discounts />
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <Categories />
                       <Footer />
                     </>

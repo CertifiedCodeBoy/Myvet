@@ -12,6 +12,9 @@ export default {
         third: "#FFD700",
         bord: "rgba(255, 255, 255, .5)",  
       },
+      transitionProperty: {
+          'height': 'height',
+        },
       fontFamily: {
         main: ["poppins", "sans-serif"],
       },

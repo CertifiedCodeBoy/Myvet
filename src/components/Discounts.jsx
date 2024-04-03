@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { CaretLeft, CaretRight } from "phosphor-react";
+import { CaretLeft, CaretRight, Copy } from "phosphor-react";
 import { OffersContext } from "../contexts/OffersContext";
 import { useToast } from "@chakra-ui/react";
 
@@ -15,22 +15,25 @@ const Discounts = () => {
 
   useEffect(() => {
     const interval = setInterval(nextOffer, 3000);
-    return () => clearInterval(interval); // This is important to clear the interval when the component unmounts
+    return () => clearInterval(interval);
   }, [offers]);
 
   return (
-    <div className="w-full h-20 sm:h-16 bg-primary  text-sm sm:text-md md:text-lg flex justify-center items-center shrink">
+    <div className="w-full py-5 bg-secondary text-sm sm:text-md md:text-lg flex justify-center items-center shrink">
       {offers.length > 0 && (
         <div className="relative flex flex-col w-full justify-center items-center">
           <div
             className={`absolute w-full flex gap-1 justify-center items-center 
             `}
           >
-            <p className="">
-              {offers[currentOffer].title} ! {offers[currentOffer].description}
+            <p className="text-xs font-medium flex flex-col md:block md:text-md ">
+              <span className="">{offers[currentOffer].title} ! </span>
+              <span className="font-normal">
+                {offers[currentOffer].description.slice(0, 50) + "..."}{" "}
+              </span>
             </p>
             <p
-              className="underline cursor-pointer hover:text-white"
+              className="underline cursor-pointer text-xs md:text-md flex bg-gray-200 hover:bg-white ml-4 rounded-md p-1 px-2 justify-center items-center gap-1"
               onClick={() => {
                 if (toast.isActive) {
                   toast.closeAll();
@@ -42,9 +45,11 @@ const Discounts = () => {
                   status: "success",
                   duration: 4000,
                   isClosable: false,
+                  position: "top",
                 });
               }}
             >
+              <Copy size={20} className="cursor-pointer" />
               {offers[currentOffer].code}{" "}
             </p>
           </div>

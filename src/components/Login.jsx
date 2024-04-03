@@ -1,8 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeSlash, At } from "phosphor-react";
 import { UserContext } from "../contexts/UserContext";
+import { CloseButton, useToast } from "@chakra-ui/react";
+import Cookies from "js-cookie";
+
+import "./all.css";
 const Login = () => {
+  const toast = useToast();
+  const [wrongCredentials, setWrongCredentials] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -12,37 +18,60 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const useUser = () => useContext(UserContext);
-  const { setIsLoggedIn } = useUser();
+  const { setIsLoggedIn, setUser, setShowToast } = useContext(UserContext);
 
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let authToken;
-    // Add your login logic here
-    fetch("https://api.escuelajs.co/api/v1/auth/login", {
+  const API_URL = "https://api.escuelajs.co/api/v1/auth/login";
+
+  const loginUser = async (formData) => {
+    const response = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        authToken = data.access_token;
-        if (authToken) {
-          localStorage.setItem("token", authToken);
-          setIsLoggedIn(true);
-          localStorage.setItem("user", JSON.stringify(formData));
-          navigate("/");
-          window.location.reload();
-          setFormData({
-            email: "",
-            password: "",
-          });
-        } else {
-          alert("Invalid email or password");
-        }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to login: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    if (!data.access_token) {
+      throw new Error("No access token received");
+    }
+
+    return data.access_token;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    loginUser(formData)
+      .then((token) => {
+        Cookies.set("token", token);
+        setIsLoggedIn(true);
+        setShowToast(true);
+        setTimeout(() => {
+          setShowToast(false);
+        }, 3000);
+        setUser({ ...formData, token });
+        navigate("/");
+        setFormData({
+          email: "",
+          password: "",
+        });
+      })
+      .catch((error) => {
+        setWrongCredentials(true);
+        toast({
+          title: "Wrong credentials",
+          description: "Please check your email and password",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
       });
   };
 
@@ -65,7 +94,9 @@ const Login = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full bg-gray-200 rounded-2xl py-3 pr-10 pl-4 outline-none"
+                  className={`w-full bg-gray-200 rounded-2xl py-3 pr-10 pl-4 outline-none ${
+                    wrongCredentials ? "border-2 border-red-500" : ""
+                  }`}
                   placeholder="Email"
                   onFocus={(e) => {
                     e.target.style.boxShadow =
@@ -87,7 +118,9 @@ const Login = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full bg-gray-200 rounded-2xl py-3 px-3 outline-none pr-10"
+                  className={`w-full bg-gray-200 rounded-2xl py-3 px-3 outline-none pr-10 ${
+                    wrongCredentials ? "border-2 border-red-500" : ""
+                  }`}
                   placeholder="Password"
                   onFocus={(e) => {
                     e.target.style.boxShadow =
@@ -151,7 +184,7 @@ const Login = () => {
               </div>
               <div className="my-6 text-center">
                 Don't have an account ?{" "}
-                <Link to="/signUp" className="text-primary">
+                <Link to="/signUp" className="text-primary hover:underline">
                   Sign up
                 </Link>
               </div>

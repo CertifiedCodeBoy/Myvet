@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import NavSmall from "./navSmall";
-import { Button, Divider, Image, ModalContent } from "@chakra-ui/react";
+import { Button, Divider, Image } from "@chakra-ui/react";
 import blacklogo from "../Assets/blacklogo.png";
 import {
   InputGroup,
@@ -11,6 +11,7 @@ import {
   InputLeftElement,
   Box,
   List,
+  Flex,
   ListItem,
 } from "@chakra-ui/react";
 
@@ -34,13 +35,15 @@ const categories = [
 ];
 
 const Navbar = () => {
-  const [search, setSearch] = useState("");
   const [focused, setFocused] = useState(false);
   const isTablet = window.screen.width >= 768 && window.screen.width < 1024;
   const isDesktop = window.screen.width >= 1024;
-
+  const [isHoveredMen, setIsHoveredMen] = useState(false);
+  const [isHoveredWomen, setIsHoveredWomen] = useState(false);
+  const [isHoveredKids, setIsHoveredKids] = useState(false);
+  const [isHoveredAccessories, setIsHoveredAccessories] = useState(false);
   return (
-    <nav className="bg-gray-200 sticky px-4 py-2 w-full top-0 flex justify-center items-center z-50 font-main shadow-xl min-h-[60px]">
+    <nav className="bg-gray-200 sticky px-4 py-2 w-full top-0 flex flex-col justify-center items-center z-50 font-main shadow-xl min-h-[60px]">
       <div className="container">
         <span className="hidden md:flex mx-auto justify-between items-center w-full">
           <div className="flex justify-start align-middle items-center relative max-h-16 w-auto lg:w-[600px] h-10  ">
@@ -72,33 +75,60 @@ const Navbar = () => {
           {/* Categories, Login, Signup */}
           <div className="flex items-center px-4">
             <div
-              className="flex items-center justify-center px-2"
+              className="flex items-center justify-center gap-4 px-2 h-8"
               id="categories"
             >
-              <Link
-                to={"/Categories/men's clothing"}
-                className={`text-md pr-4 h-[20px] text-black font-medium`}
+              <div
+                className="group relative text-md h-[20px] text-black font-medium inline-block"
+                onMouseEnter={() => {
+                  setIsHoveredMen(true);
+                  setIsHoveredWomen(false);
+                  setIsHoveredAccessories(false);
+                  setIsHoveredKids(false);
+                }}
               >
-                Men
-              </Link>
-              <Link
-                to={"/Categories/women's clothing"}
-                className={`text-md px-4 h-[20px] text-black font-medium`}
+                <Link to={"/Categories/men's clothing"}>Men</Link>
+                <span className="absolute h-0.5 bg-black -bottom-1 left-0 w-0 group-hover:w-full transition-all duration-500"></span>
+              </div>
+
+              <div
+                className="group relative text-md h-[20px] text-black font-medium inline-block"
+                onMouseEnter={() => {
+                  setIsHoveredMen(false);
+                  setIsHoveredWomen(true);
+                  setIsHoveredAccessories(false);
+                  setIsHoveredKids(false);
+                }}
               >
-                Women
-              </Link>
-              <Link
-                to={"/Categories/kids"}
-                className={`text-md px-4 h-[20px] text-black font-medium`}
+                <Link to={"/Categories/women's clothing"}>Women</Link>
+                <span className="absolute h-0.5 bg-black -bottom-1 left-0 w-0 group-hover:w-full transition-all duration-500"></span>
+              </div>
+
+              <div
+                className="group relative text-md h-[20px] text-black font-medium inline-block"
+                onMouseEnter={() => {
+                  setIsHoveredKids(true);
+                  setIsHoveredWomen(false);
+                  setIsHoveredAccessories(false);
+                  setIsHoveredMen(false);
+                }}
               >
-                Kids
-              </Link>
-              <Link
-                to={"/Categories/jewelery"}
-                className={`text-md px-4 h-[20px] text-black font-medium`}
+                <Link to={"/Categories/Kids"}>Kids</Link>
+                <span className="absolute h-0.5 bg-black -bottom-1 left-0 w-0 group-hover:w-full transition-all duration-500"></span>
+              </div>
+
+              <div
+                className="group relative text-md h-[20px] text-black font-medium inline-block"
+                onMouseEnter={() => {
+                  setIsHoveredMen(false);
+                  setIsHoveredWomen(false);
+                  setIsHoveredAccessories(true);
+                  setIsHoveredKids(false);
+                }}
               >
-                Accessories
-              </Link>
+                <Link to={"/Categories/jewelery"}>Accessories</Link>
+                <span className="absolute h-0.5 bg-black -bottom-1 left-0 w-0 group-hover:w-full transition-all duration-500"></span>
+              </div>
             </div>
             <div className="flex flex-row-reverse items-center gap-4 ml-4">
               <Link to="/SignUp">
@@ -145,6 +175,191 @@ const Navbar = () => {
           </div>
           <NavSmall />
         </div>
+      </div>
+      <div className="absolute w-[100%] top-[100%] bg-gray-200 overflow-hidden shadow-xl">
+        <Box
+          display={isHoveredMen ? "block" : "none"}
+          onMouseLeave={() => setIsHoveredMen(false)}
+          p={4}
+          pb={8}
+        >
+          <Flex justify={"center"} gap={20}>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Shirts
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Pants
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Shoes
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Hoodies
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Jackets
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Sweaters
+            </Link>
+          </Flex>
+        </Box>
+
+        <Box
+          display={isHoveredWomen ? "block" : "none"}
+          p={4}
+          pb={8}
+          onMouseLeave={() => setIsHoveredWomen(false)}
+        >
+          <Flex justify={"center"} gap={20}>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Shirts
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Pants
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Shoes
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Hoodies
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Jackets
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Sweaters
+            </Link>
+          </Flex>
+        </Box>
+
+        <Box
+          display={isHoveredKids ? "block" : "none"}
+          p={4}
+          pb={8}
+          onMouseLeave={() => setIsHoveredKids(false)}
+        >
+          <Flex justify={"center"} gap={20}>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Shirts
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Pants
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Shoes
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Hoodies
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Jackets
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Sweaters
+            </Link>
+          </Flex>
+        </Box>
+
+        <Box
+          display={isHoveredAccessories ? "block" : "none"}
+          p={4}
+          pb={8}
+          onMouseLeave={() => setIsHoveredAccessories(false)}
+        >
+          <Flex justify={"center"} gap={20}>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Gold
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Silver
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Diamond
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Rings
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Necklaces
+            </Link>
+            <Link
+              to={"/Categories/me's clothing "}
+              className={`text-md px-4 h-[20px] text-black font-medium`}
+            >
+              Bracelets
+            </Link>
+          </Flex>
+        </Box>
       </div>
     </nav>
   );

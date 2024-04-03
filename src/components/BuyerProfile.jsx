@@ -28,11 +28,14 @@ import Favorites from "./Favorites";
 import { UserContext } from "../contexts/UserContext";
 import { Skeleton } from "@chakra-ui/react";
 import { SellerContext } from "../contexts/SellerContext";
+import Cart from "./Cart";
+import UpgradeToSeller from "./UpgradeToSeller";
+import Cookies from "js-cookie";
 
 const BuyerProfile = () => {
   const toast = useToast();
   const [selected, setSelected] = useState(1);
-  const { user, isLoading } = useContext(UserContext);
+  const { user, isLoading, setIsLoggedIn } = useContext(UserContext);
   const [isExpanded, setIsExpanded] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth > 768 : false
   );
@@ -42,18 +45,15 @@ const BuyerProfile = () => {
   const [p3, setP3] = useState(false);
   const [p4, setP4] = useState(false);
   const [p5, setP5] = useState(false);
-  const email = " ahmedahmed@gmail.com ";
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
-  const { setIsLoggedIn } = useContext(UserContext);
   const { isSeller } = useContext(SellerContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    localStorage.removeItem("token");
+    Cookies.remove("token");
     navigate("/");
-    window.location.reload();
     onClose();
   };
 
@@ -524,8 +524,32 @@ const BuyerProfile = () => {
           </Box>
         )}
         {p2 && <Favorites />}
-        {p3 && <Heading>My Cart</Heading>}
-        {p4 && <Heading>Upgrade to Seller</Heading>}
+        {p3 && (
+          <Box>
+            <Box
+              p={8}
+              display={"flex"}
+              flexDir={"column"}
+              placeItems={"center"}
+            >
+              <Heading>My Cart</Heading>
+            </Box>
+            <Cart />
+          </Box>
+        )}
+        {p4 && (
+          <Box>
+            <Box
+              p={8}
+              display={"flex"}
+              flexDir={"column"}
+              placeItems={"center"}
+            >
+              <Heading>Upgrade to Seller</Heading>
+            </Box>
+            <UpgradeToSeller />
+          </Box>
+        )}
       </Box>
       <AlertDialog
         isOpen={isOpen}

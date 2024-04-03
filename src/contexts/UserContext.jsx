@@ -1,15 +1,17 @@
 import React, { createContext, useState, useEffect } from "react";
+import Cookies from "js-cookie";
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem("token") ? true : false
+    Cookies.get("token") ? true : false
   );
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
     if (!token) {
       setIsLoggedIn(false);
       return;
@@ -36,11 +38,20 @@ const UserProvider = ({ children }) => {
         console.error("Fetch error: ", error);
         setIsLoading(false);
       });
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <UserContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, user, setUser, isLoading }}
+      value={{
+        isLoggedIn,
+        setIsLoggedIn,
+        user,
+        setUser,
+        isLoading,
+        setIsLoading,
+        showToast,
+        setShowToast,
+      }}
     >
       {children}
     </UserContext.Provider>
