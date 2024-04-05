@@ -6,6 +6,7 @@ import {
   InputLeftElement,
   Input,
   Avatar,
+  Badge,
 } from "@chakra-ui/react";
 import blacklogo from "../Assets/blacklogo.png";
 import { Link } from "react-router-dom";
@@ -15,13 +16,33 @@ import { SellerContext } from "../contexts/SellerContext";
 import { UserContext } from "../contexts/UserContext";
 //icons
 import {
+  ArrowSquareOut,
+  Gear,
+  GearSix,
   Heart,
   MagnifyingGlass,
   ShoppingBag,
+  ShoppingCartSimple,
+  TShirt,
   UserCircle,
 } from "phosphor-react";
 
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
+} from "@chakra-ui/react";
+
+import { useDisclosure } from "@chakra-ui/react";
+
 const LoggedInNav = () => {
+  const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { isSeller } = useContext(SellerContext);
   const { user } = useContext(UserContext);
   const [search, setSearch] = useState("");
@@ -152,14 +173,20 @@ const LoggedInNav = () => {
               </Link>
             </div>
             <div className="flex flex-row-reverse items-center gap-4 ml-4">
-              <div className="flex items-center">
+              <div
+                className="flex items-center relative"
+                onMouseEnter={() => {
+                  onOpen();
+                }}
+                onMouseLeave={() => {}}
+              >
                 <Link to={`/${isSeller ? "SellerProfile" : "BuyerProfile"}`}>
                   <div className="flex items-center gap-2 ml-4">
                     {user ? (
                       <Avatar
                         name={user.name}
                         src={user.avatar}
-                        size='sm'
+                        size="sm"
                         bg="primary"
                         mr={2}
                       />
@@ -169,6 +196,124 @@ const LoggedInNav = () => {
                     <span>{user ? user.name : "Profile"}</span>
                   </div>
                 </Link>
+                <div
+                  className="
+                absolute top-12 right-0 w-60 z-50
+                "
+                  onMouseLeave={() => {
+                    onClose();
+                  }}
+                >
+                  <Popover
+                    placement="bottom"
+                    closeOnBlur={true}
+                    isOpen={isOpen}
+                    onClose={onClose}
+                  >
+                    <PopoverContent>
+                      <PopoverHeader className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-black font-semibold">
+                        {user ? (
+                          <Avatar
+                            name={user.name}
+                            src={user.avatar}
+                            size="sm"
+                            bg="primary"
+                            mr={2}
+                          />
+                        ) : (
+                          <UserCircle size={34} />
+                        )}
+                        <span>{user ? user.name : "Profile"}</span>
+                      </PopoverHeader>
+                      <PopoverCloseButton />
+                      <PopoverBody
+                        className="
+                        flex flex-col gap-4 py-2 
+                      "
+                      >
+                        <Link
+                          to={`/Orders`}
+                          className="flex items-center gap-2 hover:underline"
+                          onClick={() => {
+                            onClose();
+                          }}
+                        >
+                          <ShoppingBag size={24} />
+                          <span>My Orders</span>
+                        </Link>
+                        <Link
+                          to={`/Favorites`}
+                          className="flex items-center gap-2 hover:underline"
+                          onClick={() => {
+                            onClose();
+                          }}
+                        >
+                          <Heart size={24} />
+                          <span>My Wishlist</span>
+                        </Link>
+                        <Link
+                          to={`/Cart`}
+                          className="flex items-center gap-2 hover:underline"
+                          onClick={() => {
+                            onClose();
+                          }}
+                        >
+                          <Box pos={"relative"}>
+                            <ShoppingCartSimple size={24} />
+                            <Badge
+                              colorScheme="red"
+                              borderRadius="full"
+                              pos="absolute"
+                              top="-10px"
+                              right="-10px"
+                            >
+                              3
+                            </Badge>
+                          </Box>
+                          <span>My Cart</span>
+                        </Link>
+                        <Link
+                          to={`/Settings`}
+                          className="flex items-center gap-2 hover:underline"
+                          onClick={() => {
+                            onClose();
+                          }}
+                        >
+                          <GearSix size={24} />
+                          <span>Settings</span>
+                        </Link>
+                        {
+                          //if user is seller, show seller products
+                          isSeller ? (
+                            <Link
+                              to={`/SellerProfile`}
+                              className="flex items-center gap-2 hover:underline"
+                              onClick={() => {
+                                onClose();
+                              }}
+                            >
+                              <TShirt size={24} />
+                              <span>My Products</span>
+                            </Link>
+                          ) : null
+                        }
+                        <Link
+                          to={`/${isSeller ? "SellerProfile" : "BuyerProfile"}`}
+                          className="flex items-center gap-2 hover:underline"
+                        >
+                          <ArrowSquareOut size={24} color="red" />
+                          <span
+                            className="
+                            text-red-500
+                          "
+                          >
+                            Logout
+                          </span>
+                        </Link>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             </div>
           </div>

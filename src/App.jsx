@@ -20,6 +20,8 @@ import Chat from "./components/Chat";
 import { UserContext } from "./contexts/UserContext";
 import LoggedInNav from "./components/LoggedInNav";
 import BuyerProfile from "./components/BuyerProfile";
+import Favorites from "./components/Favorites";
+import Orders from "./components/Orders";
 const App = () => {
   const { isLoggedIn } = useContext(UserContext);
 
@@ -77,6 +79,37 @@ const App = () => {
                     <>
                       {isLoggedIn ? <LoggedInNav /> : <Navbar />}
                       <Cart />
+                      <Footer />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/Favorites"
+                  element={
+                    <>
+                      <Discounts />
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                      <Favorites />
+                      <Footer />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/Offers"
+                  element={
+                    <>
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                      <Discounts />
+                      <Footer />
+                    </>
+                  }
+                ></Route>
+                <Route
+                  path="/Orders"
+                  element={
+                    <>
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                      <Orders />
                       <Footer />
                     </>
                   }

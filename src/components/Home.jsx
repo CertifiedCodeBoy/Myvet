@@ -146,16 +146,18 @@ const Home = () => {
     <div className="font-main bg-gray-100 h-full pb-4 flex justify-center">
       <div className="absolute z-50 top-[620px]">
         {showToast && (
-          <div className="
+          <div
+            className="
           bg-green-900 text-white p-4 rounded-lg shadow-lg flex justify-between items-center w-96 mx-auto transition-all duration-500 ease-in-out
-          ">
+          "
+          >
             <p className="text-lg font-bold text-center">Welcome Back!</p>
             <CloseButton onClick={() => setShowToast(false)} />
           </div>
         )}
       </div>
       <div className="w-full">
-        {window.innerWidth > 768 ? <Slideshow /> : <UseMobile />}
+        {window.innerWidth > 640 ? <Slideshow /> : <UseMobile />}
         <Section title="Men" filter={(p) => p.category === "men's clothing"} />
         <Featured title="Featured" />
         <Section title="Jewlery" filter={(p) => p.category === "jewelery"} />

@@ -1,6 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ProductsContext } from "../contexts/ProductsContext";
-import { Box, Button, Flex, Heading, Image, Skeleton } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  Image,
+  Skeleton,
+  Spacer,
+} from "@chakra-ui/react";
 import slideshowImages from "../slideshowImages.json";
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
@@ -62,8 +71,8 @@ const Slideshow = () => {
         bottom={0}
         zIndex={10}
         bgGradient={"linear(to-t, black, transparent)"}
-        display={'flex'}
-        flexDir={'column'}
+        display={"flex"}
+        flexDir={"column"}
         gap={8}
       >
         <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
@@ -78,16 +87,8 @@ const Slideshow = () => {
             UP TO 50% OFF!
           </Heading>
         </Box>
-        <Box 
-          display={"flex"} 
-          justifyContent={"center"} 
-          alignItems={"center"}
-        >
-          <Button
-            colorScheme={"red"}
-            size={"lg"}
-            rounded={"full"}
-          >
+        <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+          <Button colorScheme={"red"} size={"lg"} rounded={"full"}>
             SHOP NOW
           </Button>
           <Button
@@ -96,10 +97,9 @@ const Slideshow = () => {
             rounded={"full"}
             ml={5}
             gap={4}
-
           >
             LEARN MORE
-            <ArrowSquareOut size={24} />  
+            <ArrowSquareOut size={24} />
           </Button>
         </Box>
         <Box>
@@ -113,68 +113,31 @@ const Slideshow = () => {
 };
 
 const SlideshowMobile = () => {
-  const images = [
-    "src/Assets/slideshowImages/1.png",
-    "src/Assets/slideshowImages/3.png",
-    "src/Assets/slideshowImages/4.png",
-  ];
-
-  const titles = [
-    "We Have the Best Products !",
-    "The best Deals ...",
-    "And the Best Prices !",
-  ];
+  const Logo = "src/Assets/whit_logo.png";
 
   return (
     //using splidejs
-    <Box pos={"relative"} overflow={"hidden"}>
-      <Splide
-        options={{
-          type: "loop",
-          perPage: 1,
-          perMove: 1,
-          gap: "0",
-          pagination: true,
-          autoWidth: true,
-          autoplay: true,
-          interval: 3000,
-          pauseOnHover: true,
-        }}
+    <Box pos={"relative"} overflow={"hidden"} height={"10%"}>
+      <Image src="" alt="Mobile" width={"100%"} />
+      <Box
+        pos={"absolute"}
+        top={0}
+        left={0}
+        right={0}
+        bottom={0}
+        zIndex={10}
+        bg={"linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%)"}
+        display={"flex"}
+        flexDir={"column"}
+        alignItems={"center"}
+        justifyContent={"end"}
+        height={"100%"}
       >
-        {images.map((image, index) => (
-          <SplideSlide key={index}>
-            <Flex justify={"center"} align={"center"} bg={"gray.200"}>
-              <Image
-                src={image}
-                alt={`Slide ${index + 1}`}
-                width={"400px"}
-                aspectRatio={"1/1"}
-              />
-              <Box
-                position={"absolute"}
-                top={40}
-                left={0}
-                right={0}
-                bottom={-20}
-                zIndex={10}
-                bgGradient={"linear(to-t, black, transparent)"}
-                pointerEvents="none"
-              >
-                {titles[index] && (
-                  <Heading
-                    color={"white"}
-                    textAlign={"center"}
-                    size={"lg"}
-                    mt={"36"}
-                  >
-                    {titles[index]}
-                  </Heading>
-                )}
-              </Box>
-            </Flex>
-          </SplideSlide>
-        ))}
-      </Splide>
+        <Image src={Logo} alt="logo" width={"40%"} mx={"auto"} />
+        <Heading color={"white"} mb={8}>
+          Downlad the app NOW!
+        </Heading>
+      </Box>
     </Box>
   );
 };
