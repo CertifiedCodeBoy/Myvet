@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import NavSmall from "./navSmall";
 import { Button, Divider, Image } from "@chakra-ui/react";
 import blacklogo from "../Assets/blacklogo.png";
+import { useLocation } from "react-router-dom";
 import {
   InputGroup,
   Input,
@@ -42,6 +43,8 @@ const Navbar = () => {
   const [isHoveredWomen, setIsHoveredWomen] = useState(false);
   const [isHoveredKids, setIsHoveredKids] = useState(false);
   const [isHoveredAccessories, setIsHoveredAccessories] = useState(false);
+  const location = useLocation();
+  const current = location.pathname;
   return (
     <nav className="bg-gray-200 sticky px-4 py-2 w-full top-0 flex flex-col justify-center items-center z-50 font-main shadow-xl min-h-[60px]">
       <div className="container">
@@ -88,7 +91,9 @@ const Navbar = () => {
                 }}
               >
                 <Link to={"/Categories/men's clothing"}>Men</Link>
-                <span className="absolute h-0.5 bg-black -bottom-1 left-0 w-0 group-hover:w-full transition-all duration-500"></span>
+                <span className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
+                  current === "/Categories/men's%20clothing" ? "w-full" : "w-0"
+                } group-hover:w-full transition-all duration-500`}></span>
               </div>
 
               <div
@@ -101,8 +106,9 @@ const Navbar = () => {
                 }}
               >
                 <Link to={"/Categories/women's clothing"}>Women</Link>
-                <span className="absolute h-0.5 bg-black -bottom-1 left-0 w-0 group-hover:w-full transition-all duration-500"></span>
-              </div>
+                <span className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
+                  current === "/Categories/women's%20clothing" ? "w-full" : "w-0"
+                } group-hover:w-full transition-all duration-500`}></span>              </div>
 
               <div
                 className="group relative text-md h-[20px] text-black font-medium inline-block"
@@ -114,8 +120,9 @@ const Navbar = () => {
                 }}
               >
                 <Link to={"/Categories/Kids"}>Kids</Link>
-                <span className="absolute h-0.5 bg-black -bottom-1 left-0 w-0 group-hover:w-full transition-all duration-500"></span>
-              </div>
+                <span className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
+                  current === "/Categories/Kids" ? "w-full" : "w-0"
+                } group-hover:w-full transition-all duration-500`}></span>              </div>
 
               <div
                 className="group relative text-md h-[20px] text-black font-medium inline-block"
@@ -127,8 +134,9 @@ const Navbar = () => {
                 }}
               >
                 <Link to={"/Categories/jewelery"}>Accessories</Link>
-                <span className="absolute h-0.5 bg-black -bottom-1 left-0 w-0 group-hover:w-full transition-all duration-500"></span>
-              </div>
+                <span className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
+                  current === "/Categories/jewelery" ? "w-full" : "w-0"
+                } group-hover:w-full transition-all duration-500`}></span>              </div>
             </div>
             <div className="flex flex-row-reverse items-center gap-4 ml-4">
               <Link to="/SignUp">

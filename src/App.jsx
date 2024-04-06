@@ -9,25 +9,28 @@ import Footer from "./components/Footer";
 import OffersProvider from "./contexts/OffersContext";
 import Cart from "./components/Cart";
 import ProductPage from "./components/ProductPage";
-import { ChakraProvider } from "@chakra-ui/react";
 import Discounts from "./components/Discounts";
-import ProductsProvider from "./contexts/ProductsContext";
 import Help from "./components/Help";
 import Contact from "./components/Contact";
 import HelpNav from "./components/HelpNav";
 import Loginsignupnav from "./components/Loginsignupnav";
 import Chat from "./components/Chat";
 import { UserContext } from "./contexts/UserContext";
+import { ProductsContext } from "./contexts/ProductsContext";
 import LoggedInNav from "./components/LoggedInNav";
 import BuyerProfile from "./components/BuyerProfile";
 import Favorites from "./components/Favorites";
 import Orders from "./components/Orders";
+import Loading from "./components/Loading";
 const App = () => {
   const { isLoggedIn } = useContext(UserContext);
+  const { products, loading } = useContext(ProductsContext);
+
+  if (loading || !products) {
+    return <Loading />;
+  }
 
   return (
-    <ChakraProvider theme={theme}>
-      <ProductsProvider>
         <OffersProvider>
           <div className="sm:flex-1">
             <Router>
@@ -162,13 +165,12 @@ const App = () => {
                     </>
                   }
                 ></Route>
+                <Route path="/Loading" element={<Loading />}></Route>
                 <Route path="*" element={<h1>Not Found</h1>}></Route>
               </Routes>
             </Router>
           </div>
         </OffersProvider>
-      </ProductsProvider>
-    </ChakraProvider>
   );
 };
 

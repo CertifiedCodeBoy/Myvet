@@ -4,15 +4,21 @@ import App from "./App.jsx";
 import "./index.css";
 import UserProvider from "./contexts/UserContext";
 import SellerProvider from "./contexts/SellerContext.jsx";
+import { ChakraProvider } from "@chakra-ui/react";
+import ProductsProvider from "./contexts/ProductsContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <div>
     <React.StrictMode>
-      <UserProvider>
-        <SellerProvider>
-          <App />
-        </SellerProvider>
-      </UserProvider>
+      <ChakraProvider>
+        <ProductsProvider>
+          <UserProvider>
+            <SellerProvider>
+              <App />
+            </SellerProvider>
+          </UserProvider>
+        </ProductsProvider>
+      </ChakraProvider>
     </React.StrictMode>
   </div>
 );

@@ -117,8 +117,8 @@ const SlideshowMobile = () => {
 
   return (
     //using splidejs
-    <Box pos={"relative"} overflow={"hidden"} height={"10%"}>
-      <Image src="" alt="Mobile" width={"100%"} />
+    <Box pos={"relative"} overflow={"hidden"}>
+      <Image src="src/Assets/phone.jpg" alt="Mobile" width={"100%"} />
       <Box
         pos={"absolute"}
         top={0}
@@ -133,10 +133,18 @@ const SlideshowMobile = () => {
         justifyContent={"end"}
         height={"100%"}
       >
-        <Image src={Logo} alt="logo" width={"40%"} mx={"auto"} />
-        <Heading color={"white"} mb={8}>
-          Downlad the app NOW!
-        </Heading>
+      
+      <Box display={"flex"} justifyContent={"center"} alignItems={"center"} m={6}>
+        <Button
+          colorScheme={"green"}
+          size={"md"}
+          rounded={"full"}
+          gap={4}
+        >
+          Download App
+          <ArrowSquareOut size={24} />
+        </Button>
+      </Box>
       </Box>
     </Box>
   );
