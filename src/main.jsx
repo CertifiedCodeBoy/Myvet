@@ -7,7 +7,8 @@ import SellerProvider from "./contexts/SellerContext.jsx";
 import { ChakraProvider } from "@chakra-ui/react";
 import ProductsProvider from "./contexts/ProductsContext";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <div>
     <React.StrictMode>
       <ChakraProvider>

@@ -1,5 +1,10 @@
 import React, { useContext } from "react";
-import { Outlet, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -31,147 +36,147 @@ const App = () => {
   }
 
   return (
-        <OffersProvider>
-          <div className="sm:flex-1">
-            <Outlet />
-            <Router>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <Discounts />
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                      <Home />
-                      <Footer />
-                    </>
-                  }
-                  exact
-                ></Route>
-                <Route
-                  path="/Login"
-                  element={
-                    <>
-                      <Loginsignupnav />
-                      <Login />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Signup"
-                  element={
-                    <>
-                      <Loginsignupnav />
-                      <SignUp />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Categories/:category"
-                  element={
-                    <>
-                      <Discounts />
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                      <Categories />
-                      <Footer />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Cart"
-                  element={
-                    <>
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                      <Cart />
-                      <Footer />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Favorites"
-                  element={
-                    <>
-                      <Discounts />
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                      <Favorites />
-                      <Footer />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Offers"
-                  element={
-                    <>
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                      <Discounts />
-                      <Footer />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Orders"
-                  element={
-                    <>
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                      <Orders />
-                      <Footer />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Product/:id"
-                  element={
-                    <>
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                      <ProductPage />
-                      <Footer />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Help"
-                  element={
-                    <>
-                      <HelpNav />
-                      <Help />
-                      <Footer />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/Contact"
-                  element={
-                    <>
-                      <HelpNav />
-                      <Contact />
-                      <Footer />
-                    </>
-                  }
-                ></Route>
-                <Route
-                  path="/a"
-                  element={
-                    <>
-                      <Chat />
-                    </>
-                  }
-                ></Route>
-                <Route path="/SellerProfile" element={<></>}></Route>
-                <Route
-                  path="/BuyerProfile"
-                  element={
-                    <>
-                      <LoggedInNav />
-                      <BuyerProfile />
-                    </>
-                  }
-                ></Route>
-                <Route path="/Loading" element={<Loading />}></Route>
-                <Route path="*" element={<h1>Not Found</h1>}></Route>
-              </Routes>
-            </Router>
-          </div>
-        </OffersProvider>
+    <OffersProvider>
+      <div className="sm:flex-1">
+        <Outlet />
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Discounts />
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  <Home />
+                  <Footer />
+                </>
+              }
+              exact
+            ></Route>
+            <Route
+              path="/Login"
+              element={
+                <>
+                  <Loginsignupnav />
+                  <Login />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Signup"
+              element={
+                <>
+                  <Loginsignupnav />
+                  <SignUp />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Categories/:category"
+              element={
+                <>
+                  <Discounts />
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  <Categories />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Cart"
+              element={
+                <>
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  <Cart />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Favorites"
+              element={
+                <>
+                  <Discounts />
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  <Favorites />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Offers"
+              element={
+                <>
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  <Discounts />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Orders"
+              element={
+                <>
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  <Orders />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Product/:id"
+              element={
+                <>
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  <ProductPage />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Help"
+              element={
+                <>
+                  <HelpNav />
+                  <Help />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/Contact"
+              element={
+                <>
+                  <HelpNav />
+                  <Contact />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/a"
+              element={
+                <>
+                  <Chat />
+                </>
+              }
+            ></Route>
+            <Route path="/SellerProfile" element={<></>}></Route>
+            <Route
+              path="/BuyerProfile"
+              element={
+                <>
+                  <LoggedInNav />
+                  <BuyerProfile />
+                </>
+              }
+            ></Route>
+            <Route path="/Loading" element={<Loading />}></Route>
+            <Route path="*" element={<h1>Not Found</h1>}></Route>
+          </Routes>
+        </Router>
+      </div>
+    </OffersProvider>
   );
 };
 
