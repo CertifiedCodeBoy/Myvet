@@ -39,7 +39,7 @@ const App = () => {
     <OffersProvider>
       <div className="sm:flex-1">
         <Outlet />
-        <Router>
+        <Router basename="/">
           <Routes>
             <Route
               path="/"
