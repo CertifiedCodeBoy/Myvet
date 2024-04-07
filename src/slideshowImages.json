@@ -1,21 +1,21 @@
 [
     {
         "id":"1",
-        "src":"./src/Assets/slideshowImages/2.jpeg",
+        "src":"src/Assets/slideshowImages/2.jpeg",
         "alt" : "Image 2",
         "title" : "Explore More offers and Discounts"
     }
     ,
     {
         "id":"2",
-        "src":"./src/Assets/slideshowImages/5.jpeg",
+        "src":"src/Assets/slideshowImages/5.jpeg",
         "alt" : "Image 5",
         "title" : "Our New Collection is here!"
     }
     ,
     {
         "id":"3",
-        "src":"./src/Assets/slideshowImages/6.png",
+        "src":"src/Assets/slideshowImages/6.png",
         "alt" : "Image 6",
         "title" : "Top Brands at Best Prices"
     }
