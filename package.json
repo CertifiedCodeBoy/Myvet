@@ -10,7 +10,8 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "vite build && gh-pages -d dist",
-    "push": "git add . && git commit -m 'update' && git push"
+    "push": "git add . && git commit -m 'update' && git push",
+    "pushonline" : "git add . && git commit -m 'update' && git push origin gh-pages"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
