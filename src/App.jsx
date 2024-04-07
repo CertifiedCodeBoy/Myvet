@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Outlet, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -33,6 +33,7 @@ const App = () => {
   return (
         <OffersProvider>
           <div className="sm:flex-1">
+            <Outlet />
             <Router>
               <Routes>
                 <Route
