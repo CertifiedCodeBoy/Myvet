@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Heading, Spinner, useTimeout } from "@chakra-ui/react";
 import { Info } from "phosphor-react";
 import { BarLoader, ScaleLoader } from "react-spinners";
+import whitelogo from "../Assets/whit_logo.png";
 
 const loading = () => {
-  const BlackLogo = "src/Assets/whit_logo.png";
   const randomecommercesitefacts = [
     "The first-ever e-commerce transaction was made in 1994",
     "Myvet Provides the best e-commerce experience",
@@ -78,7 +78,7 @@ const loading = () => {
         "
         >
           <img
-            src={BlackLogo}
+            src={whitelogo}
             alt="Loading ..."
             className="
           w-40

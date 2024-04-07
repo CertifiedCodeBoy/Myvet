@@ -1,9 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeSlash, At } from "phosphor-react";
 import { UserContext } from "../contexts/UserContext";
 import { CloseButton, useToast } from "@chakra-ui/react";
 import Cookies from "js-cookie";
+import facebook from "../Assets/facebook.png";
+import google from "../Assets/google.png";
 
 import "./all.css";
 const Login = () => {
@@ -165,20 +167,12 @@ const Login = () => {
               <div className="flex h-12 w-24 mx-auto">
                 <div className="w-1/2 flex align-middle justify-center">
                   <a href="#">
-                    <img
-                      src="src/Assets/facebook.png"
-                      alt="Facebook login"
-                      className="w-10"
-                    />
+                    <img src={facebook} alt="Facebook login" className="w-10" />
                   </a>
                 </div>
                 <div className="w-1/2 flex align-middle justify-center">
                   <a href="#">
-                    <img
-                      src="src/Assets/google.png"
-                      alt="Gmail login"
-                      className="w-10"
-                    />
+                    <img src={google} alt="Gmail login" className="w-10" />
                   </a>
                 </div>
               </div>

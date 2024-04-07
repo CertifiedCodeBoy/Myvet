@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Eye, EyeSlash, User, At } from "phosphor-react";
 import "./all.css";
+import facebook from "../Assets/facebook.png";
+import google from "../Assets/google.png";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -199,20 +201,12 @@ const SignUp = () => {
               <div className="flex h-12 w-24 mx-auto">
                 <div className="w-1/2 flex align-middle justify-center">
                   <a href="#">
-                    <img
-                      src="src/Assets/facebook.png"
-                      alt="Facebook login"
-                      className="w-10"
-                    />
+                    <img src={facebook} alt="Facebook login" className="w-10" />
                   </a>
                 </div>
                 <div className="w-1/2 flex align-middle justify-center">
                   <a href="#">
-                    <img
-                      src="src/Assets/google.png"
-                      alt="Gmail login"
-                      className="w-10"
-                    />
+                    <img src={google} alt="Gmail login" className="w-10" />
                   </a>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import offersData from "../offers.json"; // adjust the path as needed
+import offersData from "../dbs/offers.json";
 
 export const OffersContext = createContext();
 
