@@ -38,7 +38,7 @@ const App = () => {
   return (
     <OffersProvider>
       <div className="sm:flex-1">
-        <Router basename="/main">
+        <Router>
           <Routes>
             <Route
               path="/"
