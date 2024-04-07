@@ -36,6 +36,18 @@ const App = () => {
             <Router>
               <Routes>
                 <Route
+                  path="/"
+                  element={
+                    <>
+                      <Discounts />
+                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                      <Home />
+                      <Footer />
+                    </>
+                  }
+                  exact
+                ></Route>
+                <Route
                   path="/Login"
                   element={
                     <>
@@ -52,18 +64,6 @@ const App = () => {
                       <SignUp />
                     </>
                   }
-                ></Route>
-                <Route
-                  path="/"
-                  element={
-                    <>
-                      <Discounts />
-                      {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                      <Home />
-                      <Footer />
-                    </>
-                  }
-                  exact
                 ></Route>
                 <Route
                   path="/Categories/:category"
