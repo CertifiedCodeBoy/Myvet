@@ -1,5 +1,5 @@
 {
-  "homepage": "https://certifiedcodeboy.github.io/deply-myvet",
+  "homepage": "https://certifiedcodeboy.github.io/Myvet",
   "name": "project-1",
   "private": true,
   "version": "0.0.0",
@@ -9,8 +9,7 @@
     "bilal": "vite",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "vite build && gh-pages -d dist",
     "push": "git add . && git commit -m 'update' && git push"
   },
   "dependencies": {
