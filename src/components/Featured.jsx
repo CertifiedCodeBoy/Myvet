@@ -4,14 +4,13 @@ import { Card, Image, Text } from "@chakra-ui/react";
 import { Flex } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { Heart, Plus } from "phosphor-react";
+import image2 from "../Assets/slideshowImages/2.jpeg";
+import image5 from "../Assets/slideshowImages/5.jpeg";
 
 const Featured = ({ title }) => {
   const [hoverStates, setHoverStates] = useState({});
   const [isClicked, setIsClicked] = useState({});
-  const featuredImages = [
-    "src/Assets/slideshowImages/2.jpeg",
-    "src/Assets/slideshowImages/5.jpeg",
-  ];
+  const featuredImages = [image2, image5];
 
   return (
     <div>
