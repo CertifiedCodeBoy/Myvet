@@ -1,14 +1,5 @@
-import React, { useRef, useEffect, useContext } from "react";
-import {
-  Box,
-  Flex,
-  Heading,
-  Skeleton,
-  useBreakpoint,
-  useMediaQuery,
-  Text,
-  Button,
-} from "@chakra-ui/react";
+import React, { useContext } from "react";
+import { Box, Heading, Skeleton, useMediaQuery } from "@chakra-ui/react";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { Link } from "react-router-dom";
 import { Card, Image } from "@chakra-ui/react";
@@ -156,50 +147,23 @@ const Kard = ({ product }) => {
   return (
     <Card
       px={8}
-      pt={4}
-      pb={4}
+      py={4}
       my={4}
       mx={4}
       float={"none"}
       overflow={"hidden"}
-      sx={{
-        borderRadius: "4px",
-      }}
-      maxW={"300px"}
-      maxH={"400px"}
+      rounded={"4px"}
+      maxH={"380px"}
       height={"380px"}
       minW={"200px"}
-      display={"flex"}
-      flexDirection={"row"}
-      _hover={{
-        minWidth: "500px",
-        zIndex: "100",
-        gap: "10px",
-        paddingRight: "10px",
-      }}
-      transition={"all 0.3s ease-in-out"}
-      onMouseEnter={() => {
-        let element = document.getElementById(product.id);
-        let image = document.getElementById(`image-${product.id}`);
-        element.style.transition = "all 0.5s linear";
-        image.className = image.className + " transform scale-105 transition-all";
-        element.style.visibility = "visible";
-      }}
-      onMouseLeave={() => {
-        let element = document.getElementById(product.id);
-        let image = document.getElementById(`image-${product.id}`);
-        image.className = image.className.replace("transform scale-105", "");
-        element.style.transition = "all 0.5s linear";
-        element.style.visibility = "hidden";
-      }}
+      width={"270px"}
     >
       <Link
         to={`/Categories/${product.category}`}
         onClick={() => window.scrollTo(0, 0)}
-        className="flex flex-col items-start"
+        className={`flex flex-col items-start `}
       >
         <Image
-          id={`image-${product.id}`}
           src={product.image}
           alt={`Image`}
           maxH="250px"
@@ -220,54 +184,6 @@ const Kard = ({ product }) => {
           </h1>
         </Box>
       </Link>
-      <Box
-        id={product.id}
-        width={"300px"}
-        maxW={"300px"}
-        height={"100%"}
-        float={"right"}
-        overflow={"hidden"}
-        visibility={"hidden"}
-      >
-        <Text
-          fontSize={"sm"}
-          textAlign={"start"}
-          maxWidth={"280px"}
-          height={"85%"}
-          bg={"#f2f2f2"}
-          rounded={"md"}
-          p={2}
-        >
-          {product.description && product.description.length > 180
-            ? product.description.slice(0, 180) + "..."
-            : product.description}
-        </Text>
-        <Box
-          display={"flex"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          gap={4}
-        >
-          <Link
-            to={`/Categories/${product.category}`}
-            onClick={() => window.scrollTo(0, 0)}
-            className=" mt-4"
-          >
-            <Button colorScheme={"red"} size={"sm"} rounded={"full"}>
-              Shop now
-            </Button>
-          </Link>
-          <Link
-            to={`/Product/${product.id}`}
-            onClick={() => window.scrollTo(0, 0)}
-            className=" mt-4"
-          >
-            <Button colorScheme={"gray"} size={"sm"} rounded={"full"}>
-              Read more
-            </Button>
-          </Link>
-        </Box>
-      </Box>
     </Card>
   );
 };

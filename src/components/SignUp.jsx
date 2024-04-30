@@ -1,21 +1,53 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Eye, EyeSlash, User, At } from "phosphor-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Eye, EyeSlash, User, At, Phone } from "phosphor-react";
 import "./all.css";
 import facebook from "../Assets/facebook.png";
 import google from "../Assets/google.png";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const API_URL = "https://api.escuelajs.co/api/v1/users/";
+
+  const signUser = async (formData) => {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(
+        {
+          "name": `${formData.firstName}`,
+          "email": `${formData.email}`,
+          "password": `${formData.password}`,
+          "avatar": "https://picsum.photos/800",
+        }
+      ),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to signup: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    if (!data) {
+      throw new Error("No data received");
+    }
+
+    return data;
+  };
 
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
+    phoneNumber: "",
     password: "",
     confirmPassword: "",
   });
-  const [passwordMatchError, setPasswordMatchError] = useState(false); // State for password match error
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,20 +56,27 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      setPasswordMatchError(true); // Set password match error to true
-      return; // Prevent submission if passwords don't match
+      setPasswordMatchError(true);
+      return;
     }
-    // Reset password match error when passwords match
     setPasswordMatchError(false);
-    // Add your signup logic here
-    console.log(formData);
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+    //signup logic
+
+    signUser(formData)
+      .then(() => {
+        navigate("/login");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phoneNumber: "",
+          password: "",
+          confirmPassword: "",
+        });
+      })
+      .catch((error) => {
+        console.error("Cannot sign up", error);
+      });
   };
 
   return (
@@ -118,6 +157,28 @@ const SignUp = () => {
                 />
                 <div className="absolute inset-y-0 right-4 flex items-center justify-center">
                   <At size={25} />
+                </div>
+              </div>
+              <div className="relative mb-4">
+                <input
+                  type="number"
+                  id="phonNumbere"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  className="w-full bg-gray-200 rounded-2xl py-3 pr-12 px-3 outline-none"
+                  placeholder="Phone number"
+                  onFocus={(e) => {
+                    e.target.style.boxShadow =
+                      "2px 2px 8px 0px rgba(0, 0, 0, 0.6)";
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.boxShadow = "none";
+                  }}
+                  required
+                />
+                <div className="absolute inset-y-0 right-4 flex items-center justify-center">
+                  <Phone size={24} />
                 </div>
               </div>
               <div className="relative mb-4">

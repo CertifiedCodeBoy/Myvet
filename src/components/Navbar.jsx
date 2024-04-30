@@ -27,13 +27,6 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 
-const categories = [
-  "men's clothing",
-  "women's clothing",
-  "kids",
-  "jewelery",
-  "accessories",
-];
 
 const Navbar = () => {
   const [focused, setFocused] = useState(false);
@@ -382,11 +375,6 @@ const SearchInput = ({ width, placeholder, pr }) => {
   const handleChange = async (e) => {
     setSearch(e.target.value);
     const searchTerm = e.target.value;
-
-    // Check if the search term matches a category
-    const matchedCategory = categories.find((category) =>
-      category.toLowerCase().includes(searchTerm)
-    );
 
     try {
       const response = await fetch(

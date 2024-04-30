@@ -20,7 +20,7 @@ const ProductPage = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [isAddingReview, setIsAddingReview] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track user login state
+  const [isLoggedIn, setIsLoggedIn] = useState(true); // Track user login state
 
   // Sample fake comments data
   const [comments, setComments] = useState([

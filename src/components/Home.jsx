@@ -1,20 +1,14 @@
 import React, { useContext } from "react";
-import { ProductsContext } from "../contexts/ProductsContext";
 import Slideshow from "./SlideShow";
-import { CloseButton, Flex, Grid, GridItem, Heading } from "@chakra-ui/react";
+import { CloseButton } from "@chakra-ui/react";
 import "./all.css";
-import { Skeleton } from "@chakra-ui/react";
 import Section from "./Section";
 import Featured from "./Featured";
 import UseMobile from "./UseMobile";
 import { UserContext } from "../contexts/UserContext";
-import Loading from "./Loading";
 
 const Home = () => {
   const { showToast, setShowToast } = useContext(UserContext);
-  const { products, loading } = useContext(ProductsContext);
-
- 
 
   return (
     <div className="font-main bg-gray-100 h-full pb-4 flex justify-center">
