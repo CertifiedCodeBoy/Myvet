@@ -24,8 +24,13 @@ import Orders from "./components/Orders";
 import Loading from "./components/Loading";
 import Welcome from "./components/Welcome";
 import WelcomeNav from "./components/WelcomeNav";
+import MyProducts from "./components/MyProducts"; // Import MyProducts
+import SellerProfile from "./components/SellerProfile"; // Import SellerProfile
+import ItemPage from "./components/ItemPage";
+import SellerItem from "./components/SellerItem";
+
 const App = () => {
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, user } = useContext(UserContext);
   const { products, loading } = useContext(ProductsContext);
 
   if (loading || !products) {
@@ -41,12 +46,10 @@ const App = () => {
               path="/Welcome"
               element={
                 <>
-                  <Welcome WelcomeNav={WelcomeNav}/>
+                  <Welcome WelcomeNav={WelcomeNav} />
                 </>
               }
-            >
-
-            </Route>
+            ></Route>
             <Route
               path="/"
               element={
@@ -149,6 +152,16 @@ const App = () => {
                 </>
               }
             ></Route>
+
+            <Route
+              path="/ItemPage"
+              element={
+                <>
+                  <ItemPage />
+                </>
+              }
+            ></Route>
+
             <Route
               path="/Contact"
               element={
@@ -167,17 +180,49 @@ const App = () => {
                 </>
               }
             ></Route>
-            <Route path="/SellerProfile" element={<></>}></Route>
+            {/* Add SellerProfile Route with conditions */}
+            {isLoggedIn && user.role == "admin" ? (
+              <Route
+                path="/SellerProfile"
+                element={
+                  <>
+                    <LoggedInNav />
+                    <SellerProfile />
+                    <Footer />
+                  </>
+                }
+              ></Route>
+            ) : (
+              <Route
+                path="/BuyerProfile"
+                element={
+                  <>
+                    <LoggedInNav />
+                    <BuyerProfile />
+                    <Footer />
+                  </>
+                }
+              ></Route>
+            )}
+            <Route path="/Loading" element={<Loading />}></Route>
             <Route
-              path="/BuyerProfile"
+              path="/MyProducts" // Route for MyProducts
               element={
                 <>
-                  <LoggedInNav />
-                  <BuyerProfile />
+                  <MyProducts />
                 </>
               }
             ></Route>
-            <Route path="/Loading" element={<Loading />}></Route>
+            <Route
+              path="/SellerItem/:id"
+              element={
+                <>
+                  <LoggedInNav />
+                  <SellerItem />
+                  <Footer />
+                </>
+              }
+            ></Route>
             <Route path="*" element={<h1>Not Found</h1>}></Route>
           </Routes>
         </Router>
