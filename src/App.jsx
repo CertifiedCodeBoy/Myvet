@@ -22,6 +22,8 @@ import BuyerProfile from "./components/BuyerProfile";
 import Favorites from "./components/Favorites";
 import Orders from "./components/Orders";
 import Loading from "./components/Loading";
+import Welcome from "./components/Welcome";
+import WelcomeNav from "./components/WelcomeNav";
 const App = () => {
   const { isLoggedIn } = useContext(UserContext);
   const { products, loading } = useContext(ProductsContext);
@@ -35,6 +37,16 @@ const App = () => {
       <div className="sm:flex-1">
         <Router>
           <Routes>
+            <Route
+              path="/Welcome"
+              element={
+                <>
+                  <Welcome WelcomeNav={WelcomeNav}/>
+                </>
+              }
+            >
+
+            </Route>
             <Route
               path="/"
               element={

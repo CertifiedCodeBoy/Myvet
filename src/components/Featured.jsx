@@ -63,7 +63,7 @@ const Featured = ({ title }) => {
                   {index === 0 ? "Cutton Hoodies" : "Our Latest Collection"}
                 </Text>
                 <Link
-                  to={index === 0 ? `/Categories/Men` : `/Categories/Women`}
+                  to={index === 0 ? `/Categories/men's clothing` : `/Categories/women's clothing`}
                 >
                   <Text color={"white"} fontSize={"xl"} textDecor={"underline"}>
                     {index === 0 ? "Shop now" : "Discover More"}

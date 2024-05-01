@@ -297,7 +297,7 @@ const LoggedInNav = () => {
                           ) : null
                         }
                         <Link
-                          to={`/${isSeller ? "SellerProfile" : "BuyerProfile"}`}
+                          to={`/${!isSeller ? "SellerProfile" : "BuyerProfile"}`}
                           className="flex items-center gap-2 hover:underline"
                         >
                           <ArrowSquareOut size={24} color="red" />

@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: theme => ({
+        'logo3': "url('./src/Assets/slideshowImages/2.jpeg')",
+        'logo2': "url('./src/Assets/slideshowImages/5.jpeg')",
+        'logo': "url('./src/Assets/bg.png')",
+      }),
       colors: {
         primary: "#A0887F",
         secondary: "#F2F2F2",

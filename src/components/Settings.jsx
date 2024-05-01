@@ -1,7 +1,6 @@
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
-import { Gear } from "phosphor-react";
 
 const Settings = () => {
   const { user } = useContext(UserContext);
