@@ -182,16 +182,15 @@ const LoggedInNav = () => {
                   <div className="flex items-center gap-2 ml-4">
                     {user ? (
                       <Avatar
-                        name={user.name}
-                        src={user.avatar}
+                        name={user.firstName}
+                        src={user.pic}
                         size="sm"
-                        bg="primary"
                         mr={2}
                       />
                     ) : (
                       <UserCircle size={34} />
                     )}
-                    <span>{user ? user.name : "Profile"}</span>
+                    <span>{user ? user.firstName : "Profile"}</span>
                   </div>
                 </Link>
                 <div
@@ -200,7 +199,6 @@ const LoggedInNav = () => {
                 "
                   onMouseLeave={() => {
                     onClose();
-                    setClosed(true);
                   }}
                 >
                   <Popover
@@ -213,16 +211,15 @@ const LoggedInNav = () => {
                       <PopoverHeader className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-black font-semibold">
                         {user ? (
                           <Avatar
-                            name={user.name}
-                            src={user.avatar}
+                            name={user.firstName}
+                            src={user.pic}
                             size="sm"
-                            bg="primary"
                             mr={2}
                           />
                         ) : (
                           <UserCircle size={34} />
                         )}
-                        <span>{user ? user.name : "Profile"}</span>
+                        <span>{user ? user.firstName : "Profile"}</span>
                       </PopoverHeader>
                       <PopoverCloseButton />
                       <PopoverBody
@@ -283,7 +280,7 @@ const LoggedInNav = () => {
                         </Link>
                         {
                           //if user is seller, show seller products
-                          isSeller ? (
+                          user.isSeller ? (
                             <Link
                               to={`/SellerProfile`}
                               className="flex items-center gap-2 hover:underline"
@@ -297,7 +294,7 @@ const LoggedInNav = () => {
                           ) : null
                         }
                         <Link
-                          to={`/${!isSeller ? "SellerProfile" : "BuyerProfile"}`}
+                          to={`/${user.isSeller ? "SellerProfile" : "BuyerProfile"}`}
                           className="flex items-center gap-2 hover:underline"
                         >
                           <ArrowSquareOut size={24} color="red" />

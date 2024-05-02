@@ -9,7 +9,7 @@ export default {
       backgroundImage: theme => ({
         'logo3': "url('./src/Assets/slideshowImages/2.jpeg')",
         'logo2': "url('./src/Assets/slideshowImages/5.jpeg')",
-        'logo': "url('./src/Assets/bg.png')",
+        'logo': "url('./src/Assets/photo_2024-05-02_14-36-10.jpg')",
       }),
       colors: {
         primary: "#A0887F",

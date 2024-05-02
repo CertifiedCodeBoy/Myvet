@@ -6,6 +6,7 @@ import { CloseButton, useToast } from "@chakra-ui/react";
 import Cookies from "js-cookie";
 import facebook from "../Assets/facebook.png";
 import google from "../Assets/google.png";
+import axios from "axios";
 
 import "./all.css";
 const Login = () => {
@@ -23,47 +24,43 @@ const Login = () => {
   const { setIsLoggedIn, setUser, setShowToast } = useContext(UserContext);
 
   const navigate = useNavigate();
-  const API_URL = "https://api.escuelajs.co/api/v1/auth/login";
+  const API_URL = "http://localhost:5000/login";
 
   const loginUser = async (formData) => {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to login: ${response.statusText}`);
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: `${formData.email}`,
+          password: `${formData.password}`,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        return data;
+      }
+    } catch (error) {
+      throw new Error(`Failed to login: ${error}`);
     }
-
-    const data = await response.json();
-
-    if (!data.access_token) {
-      throw new Error("No access token received");
-    }
-
-    return data.access_token;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     loginUser(formData)
-      .then((token) => {
-        Cookies.set("token", token);
+      .then((data) => {
         setIsLoggedIn(true);
+        localStorage.setItem("jwt", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        setUser(data.user);
+        navigate("/");
         setShowToast(true);
         setTimeout(() => {
           setShowToast(false);
         }, 3000);
-        setUser({ ...formData, token });
-        navigate("/");
-        setFormData({
-          email: "",
-          password: "",
-        });
       })
       .catch((error) => {
         setWrongCredentials(true);

@@ -8,7 +8,7 @@ import google from "../Assets/google.png";
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const API_URL = "https://api.escuelajs.co/api/v1/users/";
+  const API_URL = "http://localhost:5000/register";
 
   const signUser = async (formData) => {
     const response = await fetch(API_URL, {
@@ -18,10 +18,11 @@ const SignUp = () => {
       },
       body: JSON.stringify(
         {
-          "name": `${formData.firstName}`,
           "email": `${formData.email}`,
+          "firstName": `${formData.firstName}`,
+          "lastName": `${formData.firstName}`,
           "password": `${formData.password}`,
-          "avatar": "https://picsum.photos/800",
+          "pic": "https://picsum.photos/800",
         }
       ),
     });
@@ -43,9 +44,7 @@ const SignUp = () => {
     firstName: "",
     lastName: "",
     email: "",
-    phoneNumber: "",
     password: "",
-    confirmPassword: "",
   });
   const [passwordMatchError, setPasswordMatchError] = useState(false);
 

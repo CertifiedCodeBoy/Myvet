@@ -38,7 +38,7 @@ const BuyerProfile = () => {
   const [selected, setSelected] = useState(1);
   const { user, isLoading, setIsLoggedIn } = useContext(UserContext);
   const [isExpanded, setIsExpanded] = useState(() =>
-    typeof window !== "undefined" ? window.innerWidth > 768 : false
+    false
   );
   const [focused, setFocused] = useState(false);
   const [p1, setP1] = useState(true);
@@ -48,7 +48,6 @@ const BuyerProfile = () => {
   const [p5, setP5] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
-  const { isSeller } = useContext(SellerContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -239,15 +238,15 @@ const BuyerProfile = () => {
                 gap={{ base: "0", md: "2" }}
                 direction={{ base: "column", md: "row" }}
               >
-                <Avatar size="2xl" name={user.name} src={user.avatar} />
+                <Avatar size="2xl" name={user.firstName} src={user.pic} />
                 <Flex direction={"column"}>
                   <Heading mt={{ base: 8, md: 0 }} ml={{ base: 0, md: 8 }}>
-                    {user.name}
+                    {user.firstName}
                   </Heading>
                 </Flex>
-                {user.role == "customer" ? (
+                {!user.isSeller ? (
                   <Badge mt={{ base: 0, md: 4 }} colorScheme="green">
-                    {user.role}
+                    Customer
                   </Badge>
                 ) : (
                   <Badge mt={{ base: 0, md: 4 }} colorScheme="red">

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -32,7 +32,6 @@ import SellerItem from "./components/SellerItem";
 const App = () => {
   const { isLoggedIn, user } = useContext(UserContext);
   const { products, loading } = useContext(ProductsContext);
-
   if (loading || !products) {
     return <Loading />;
   }
@@ -181,29 +180,27 @@ const App = () => {
               }
             ></Route>
             {/* Add SellerProfile Route with conditions */}
-            {isLoggedIn && user.role == "admin" ? (
-              <Route
-                path="/SellerProfile"
-                element={
-                  <>
-                    <LoggedInNav />
-                    <SellerProfile />
-                    <Footer />
-                  </>
-                }
-              ></Route>
-            ) : (
-              <Route
-                path="/BuyerProfile"
-                element={
-                  <>
-                    <LoggedInNav />
-                    <BuyerProfile />
-                    <Footer />
-                  </>
-                }
-              ></Route>
-            )}
+            <Route
+              path="/Profile"
+              element={
+                <>
+                  <LoggedInNav />
+                  <SellerProfile /> 
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/BuyerProfile"
+              element={
+                <>
+                  <LoggedInNav />
+                  <BuyerProfile />
+                  <Footer />
+                </>
+              }
+            >
+            </Route>
             <Route path="/Loading" element={<Loading />}></Route>
             <Route
               path="/MyProducts" // Route for MyProducts
