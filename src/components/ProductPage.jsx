@@ -3,27 +3,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShoppingCart, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from 'react-router-dom';
 import { ProductsContext } from '../contexts/ProductsContext';
+import { UserContext } from '../contexts/UserContext';
 
 const ProductPage = () => {
-  const { id } = useParams(); // Get product ID from URL params
-  const { getProductById } = useContext(ProductsContext); // Access getProductById function from ProductsContext
-  const [product, setProduct] = useState(null);
 
-  useEffect(() => {
-    // Fetch product data based on ID when component mounts
-    const fetchProduct = async () => {
-      const fetchedProduct = await getProductById(id);
-      setProduct(fetchedProduct);
-    };
-    fetchProduct();
-  }, [id, getProductById]);
+  const { products } = useContext(ProductsContext);
+  const { user, isLoggedIn } = useContext(UserContext);
+  const { id } = useParams();
 
+
+  const product = products[id - 1];
+
+  
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
   const [isAddingReview, setIsAddingReview] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track user login state
+  const [comment, setComment] = useState('');
 
   // Sample fake comments data
   const [comments, setComments] = useState([
@@ -53,7 +49,9 @@ const ProductPage = () => {
   };
 
   const handleCommentChange = (event) => {
-    setComment(event.target.value);
+    setComment(
+      event.target.value
+    )
   };
 
   const handleToggleReviewForm = () => {
@@ -68,24 +66,25 @@ const ProductPage = () => {
 
   const handleSubmitReview = () => {
     // Implement submit review functionality
-    const newComment = {
+    const newComment =
+    {
       id: comments.length + 1,
-      name: 'Logged in User', // Replace with actual user name after authentication
-      rating,
-      comment,
+      name: user.name,
+      rating: 5,
+      comment: comment,
       date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
-    };
+    }
     setComments([...comments, newComment]);
+
     setIsAddingReview(false);
   };
 
   // Function to check if a size is available
   const isAvailableSize = (size) => {
-    return product && product.sizes.includes(size);
+    // return product && product.sizes.includes(size);
   };
 
-  // Calculate average star rating
-  const averageRating = comments.length > 0 ? comments.reduce((total, comment) => total + comment.rating, 0) / comments.length : 0;
+  const averageRating = comments.length > 0 ? comments.reduce((total, comment) => total + comment.rating, 0) / (comments.length ): 0;
 
   if (!product) {
     return <div>Loading...</div>;
@@ -96,18 +95,18 @@ const ProductPage = () => {
       <div className="flex flex-wrap items-center">
         {/* Product Photo */}
         <div className="w-full md:w-1/2 p-4">
-          <img src={product.image} alt={product.name} className="w-full h-auto md:h-auto rounded-none shadow-lg" style={{ maxHeight: '500px' }} />
+          <img src={product.image} alt={product.title} className="w-full h-auto md:h-auto rounded-none shadow-lg" style={{ maxHeight: '500px' }} />
         </div>
         {/* Product Details */}
         <div className="w-full md:w-1/2 p-4">
-          <h1 className="text-3xl font-semibold mb-1 text-gray-900">{product.name}</h1>
-          <p className="text-lg text-gray-700 mb-2">${product.price}</p>
+          <h1 className="text-3xl font-semibold mb-1 text-gray-900">{product.title}</h1>
+          <p className="text-lg text-gray-700 mb-2">{product.price} DA</p>
           <h1 className='text-3xl font-medium mb-3 text-gray-900'>Description</h1>
           <p className="text-gray-700 mb-4">{product.description}</p>
           {/* Color Selector */}
           <div className="mb-4 flex">
             <label className="text-gray-700 mr-2 font-semibold">Color:</label>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               {product.colors.map((color) => (
                 <button
                   key={color}
@@ -116,12 +115,12 @@ const ProductPage = () => {
                   onClick={() => handleColorChange(color)}
                 ></button>
               ))}
-            </div>
+            </div> */}
           </div>
           {/* Size Selector */}
           <div className="mb-4 flex items-center">
             <label className="text-gray-700 mr-2 font-semibold">Size:</label>
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               {product.sizes.map((size) => (
                 <button
                   key={size}
@@ -133,7 +132,7 @@ const ProductPage = () => {
                   {size}
                 </button>
               ))}
-            </div>
+            </div> */}
           </div>
           {/* Buttons: Add to Cart and Add to Favorites */}
           <div className="flex flex-col gap-4">
