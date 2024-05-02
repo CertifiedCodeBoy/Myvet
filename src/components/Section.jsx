@@ -35,47 +35,22 @@ const Section = ({ title, filter }) => {
   return (
     <Splide
       hasTrack={false}
-      className="relative my-8 p-4"
+      className="relative my-2"
       options={{
         perPage: 5,
-        gap: "1rem",
         perMove: 1,
         pagination: false,
         type: "slide",
         breakpoints: {
           1024: {
-            perPage: 3,
+            perPage: 4,
           },
           768: {
             perPage: 3,
           },
           640: {
-            perPage: 3,
-            gap: "10rem",
-          },
-          480: {
-            perPage: 2,
-            gap: "2rem",
-          },
-          450: {
-            perPage: 2,
-            gap: "2rem",
-          },
-          400: {
-            perPage: 2,
-            gap: "5rem",
-          },
-          360: {
             perPage: 1,
-            gap: "-5rem",
-          },
-          320: {
-            perPage: 1,
-            gap: "-2rem",
-          },
-          280: {
-            perPage: 1,
-            gap: "1rem",
+            gap: "-11rem",
           },
         },
       }}
@@ -95,9 +70,10 @@ const Section = ({ title, filter }) => {
             <SplideSlide key={index}>
               {deviceType[1] ? (
                 <Card
-                  mx={4}
-                  px={6}
-                  pt={4}
+                px={8}
+                py={4}
+                my={4}
+                mx={4}
                   float={"none"}
                   sx={{
                     boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.2)",
@@ -106,7 +82,6 @@ const Section = ({ title, filter }) => {
                   maxW={"200px"}
                   minW={"200px"}
                   boxSize={"300px"}
-                  m={4}
                 >
                   <Link
                     to={`/Categories/${product.category}`}
@@ -120,13 +95,13 @@ const Section = ({ title, filter }) => {
                       aspectRatio={"1/1"}
                       objectFit="contain"
                     />
-                    <Box mt={"8"}>
+                    <Box mt={8}>
                       <h1 className="text-xs font-md text-[#111111]">
                         {product.title.slice(0, 20) +
                           (product.title.length > 20 ? "..." : "")}
                       </h1>
                     </Box>
-                    <Box>
+                    <Box mb={4}>
                       <h1 className="text-xs font-bold text-[#111111]">
                         {product.price} DA
                       </h1>

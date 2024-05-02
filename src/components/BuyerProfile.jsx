@@ -52,7 +52,7 @@ const BuyerProfile = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    Cookies.remove("token");
+    localStorage.removeItem("jwt");
     navigate("/");
     onClose();
   };

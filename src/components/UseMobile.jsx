@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Box, Button, Text, Image, Flex, CloseButton } from "@chakra-ui/react";
 import { GooglePlayLogo } from "phosphor-react";
 import {SlideshowMobile} from "./SlideShow";
+import BlackLogo from "../Assets/blacklogo.png";
 
 const UseMobile = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -37,7 +38,7 @@ const UseMobile = () => {
                 onClick={handleClose}
             />
             <Flex justify={"center"} align={"center"} direction={"column"}>
-                <Image src="src/Assets/blacklogo.png" alt="MyVet Logo" width={"55%"} />
+                <Image src={BlackLogo} alt="MyVet Logo" width={"55%"} />
                 <Text mb={4}>
                     This application is best experienced on our mobile app.
                 </Text>

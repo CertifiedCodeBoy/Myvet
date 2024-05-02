@@ -38,8 +38,20 @@ const Discounts = () => {
                 if (toast.isActive) {
                   toast.closeAll();
                 }
-                navigator.clipboard.writeText(offers[currentOffer].code);
-                toast({
+                // copy to clipboard
+                if (navigator.clipboard) {
+                  navigator.clipboard.writeText(offers[currentOffer].code);
+                } else if (document.execCommand) {
+                  const textarea = document.createElement('textarea');
+                  textarea.value = offers[currentOffer].code;
+                  document.body.appendChild(textarea);
+                  textarea.select();
+                  document.execCommand('copy');
+                  document.body.removeChild(textarea);
+                } else {
+                  console.error('Copying to clipboard not supported');
+                }
+                  toast({
                   title: "Copied!",
                   description: "Code Copied to clipboard.",
                   status: "success",
@@ -47,6 +59,7 @@ const Discounts = () => {
                   isClosable: false,
                   position: "top",
                 });
+              
               }}
             >
               <Copy size={20} className="cursor-pointer" />

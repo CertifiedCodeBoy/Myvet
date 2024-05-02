@@ -7,7 +7,7 @@ import { Heart, Plus } from "phosphor-react";
 import image2 from "../Assets/slideshowImages/2.jpeg";
 import image5 from "../Assets/slideshowImages/5.jpeg";
 
-const Featured = ({ title, direction }) => {
+const Featured = ({ title }) => {
   const [hoverStates, setHoverStates] = useState({});
   const [isClicked, setIsClicked] = useState({});
   const featuredImages = [image2, image5];
@@ -22,7 +22,7 @@ const Featured = ({ title, direction }) => {
         align={"center"}
         gap={2}
         flex={1}
-        direction={direction ? direction : "row"}
+        direction={{base: "column", md: "row"}}
       >
         {featuredImages.map((image, index) => (
           <Card

@@ -280,7 +280,7 @@ const LoggedInNav = () => {
                         </Link>
                         {
                           //if user is seller, show seller products
-                          user.isSeller ? (
+                          !user.isSeller ? (
                             <Link
                               to={`/SellerProfile`}
                               className="flex items-center gap-2 hover:underline"
@@ -294,7 +294,7 @@ const LoggedInNav = () => {
                           ) : null
                         }
                         <Link
-                          to={`/${user.isSeller ? "SellerProfile" : "BuyerProfile"}`}
+                          to={`/${!user.isSeller ? "SellerProfile" : "BuyerProfile"}`}
                           className="flex items-center gap-2 hover:underline"
                         >
                           <ArrowSquareOut size={24} color="red" />

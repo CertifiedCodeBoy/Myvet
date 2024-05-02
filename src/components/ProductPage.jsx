@@ -94,8 +94,8 @@ const ProductPage = () => {
     <div className="container mx-auto px-4 py-8 lg:w-1/2"> {/* Reduced width for large screens */}
       <div className="flex flex-wrap items-center">
         {/* Product Photo */}
-        <div className="w-full md:w-1/2 p-4">
-          <img src={product.image} alt={product.title} className="w-full h-auto md:h-auto rounded-none shadow-lg" style={{ maxHeight: '500px' }} />
+        <div className="w-full md:w-1/2 p-2">
+          <img src={product.image} alt={product.title} className="w-full h-auto md:h-auto rounded-none shadow-lg p-4" style={{ maxHeight: '500px' }} />
         </div>
         {/* Product Details */}
         <div className="w-full md:w-1/2 p-4">

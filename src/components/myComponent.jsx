@@ -19,11 +19,11 @@ function MyComponent({ onClose }) {
             <>
               <h2>
                 <Flex placeItems={"center"} direction={"row"} gap={3}>
-                  <Bag size={38} />
+                  <Bag size={35} />
                   <AccordionButton
-                    _expanded={{ border: "none", color: "white"}}
+                    _hover={{ bg: "transparent" }}
+                    _expanded={{ border: "none", color: "white", bg: "transparent" }}
                     textAlign={"center"}
-                    _hover={{ color: "white" }}
                   >
                     <h1 className="text-lg font-medium">Categories</h1>
                     <AccordionIcon ml={8} />
@@ -31,7 +31,7 @@ function MyComponent({ onClose }) {
                 </Flex>
               </h2>
               <AccordionPanel>
-                <Stack placeItems={"start"} ml={8}>
+                <Stack placeItems={"start"} ml={10}>
                   <Link
                     to={"/Categories/men's clothing"}
                     className={`text-black hover:text-white`}
@@ -52,6 +52,13 @@ function MyComponent({ onClose }) {
                     onClick={onClose}
                   >
                     Women
+                  </Link>
+                  <Link
+                    to={"/Categories/Kids clothing"}
+                    className={`text-black hover:text-white`}
+                    onClick={onClose}
+                  >
+                    Kids
                   </Link>
                 </Stack>
               </AccordionPanel>

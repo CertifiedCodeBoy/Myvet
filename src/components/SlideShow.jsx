@@ -15,6 +15,7 @@ import "swiper/css/bundle";
 import image2 from "../Assets/slideshowImages/2.jpeg";
 import image5 from "../Assets/slideshowImages/5.jpeg";
 import image6 from "../Assets/slideshowImages/6.png";
+import phone from "../Assets/phone.jpg";
 
 //splidejs
 import { Splide, SplideSlide } from "@splidejs/react-splide";
@@ -22,6 +23,7 @@ import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 
 import Slide from "./TitleMaker.jsx";
 import { ArrowSquareOut } from "phosphor-react";
+import { Link } from "react-router-dom";
 
 const Slideshow = () => {
   const { products, loading } = useContext(ProductsContext);
@@ -135,12 +137,11 @@ const Slideshow = () => {
 };
 
 const SlideshowMobile = () => {
-  const Logo = "src/Assets/whit_logo.png";
 
   return (
     //using splidejs
     <Box pos={"relative"} overflow={"hidden"}>
-      <Image src="src/Assets/phone.jpg" alt="Mobile" width={"100%"} />
+      <Image src={phone} alt="Mobile" width={"100%"} />
       <Box
         pos={"absolute"}
         top={0}
@@ -160,6 +161,8 @@ const SlideshowMobile = () => {
           justifyContent={"center"}
           alignItems={"center"}
           m={6}
+          as="a"
+          href="https://play.google.com/store/apps/details?id=com.myvet"
         >
           <Button colorScheme={"green"} size={"md"} rounded={"full"} gap={4}>
             Download App
