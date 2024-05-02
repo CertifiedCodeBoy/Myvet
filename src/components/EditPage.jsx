@@ -1,12 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { SketchPicker } from 'react-color';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook directly from react-router-dom
+import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate hook directly from react-router-dom
 import { ProductsContext } from '../contexts/ProductsContext';
 
-const ItemPage = () => {
-  const { addProduct } = useContext(ProductsContext);
+const EditPage = () => {
+  const { products, addProduct } = useContext(ProductsContext);
   const history = useNavigate(); // Initialize useHistory
-
+  const { id } = useParams();
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
@@ -75,6 +75,8 @@ const ItemPage = () => {
     }
   };
 
+  const product = products[id - 1];
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-semibold mb-4">Add Product</h1>
@@ -86,6 +88,7 @@ const ItemPage = () => {
           <input
             type="text"
             value={name}
+            placeholder={product.title}
             onChange={(e) => setName(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
           />
@@ -97,6 +100,7 @@ const ItemPage = () => {
           <input
             type="text"
             value={price}
+            placeholder={product.price}
             onChange={(e) => setPrice(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
           />
@@ -107,6 +111,7 @@ const ItemPage = () => {
           </label>
           <textarea
             value={description}
+            placeholder={product.description}
             onChange={(e) => setDescription(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
           ></textarea>
@@ -238,11 +243,11 @@ const ItemPage = () => {
           type="submit"
           className="bg-amber-800 text-white px-8 py-3 rounded-md hover:bg-amber-950"
         >
-          Add Product
+          Edit Product
         </button>
       </form>
     </div>
   );
 };
 
-export default ItemPage;
+export default EditPage;

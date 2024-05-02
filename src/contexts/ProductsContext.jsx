@@ -42,22 +42,18 @@ const ProductsProvider = ({ children }) => {
 
   const deleteProduct = async (productId) => {
     try {
-      await fetch("https://fakestoreapi.com/products/${productId}", {
+      await fetch(`https://fakestoreapi.com/products/${productId}`, {
         method: "DELETE",
       });
       setProducts(products.filter((product) => product.id !== productId));
     } catch (error) {
       console.error("Error deleting product:", error);
-      setError(
-        error.message || "An error occurred while deleting the product."
-      );
+      setError(error.message || "An error occurred while deleting the product.");
     }
   };
 
   return (
-    <ProductsContext.Provider
-      value={{ products, loading, error, addProduct, deleteProduct }}
-    >
+    <ProductsContext.Provider value={{ products, loading, error, addProduct, deleteProduct }}>
       {children}
     </ProductsContext.Provider>
   );

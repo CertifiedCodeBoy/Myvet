@@ -28,6 +28,7 @@ import MyProducts from "./components/MyProducts"; // Import MyProducts
 import SellerProfile from "./components/SellerProfile"; // Import SellerProfile
 import ItemPage from "./components/ItemPage";
 import SellerItem from "./components/SellerItem";
+import EditPage from "./components/EditPage"; // Import EditPage
 
 const App = () => {
   const { isLoggedIn, user } = useContext(UserContext);
@@ -151,7 +152,16 @@ const App = () => {
                 </>
               }
             ></Route>
-
+            <Route
+              path="/EditPage/:id" // Route for EditPage with product id
+              element={
+                <>
+                  <LoggedInNav />
+                  <EditPage />
+                  <Footer />
+                </>
+              }
+            ></Route>
             <Route
               path="/ItemPage"
               element={
@@ -160,7 +170,16 @@ const App = () => {
                 </>
               }
             ></Route>
-
+            <Route
+              path="/SellerItem/:id"
+              element={
+                <>
+                  <LoggedInNav />
+                  <SellerItem />
+                  <Footer />
+                </>
+              }
+            ></Route>
             <Route
               path="/Contact"
               element={
@@ -181,11 +200,11 @@ const App = () => {
             ></Route>
             {/* Add SellerProfile Route with conditions */}
             <Route
-              path="/Profile"
+              path="/SellerProfile"
               element={
                 <>
                   <LoggedInNav />
-                  <SellerProfile /> 
+                  <SellerProfile />
                   <Footer />
                 </>
               }
@@ -199,8 +218,7 @@ const App = () => {
                   <Footer />
                 </>
               }
-            >
-            </Route>
+            ></Route>
             <Route path="/Loading" element={<Loading />}></Route>
             <Route
               path="/MyProducts" // Route for MyProducts
