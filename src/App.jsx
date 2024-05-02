@@ -22,10 +22,11 @@ import BuyerProfile from "./components/BuyerProfile";
 import Favorites from "./components/Favorites";
 import Orders from "./components/Orders";
 import Loading from "./components/Loading";
-import MyProducts from "./components/MyProducts"; // Import MyProducts
-import SellerProfile from "./components/SellerProfile"; // Import SellerProfile
+import MyProducts from "./components/MyProducts";
+import SellerProfile from "./components/SellerProfile";
 import ItemPage from "./components/ItemPage";
 import SellerItem from "./components/SellerItem";
+import EditPage from "./components/EditPage"; // Import EditPage
 
 const App = () => {
   const { isLoggedIn, user } = useContext(UserContext);
@@ -142,7 +143,16 @@ const App = () => {
                 </>
               }
             ></Route>
-
+            <Route
+              path="/EditPage/:id" // Route for EditPage with product id
+              element={
+                <>
+                  <LoggedInNav />
+                  <EditPage />
+                  <Footer />
+                </>
+              }
+            ></Route>
             <Route
               path="/ItemPage"
               element={
@@ -151,7 +161,16 @@ const App = () => {
                 </>
               }
             ></Route>
-
+            <Route
+  path="/SellerItem/:id"
+  element={
+    <>
+      <LoggedInNav />
+      <SellerItem />
+      <Footer />
+    </>
+  }
+></Route>
             <Route
               path="/Contact"
               element={
@@ -170,54 +189,29 @@ const App = () => {
                 </>
               }
             ></Route>
-            {/* Add SellerProfile Route with conditions */}
-          { isLoggedIn &&  user.role == "admin" ? 
-          <Route
-              path="/SellerProfile"
-              element={
-                <>
-                      <LoggedInNav />
-                        <SellerProfile />
-                  <Footer />
-                </>
-              }
-            ></Route>
-              :
-            <Route
-              path="/BuyerProfile"
-              element={
-                <>
-                  <LoggedInNav />
-                  <BuyerProfile />
-                  <Footer />
-                </>
-              }
-            ></Route>
-            }
-            <Route
-              path="/Loading"
-              element={<Loading />}
-            ></Route>
-            <Route
-              path="/MyProducts" // Route for MyProducts
-              element={
-                <>
-                  <MyProducts />
-            
-                </>
-              }
-            ></Route>
-            <Route
-            path="/SellerItem/:id"
-            element={
-              <>
-                <LoggedInNav />
-                <SellerItem />
-                <Footer />
-              </>
-            }
-            >
-            </Route>
+            {isLoggedIn ? (
+              <Route
+                path="/SellerProfile"
+                element={
+                  <>
+                    <LoggedInNav />
+                    <SellerProfile />
+                    <Footer />
+                  </>
+                }
+              ></Route>
+            ) : (
+              <Route
+                path="/BuyerProfile"
+                element={
+                  <>
+                    <LoggedInNav />
+                    <BuyerProfile />
+                    <Footer />
+                  </>
+                }
+              ></Route>
+            )}
             <Route path="*" element={<h1>Not Found</h1>}></Route>
           </Routes>
         </Router>

@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShoppingCart, faStar } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { ProductsContext } from '../contexts/ProductsContext';
 
 const ProductPage = () => {
-  // Sample product data (replace it with your actual data)
-  const product = {
-    id: 1,
-    name: 'Nike Air Zoom Pegasus 38',
-    price: 120,
-    description: 'The Nike Air Zoom Pegasus 38 continues to put a spring in your step, using the same responsive foam as its predecessor. Mesh in the upper combines the comfort and durability you want with a fit that nods to the fast.',
-    sizes: ['S', 'M', 'L', 'XL', '2XL'],
-    colors: ['Black', 'White', 'Blue'],
-    image: 'https://via.placeholder.com/500x850', // Adjusted image height
-  };
+  const { id } = useParams(); // Get product ID from URL params
+  const { getProductById } = useContext(ProductsContext); // Access getProductById function from ProductsContext
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    // Fetch product data based on ID when component mounts
+    const fetchProduct = async () => {
+      const fetchedProduct = await getProductById(id);
+      setProduct(fetchedProduct);
+    };
+    fetchProduct();
+  }, [id, getProductById]);
 
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
@@ -78,17 +81,15 @@ const ProductPage = () => {
 
   // Function to check if a size is available
   const isAvailableSize = (size) => {
-    return product.sizes.includes(size);
-  };
-
-  // Function to fake user login
-  const handleLogin = () => {
-    // Implement login functionality
-    setIsLoggedIn(true);
+    return product && product.sizes.includes(size);
   };
 
   // Calculate average star rating
   const averageRating = comments.length > 0 ? comments.reduce((total, comment) => total + comment.rating, 0) / comments.length : 0;
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8 lg:w-1/2"> {/* Reduced width for large screens */}
