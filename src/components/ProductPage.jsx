@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faShoppingCart, faStar } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from 'react-router-dom';
+import { Await, useParams } from 'react-router-dom';
 import { ProductsContext } from '../contexts/ProductsContext';
 import { UserContext } from '../contexts/UserContext';
 
 const ProductPage = () => {
 
-  const { products } = useContext(ProductsContext);
-  const { user, isLoggedIn } = useContext(UserContext);
+  const { products,addProduct } = useContext(ProductsContext);
+  const { user, isLoggedIn ,setUser} = useContext(UserContext);
   const { id } = useParams();
 
 
@@ -37,7 +37,22 @@ const ProductPage = () => {
   };
 
   const handleAddToCart = () => {
-    // Implement add to cart functionality
+    // if (!selectedSize || !selectedColor) {
+    //   alert('Please select size and color before adding to cart.');
+    //   return;
+    // }
+    const newProduct = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.image,
+      quantity: 1, // default quantity
+      size: selectedSize,
+      color: selectedColor,
+    };
+    addProduct(newProduct); // Add product to cart
+    // Redirect user to cart page
+    // You can use react-router-dom for this navigation
   };
 
   const handleAddToFavorites = () => {

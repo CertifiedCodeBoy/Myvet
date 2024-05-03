@@ -24,7 +24,7 @@ const Login = () => {
   const { setIsLoggedIn, setUser, setShowToast } = useContext(UserContext);
 
   const navigate = useNavigate();
-  const API_URL = "https://5208-154-121-43-250.ngrok-free.app/login";
+  const API_URL = "http://localhost:5000/login";
 
   const loginUser = async (formData) => {
     try {

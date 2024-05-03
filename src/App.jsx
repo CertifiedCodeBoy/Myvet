@@ -221,7 +221,7 @@ const App = () => {
             ></Route>
             <Route path="/Loading" element={<Loading />}></Route>
             <Route
-              path="/MyProducts" // Route for MyProducts
+              path="/MyProducts" 
               element={
                 <>
                   <MyProducts />
