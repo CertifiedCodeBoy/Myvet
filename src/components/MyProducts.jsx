@@ -5,21 +5,19 @@ import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { ProductsContext } from "../contexts/ProductsContext";
 
 const MyProducts = () => {
-  const { products, deleteProduct } = useContext(ProductsContext); // Get products and deleteProduct function from context
+  const { products } = useContext(ProductsContext); // Get products and deleteProduct function from context
 
   const handleDelete = (productId) => {
-    deleteProduct(productId); // Call deleteProduct function from context
   };
 
   return (
     <Box p={8}>
       <Heading mb={4}>My Products</Heading>
       <Flex flexWrap="wrap">
-        {products
-          .filter((product) => product.category === "men's clothing") // Filter products by category
+        {products.Shoe
           .map((product) => (
             <Box
-              key={product.id}
+              key={product._id}
               maxW="sm"
               borderWidth="1px"
               borderRadius="lg"
@@ -30,9 +28,9 @@ const MyProducts = () => {
               boxShadow="lg"
               position="relative"
             >
-              <Link key={product.id} to={`/SellerItem/${product.id}`} style={{ textDecoration: "none" }}>
+              <Link key={product.id} to={`/EditPage`} style={{ textDecoration: "none" }}>
                 <Box height="200px" position="relative" overflow="hidden" borderRadius="lg" mb={2}>
-                  <Image src={product.image} alt={product.name} w="100%" h="100%" objectFit="contain" cursor="pointer" borderRadius="lg" />
+                  <Image src={product.pic[0]} alt={product.name} w="100%" h="100%" objectFit="contain" cursor="pointer" borderRadius="lg" />
                 </Box>
                 <Box>
                   <Heading fontSize="xl">{product.name}</Heading>
@@ -50,7 +48,7 @@ const MyProducts = () => {
                 />
                 <Button
                   as={Link}
-                  to={`/EditPage/${product.id}`}
+                  to={`/EditPage/${product._id}`}
                   colorScheme="blue"
                   variant="ghost"
                 >

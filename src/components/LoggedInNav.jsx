@@ -178,7 +178,7 @@ const LoggedInNav = () => {
                   onOpen();
                 }}
               >
-                <Link to={`/${isSeller ? "SellerProfile" : "BuyerProfile"}`}>
+                <Link to={`/Profile/${user.id}`}>
                   <div className="flex items-center gap-2 ml-4">
                     {user ? (
                       <Avatar
@@ -280,9 +280,9 @@ const LoggedInNav = () => {
                         </Link>
                         {
                           //if user is seller, show seller products
-                          !user.isSeller ? (
+                          user.isSeller ? (
                             <Link
-                              to={`/SellerProfile`}
+                              to={`/Profile`}
                               className="flex items-center gap-2 hover:underline"
                               onClick={() => {
                                 onClose();
@@ -294,7 +294,7 @@ const LoggedInNav = () => {
                           ) : null
                         }
                         <Link
-                          to={`/${!user.isSeller ? "SellerProfile" : "BuyerProfile"}`}
+                          to="/Profile"
                           className="flex items-center gap-2 hover:underline"
                         >
                           <ArrowSquareOut size={24} color="red" />

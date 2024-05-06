@@ -37,7 +37,7 @@ const BuyerProfile = () => {
   const toast = useToast();
   const [selected, setSelected] = useState(1);
   const { user, isLoading, setIsLoggedIn } = useContext(UserContext);
-  const [isExpanded, setIsExpanded] = useState(() =>
+  const [isExpanded, setIsExpanded] = useState(
     false
   );
   const [focused, setFocused] = useState(false);

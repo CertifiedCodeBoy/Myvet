@@ -24,7 +24,7 @@ const Login = () => {
   const { setIsLoggedIn, setUser, setShowToast } = useContext(UserContext);
 
   const navigate = useNavigate();
-  const API_URL = "https://5208-154-121-43-250.ngrok-free.app/login";
+  const API_URL = "http://localhost:5000/login";
 
   const loginUser = async (formData) => {
     try {
@@ -55,6 +55,7 @@ const Login = () => {
         setIsLoggedIn(true);
         localStorage.setItem("jwt", data.token);
         localStorage.setItem("user", JSON.stringify(data.user));
+        Cookies.set("jwt",data.jwt);
         setUser(data.user);
         navigate("/");
         setShowToast(true);

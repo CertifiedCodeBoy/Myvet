@@ -1,32 +1,65 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faShoppingCart, faStar } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from 'react-router-dom';
-import { ProductsContext } from '../contexts/ProductsContext';
-import { UserContext } from '../contexts/UserContext';
+import {
+  faHeart,
+  faShoppingCart,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
+import { useParams } from "react-router-dom";
+import { ProductsContext } from "../contexts/ProductsContext";
+import { UserContext } from "../contexts/UserContext";
+import { FavoritesContext } from "../contexts/FavoritesContext";
+import Cookies from "js-cookie";
+import { Heart } from "phosphor-react";
 
 const ProductPage = () => {
-
-  const { products } = useContext(ProductsContext);
   const { user, isLoggedIn } = useContext(UserContext);
+  const { addFavorite } = useContext(FavoritesContext);
   const { id } = useParams();
+  const { getProduct, loading } = useContext(ProductsContext);
 
-
-  const product = products[id - 1];
-
-  
-  const [selectedSize, setSelectedSize] = useState('');
-  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
   const [rating, setRating] = useState(0);
   const [isAddingReview, setIsAddingReview] = useState(false);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
+  const [isFavorite, setIsFavorite] = useState(false);
 
   // Sample fake comments data
   const [comments, setComments] = useState([
-    { id: 1, name: 'John Doe', rating: 5, comment: 'Great shoes! Very comfortable.', date: 'Feb 18, 2024' },
-    { id: 2, name: 'Jane Smith', rating: 4, comment: 'Nice design and good quality.', date: 'Feb 16, 2024' },
-    { id: 3, name: 'Alice Johnson', rating: 2, comment: 'Decent shoes, but could be better.', date: 'Feb 20, 2024' },
+    {
+      id: 1,
+      name: "John Doe",
+      rating: 5,
+      comment: "Great shoes! Very comfortable.",
+      date: "Feb 18, 2024",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      rating: 4,
+      comment: "Nice design and good quality.",
+      date: "Feb 16, 2024",
+    },
+    {
+      id: 3,
+      name: "Alice Johnson",
+      rating: 2,
+      comment: "Decent shoes, but could be better.",
+      date: "Feb 20, 2024",
+    },
   ]);
+
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const data = await getProduct(id);
+      setProduct(data.result);
+      setIsFavorite(data.isFavorite);
+    };
+    fetchProduct();
+  }, []);
 
   const handleSizeChange = (size) => {
     setSelectedSize(size);
@@ -41,7 +74,18 @@ const ProductPage = () => {
   };
 
   const handleAddToFavorites = () => {
-    // Implement add to favorites functionality
+    const productId = product._id;
+    const productImage = product.pic[0];
+    const productTitle = product.name;
+    const productPrice = product.price;
+    const requestBody = {
+      id: productId,
+      price: productPrice,
+      name: productTitle,
+      pic: productImage,
+    };
+
+    addFavorite(requestBody, productId);
   };
 
   const handleRatingChange = (newRating) => {
@@ -49,9 +93,7 @@ const ProductPage = () => {
   };
 
   const handleCommentChange = (event) => {
-    setComment(
-      event.target.value
-    )
+    setComment(event.target.value);
   };
 
   const handleToggleReviewForm = () => {
@@ -60,20 +102,23 @@ const ProductPage = () => {
       setIsAddingReview(!isAddingReview);
     } else {
       // Redirect user to login page or show login modal
-      alert('You need to be logged in to write a review.');
+      alert("You need to be logged in to write a review.");
     }
   };
 
   const handleSubmitReview = () => {
     // Implement submit review functionality
-    const newComment =
-    {
+    const newComment = {
       id: comments.length + 1,
       name: user.name,
       rating: 5,
       comment: comment,
-      date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
-    }
+      date: new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+    };
     setComments([...comments, newComment]);
 
     setIsAddingReview(false);
@@ -84,44 +129,64 @@ const ProductPage = () => {
     // return product && product.sizes.includes(size);
   };
 
-  const averageRating = comments.length > 0 ? comments.reduce((total, comment) => total + comment.rating, 0) / (comments.length ): 0;
+  const averageRating =
+    comments.length > 0
+      ? comments.reduce((total, comment) => total + comment.rating, 0) /
+        comments.length
+      : 0;
 
-  if (!product) {
-    return <div>Loading...</div>;
+  if (loading || !product) {
+    return <p>Loading...</p>;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 lg:w-1/2"> {/* Reduced width for large screens */}
+    <div className="container mx-auto px-4 py-8 lg:w-1/2">
       <div className="flex flex-wrap items-center">
         {/* Product Photo */}
         <div className="w-full md:w-1/2 p-2">
-          <img src={product.image} alt={product.title} className="w-full h-auto md:h-auto rounded-none shadow-lg p-4" style={{ maxHeight: '500px' }} />
+          <img
+            src={product.pic[0]}
+            alt={product.name}
+            className="w-full h-auto md:h-auto rounded-none shadow-lg p-4"
+            style={{ maxHeight: "500px" }}
+          />
         </div>
         {/* Product Details */}
         <div className="w-full md:w-1/2 p-4">
-          <h1 className="text-3xl font-semibold mb-1 text-gray-900">{product.title}</h1>
-          <p className="text-lg text-gray-700 mb-2">{product.price} DA</p>
-          <h1 className='text-3xl font-medium mb-3 text-gray-900'>Description</h1>
+          <h1 className="text-3xl font-semibold mb-1 text-gray-900">
+            {product.name}
+          </h1>
+          {/* <p className="text-lg text-gray-700 mb-2">{product.price} DA</p> */}
+          <h1 className="text-3xl font-medium mb-3 text-gray-900">
+            Description
+          </h1>
           <p className="text-gray-700 mb-4">{product.description}</p>
           {/* Color Selector */}
           <div className="mb-4 flex">
             <label className="text-gray-700 mr-2 font-semibold">Color:</label>
-            {/* <div className="flex items-center">
+            <div className="flex items-center">
               {product.colors.map((color) => (
                 <button
                   key={color}
-                  className={`w-8 h-8 rounded-full border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${selectedColor === color ? 'ring-2 ring-primarybg-primary' : ''}`}
-                  style={{ backgroundColor: color.toLowerCase(), cursor: 'pointer' }}
+                  className={`w-8 h-8 rounded-full border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${
+                    selectedColor === color
+                      ? "ring-2 ring-primarybg-primary"
+                      : ""
+                  }`}
+                  style={{
+                    backgroundColor: color.toLowerCase(),
+                    cursor: "pointer",
+                  }}
                   onClick={() => handleColorChange(color)}
                 ></button>
               ))}
-            </div> */}
+            </div>
           </div>
           {/* Size Selector */}
           <div className="mb-4 flex items-center">
             <label className="text-gray-700 mr-2 font-semibold">Size:</label>
-            {/* <div className="flex items-center">
-              {product.sizes.map((size) => (
+            <div className="flex items-center">
+              {/* {product.colors.sizes.map((size) => (
                 <button
                   key={size}
                   className={`w-10 h-10 rounded-md border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${!isAvailableSize(size) ? 'bg-gray-200 cursor-not-allowed' : selectedSize === size ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
@@ -131,8 +196,8 @@ const ProductPage = () => {
                 >
                   {size}
                 </button>
-              ))}
-            </div> */}
+              ))} */}
+            </div>
           </div>
           {/* Buttons: Add to Cart and Add to Favorites */}
           <div className="flex flex-col gap-4">
@@ -148,15 +213,34 @@ const ProductPage = () => {
               onClick={handleAddToFavorites}
               className="bg-transparent text-primarybg-primary border border-amber-950 px-6 py-4 rounded-3xl hover:bg-gray-100 hover:text-amber-950"
             >
-              <FontAwesomeIcon icon={faHeart} className="mr-2" />
-              Add to Favorites
+              {isFavorite ? (
+                <div className="flex items-center justify-center gap-4">
+                  <Heart 
+                  size={24}
+                  color="red"
+                  weight="fill"
+                  />
+                  <p
+                    className="text-amber-950 hover:text-amber-950 text-md "
+                  >
+                    Remove from Favorites
+                  </p>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center gap-2">
+                  <Heart size={24} />
+                  <p>Add to Favorites</p>
+                </div>
+              )}
             </button>
           </div>
         </div>
       </div>
-      {/* Reviews Section */}
       <div className="mt-2 lg:mt-4">
-        <h2 className="text-xl font-semibold mb-4">Reviews ({averageRating.toFixed(1)})<FontAwesomeIcon icon={faStar} className="text-yellow-500" /></h2>
+        <h2 className="text-xl font-semibold mb-4">
+          Reviews ({averageRating.toFixed(1)})
+          <FontAwesomeIcon icon={faStar} className="text-yellow-500" />
+        </h2>
         {/* Write a Review Button (conditional) */}
         <div className="mb-4">
           <button
@@ -173,7 +257,15 @@ const ProductPage = () => {
               {/* User Rating */}
               <div className="flex items-center mr-2">
                 {[...Array(5)].map((_, i) => (
-                  <FontAwesomeIcon key={i} icon={faStar} className={i < fakeComment.rating ? 'text-yellow-500' : 'text-gray-400'} />
+                  <FontAwesomeIcon
+                    key={i}
+                    icon={faStar}
+                    className={
+                      i < fakeComment.rating
+                        ? "text-yellow-500"
+                        : "text-gray-400"
+                    }
+                  />
                 ))}
               </div>
               {/* User Name */}

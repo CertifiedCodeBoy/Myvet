@@ -6,9 +6,15 @@ import Section from "./Section";
 import Featured from "./Featured";
 import UseMobile from "./UseMobile";
 import { UserContext } from "../contexts/UserContext";
+import { ProductsContext } from "../contexts/ProductsContext";
 
 const Home = () => {
   const { showToast, setShowToast } = useContext(UserContext);
+  const { products } = useContext(ProductsContext);
+
+  if (!products) {
+    return (<div className="text-6xl">Loading ...</div>)
+  }
 
   return (
     <div className="font-main bg-gray-100 h-full pb-4 flex justify-center">
@@ -26,16 +32,13 @@ const Home = () => {
       </div>
       <div className="w-full">
         {window.innerWidth > 640 ? <Slideshow /> : <UseMobile />}
-        <Section title="Men" filter={(p) => p.category === "men's clothing"} />
+        <Section title="Promoted" category={products.Promoted} />
         <Featured title="Featured" />
-        <Section title="Jewlery" filter={(p) => p.category === "jewelery"} />
-        <Section title="Most Bought" filter={(p) => p.rating.count >= 120} />
-        <Section title="Cheapest" filter={(p) => p.price <= 50} />
-        <Section
-          title="Women"
-          filter={(p) => p.category === "women's clothing"}
-        />
-        <Section title="Popular" filter={(p) => p.rating.rate >= 3} />
+        <Section title="Shoes" category={products.Shoe} />
+        <Section title="Pants" category={products.Pants} />
+        <Section title="Hoodies" category={products.Hoodie} />
+        <Section title="T-Shirts" category={products.TShirt} />
+        <Section title="Dresses" category={products.Dress} />
       </div>
     </div>
   );

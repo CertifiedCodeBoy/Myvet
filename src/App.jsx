@@ -200,21 +200,11 @@ const App = () => {
             ></Route>
             {/* Add SellerProfile Route with conditions */}
             <Route
-              path="/SellerProfile"
+              path={`/Profile/:id`}
               element={
                 <>
                   <LoggedInNav />
-                  <SellerProfile />
-                  <Footer />
-                </>
-              }
-            ></Route>
-            <Route
-              path="/BuyerProfile"
-              element={
-                <>
-                  <LoggedInNav />
-                  <BuyerProfile />
+                  {user && user.isSeller ? <SellerProfile /> : <BuyerProfile />}
                   <Footer />
                 </>
               }

@@ -6,6 +6,8 @@ import UserProvider from "./contexts/UserContext";
 import SellerProvider from "./contexts/SellerContext.jsx";
 import { ChakraProvider } from "@chakra-ui/react";
 import ProductsProvider from "./contexts/ProductsContext";
+import FavoritesProvider from "./contexts/FavoritesContext";
+import CategoriesProvider from "./contexts/CategoriesContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -13,7 +15,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <ProductsProvider>
         <UserProvider>
           <SellerProvider>
-            <App />
+            <CategoriesProvider>
+              <FavoritesProvider>
+                <App />
+              </FavoritesProvider>
+            </CategoriesProvider>
           </SellerProvider>
         </UserProvider>
       </ProductsProvider>

@@ -7,11 +7,11 @@ import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { CaretLeft, CaretRight } from "phosphor-react";
 
-const Section = ({ title, filter }) => {
+const Section = ({ title, category }) => {
   const useProducts = () => useContext(ProductsContext);
-  const { products, loading } = useProducts();
+  const { loading } = useProducts();
 
-  if (loading || !products) {
+  if (loading) {
     return (
       <Skeleton
         isLoaded={!loading}
@@ -21,10 +21,6 @@ const Section = ({ title, filter }) => {
       />
     );
   }
-
-  const filteredProducts = products.filter(
-    (product) => product.category != "electronics" && filter(product)
-  );
 
   const deviceType = useMediaQuery([
     "(max-width: 640px)",
@@ -65,8 +61,8 @@ const Section = ({ title, filter }) => {
         </div>
       </Box>
       <SplideTrack>
-        {filteredProducts &&
-          filteredProducts.map((product, index) => (
+        {category &&
+          category.map((product, index) => (
             <SplideSlide key={index}>
               {deviceType[1] ? (
                 <Card
@@ -88,7 +84,7 @@ const Section = ({ title, filter }) => {
                     onClick={() => window.scrollTo(0, 0)}
                   >
                     <Image
-                      src={product.image}
+                      src={product.pic[0]}
                       alt={`Image`}
                       maxH="200px"
                       minH={"200px"}
@@ -97,8 +93,8 @@ const Section = ({ title, filter }) => {
                     />
                     <Box mt={8}>
                       <h1 className="text-xs font-md text-[#111111]">
-                        {product.title.slice(0, 20) +
-                          (product.title.length > 20 ? "..." : "")}
+                        {product.name.slice(0, 20) +
+                          (product.name.length > 20 ? "..." : "")}
                       </h1>
                     </Box>
                     <Box mb={4}>
@@ -139,7 +135,7 @@ const Kard = ({ product }) => {
         className={`flex flex-col items-start `}
       >
         <Image
-          src={product.image}
+          src={product.pic[0]}
           alt={`Image`}
           maxH="250px"
           minH={"250px"}
@@ -149,8 +145,8 @@ const Kard = ({ product }) => {
         />
         <Box mt={"8"}>
           <h1 className="text-md font-medium text-[#111111]">
-            {product.title.slice(0, 12) +
-              (product.title.length > 8 ? "..." : "")}
+            {product.name.slice(0, 12) +
+              (product.name.length > 8 ? "..." : "")}
           </h1>
         </Box>
         <Box my={4}>

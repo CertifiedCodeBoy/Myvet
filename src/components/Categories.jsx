@@ -15,43 +15,45 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { ProductsContext } from "../contexts/ProductsContext";
+import { CategoriesContext } from "../contexts/CategoriesContext.jsx";
 import { Link } from "react-router-dom";
-import { extendTheme } from '@chakra-ui/react'
-import  {radioTheme}  from './Styles/radio.ts'
+import { extendTheme } from "@chakra-ui/react";
+import { radioTheme } from "./Styles/radio.ts";
 
 export const theme = extendTheme({
   components: { Radio: radioTheme },
-})
+});
 
 const Categories = () => {
   const { category } = useParams();
-  const useProducts = useContext(ProductsContext);
-  const { products, loading } = useProducts;
-
-  const [priceFilter, setPriceFilter] = useState();
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const {
+    categories,
+    loading,
+    error,
+    fetchCategories,
+    fetchPriceFilter,
+  } = useContext(CategoriesContext);
+  const [priceFilter, setPriceFilter] = useState("");
+  const [genderFilter, setGenderFilter] = useState("");
+  const [ageFilter, setAgeFilter] = useState("");
 
   useEffect(() => {
-    let filtered = products;
+  fetchCategories(category);
+  }, []);
 
-    if (category) {
-      filtered = filtered.filter((product) => product.category === category);
-    }
-
-    if (priceFilter) {
-      const min = parseInt(priceFilter.substring(0, priceFilter.indexOf("-")));
-      const max = parseInt(priceFilter.substring(priceFilter.indexOf("-") + 1));
-      filtered = filtered.filter(
-        (product) => product.price >= min && product.price <= max
-      );
-    }
-
-    setFilteredProducts(filtered);
-  }, [products, priceFilter, category]);
-
-  if (loading || !products) {
+  useEffect(() => {
+    fetchPriceFilter(category, priceFilter, genderFilter, ageFilter);
+  }, [ priceFilter, genderFilter, ageFilter]);
+  
+  if (loading) {
     return <div className="min-h-96">Loading...</div>;
   }
+  
+  if (error) {
+    return <div className="min-h-96">An error occurred: {error}</div>;
+  }
+  
+
   return (
     <>
       <Box width={"100%"} overflow={"hidden"} my={8}>
@@ -59,7 +61,11 @@ const Categories = () => {
           <Box width={{ base: "100%", md: "20%" }} p={4}>
             <Stack placeItems={"start"}>
               <Accordion allowToggle width={"100%"} mb={4}>
-                <AccordionItem width={"100%"} border={"none"} position={"relative"}>
+                <AccordionItem
+                  width={"100%"}
+                  border={"none"}
+                  position={"relative"}
+                >
                   {({ isExpanded }) => (
                     <>
                       <h2>
@@ -76,16 +82,13 @@ const Categories = () => {
                       <AccordionPanel>
                         <RadioGroup
                           value={priceFilter}
-                          onChange={setPriceFilter}
+                          onChange={(value) => {
+                            setPriceFilter(value);
+                          }}
                         >
-                          <Stack spacing={5} direction={"column"} >
-                            <Radio  value="" defaultChecked={"true"}>
-                              All
-                            </Radio>
-                            <Radio value="0-100">0 - 100 DA</Radio>
-                            <Radio value="100-150">100 - 150 DA</Radio>
-                            <Radio value="150-200">150 - 200 DA</Radio>
-                            <Radio value="200">+ 200 DA</Radio>
+                          <Stack spacing={5} direction={"column"}>
+                            <Radio value="">Ascending</Radio>
+                            <Radio value="d">Descending</Radio>
                           </Stack>
                         </RadioGroup>
                       </AccordionPanel>
@@ -96,7 +99,11 @@ const Categories = () => {
             </Stack>
             <Stack placeItems={"start"}>
               <Accordion allowToggle width={"100%"} mb={4}>
-                <AccordionItem width={"100%"} border={"none"} position={"relative"}>
+                <AccordionItem
+                  width={"100%"}
+                  border={"none"}
+                  position={"relative"}
+                >
                   {({ isExpanded }) => (
                     <>
                       <h2>
@@ -105,17 +112,23 @@ const Categories = () => {
                             _expanded={{ border: "none" }}
                             textAlign={"center"}
                           >
-                            <h1 className="text-lg font-medium">Color</h1>
+                            <h1 className="text-lg font-medium">Gender</h1>
                             <AccordionIcon position={"absolute"} right={2} />
                           </AccordionButton>
                         </Flex>
                       </h2>
                       <AccordionPanel>
-                        <RadioGroup colorScheme="gray">
+                        <RadioGroup
+                          value={genderFilter}
+                          onChange={(value) => {
+                            setGenderFilter(value);
+                          }}
+                        >
                           <Stack spacing={5} direction={"column"}>
-                            <Radio value="Men">Red</Radio>
-                            <Radio value="Unisex">Green</Radio>
-                            <Radio value="Women">Blue</Radio>
+                            <Radio value="">All</Radio>
+                            <Radio value="Male">Male</Radio>
+                            <Radio value="Female">Female</Radio>
+                            <Radio value="Unisex">Unisex</Radio>
                           </Stack>
                         </RadioGroup>
                       </AccordionPanel>
@@ -126,7 +139,11 @@ const Categories = () => {
             </Stack>
             <Stack placeItems={"start"}>
               <Accordion allowToggle width={"100%"} mb={4}>
-                <AccordionItem width={"100%"} border={"none"} position={"relative"}>
+                <AccordionItem
+                  width={"100%"}
+                  border={"none"}
+                  position={"relative"}
+                >
                   {({ isExpanded }) => (
                     <>
                       <h2>
@@ -135,24 +152,22 @@ const Categories = () => {
                             _expanded={{ border: "none" }}
                             textAlign={"center"}
                           >
-                            <h1 className="text-lg font-medium">Size</h1>
+                            <h1 className="text-lg font-medium">Age</h1>
                             <AccordionIcon position={"absolute"} right={2} />
                           </AccordionButton>
                         </Flex>
                       </h2>
                       <AccordionPanel>
-                        <RadioGroup colorScheme={'brown'}>
+                        <RadioGroup
+                          value={ageFilter}
+                          onChange={(value) => {
+                            setAgeFilter(value);
+                          }}
+                        >
                           <Stack spacing={5} direction={"column"}>
-                            <Radio value="XS" defaultChecked>
-                              XS
-                            </Radio>
-                            <Radio value="S">S</Radio>
-                            <Radio value="M">
-                              M
-                            </Radio>
-                            <Radio value="L">L</Radio>
-                            <Radio value="XL">XL</Radio>
-                            <Radio value="XXL">XXL</Radio>
+                            <Radio value="">All</Radio>
+                            <Radio value="Kid">Kids</Radio>
+                            <Radio value="Adult">Adults</Radio>
                           </Stack>
                         </RadioGroup>
                       </AccordionPanel>
@@ -164,9 +179,9 @@ const Categories = () => {
           </Box>
           <Box flex="1" p={4}>
             <Flex wrap="wrap" justify="start">
-              {filteredProducts.map((product) => (
+              {categories.map((product, index) => (
                 <Box
-                  key={product.id}
+                  key={index}
                   w={{ base: "100%", sm: "50%", md: "33%", lg: "25%" }}
                   p={2}
                 >
@@ -183,7 +198,7 @@ const Categories = () => {
 
 const Kard = ({ product }) => {
   return (
-    <Link to={`/Product/${product.id}`}>
+    <Link to={`/Product/${product._id}`}>
       <Card
         p={4}
         float={"none"}
@@ -197,17 +212,17 @@ const Kard = ({ product }) => {
         overflow={"hidden"}
       >
         <Image
-          src={product.image}
+          src={product.pic[0]}
           alt={`Image`}
-          width={{base:"auto",xxl:"20%"}}
+          width={{ base: "auto", xxl: "20%" }}
           aspectRatio={"1/1"}
           objectFit="contain"
         />
-        <Stack maxWidth={'100%'} overflow={"hidden"} mt={4}>
-          <Box >
+        <Stack maxWidth={"100%"} overflow={"hidden"} mt={4}>
+          <Box>
             <h1 className="text-sm lg:text-md 2xl:text-lg whitespace-nowrap font-semibold text-[#111111]">
-              {product.title.slice(0, 20) +
-                (product.title.length > 20 ? "..." : "")}
+              {product.name.slice(0, 20) +
+                (product.name.length > 20 ? "..." : "")}
             </h1>
           </Box>
           <Box>

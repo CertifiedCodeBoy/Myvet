@@ -1,23 +1,50 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { SketchPicker } from 'react-color';
-import { useNavigate, useParams } from 'react-router-dom'; // Import useNavigate hook directly from react-router-dom
-import { ProductsContext } from '../contexts/ProductsContext';
+import React, { useState, useContext, useEffect } from "react";
+import { SketchPicker } from "react-color";
+import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate hook directly from react-router-dom
+import { ProductsContext } from "../contexts/ProductsContext";
 
 const EditPage = () => {
-  const { products, addProduct } = useContext(ProductsContext);
   const history = useNavigate(); // Initialize useHistory
   const { id } = useParams();
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [description, setDescription] = useState('');
+  const { products } = useContext(ProductsContext);
+  const [product, setProduct] = useState(null);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
   const [colors, setColors] = useState([]);
-  const [selectedColor, setSelectedColor] = useState('#ffffff');
+  const [selectedColor, setSelectedColor] = useState("#ffffff");
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedSize, setSelectedSize] = useState("");
   const [sizes, setSizes] = useState([]);
-  const [image, setImage] = useState(null);
+  const [pic, setPic] = useState([]);
   const [hoveredColorIndex, setHoveredColorIndex] = useState(null);
   const [hoveredSizeIndex, setHoveredSizeIndex] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/product/${id}`);
+        const data = await response.json();
+        setProduct(data.result);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  useEffect(() => {
+    if (product) {
+      setName(product.name);
+      setPrice(product.price);
+      setDescription(product.description);
+      setColors(product.colors);
+      if (product.colors.length > 0) {
+        setSizes(product.colors.sizes);
+      }
+    }
+  }, [product]);
 
   const handleColorAdd = () => {
     setColors([...colors, selectedColor]);
@@ -26,11 +53,11 @@ const EditPage = () => {
 
   const handleSizeAdd = () => {
     setSizes([...sizes, selectedSize]);
-    setSelectedSize('');
+    setSelectedSize("");
   };
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    setPic(e.target.files[0]);
   };
 
   const handleColorDelete = (index) => {
@@ -49,33 +76,34 @@ const EditPage = () => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('title', name);
-      formData.append('price', parseFloat(price));
-      formData.append('description', description);
-      formData.append('image', image);
-      formData.append('category', "men's clothing");
-      formData.append('colors', JSON.stringify(colors)); // Add colors to form data
-      formData.append('sizes', JSON.stringify(sizes)); // Add sizes to form data
+      formData.append("name", name);
+      formData.append("price", parseFloat(price));
+      formData.append("description", description);
+      formData.append("pic", pic);
+      formData.append("category", "men's clothing");
+      formData.append("colors", JSON.stringify(colors)); // Add colors to form data
+      formData.append("sizes", JSON.stringify(sizes)); // Add sizes to form data
 
       const newProduct = {
-        title: name,
+        name: name,
         price: parseFloat(price),
         description,
-        image,
+        pic: [
+          "https://via.placeholder.com/150",
+          "https://via.placeholder.com/150",
+          "https://via.placeholder.com/150",
+        ],
         category: "men's clothing",
-        colors,
-        sizes,
+        colors : {
+          color : sizes,
+        },
       };
 
-      await addProduct(newProduct);
-      console.log('Product added successfully!');
-      history("/SellerProfile");
+      console.log("Product added successfully!", newProduct);
     } catch (error) {
-      console.error('Error adding product:', error);
+      console.error("Error adding product:", error);
     }
   };
-
-  const product = products[id - 1];
 
   return (
     <div className="container mx-auto py-8">
@@ -88,7 +116,6 @@ const EditPage = () => {
           <input
             type="text"
             value={name}
-            placeholder={product.title}
             onChange={(e) => setName(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
           />
@@ -100,7 +127,6 @@ const EditPage = () => {
           <input
             type="text"
             value={price}
-            placeholder={product.price}
             onChange={(e) => setPrice(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
           />
@@ -111,7 +137,6 @@ const EditPage = () => {
           </label>
           <textarea
             value={description}
-            placeholder={product.description}
             onChange={(e) => setDescription(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
           ></textarea>

@@ -209,13 +209,13 @@ const SellerProfile = () => {
                 gap={{ base: "0", md: "2" }}
                 direction={{ base: "column", md: "row" }}
               >
-                <Avatar size="2xl" name={user.name} src={user.avatar} />
+                <Avatar size="2xl" name={user.firstName} src={user.pic} />
                 <Flex direction={"column"}>
                   <Heading mt={{ base: 8, md: 0 }} ml={{ base: 0, md: 8 }}>
-                    {user.name}
+                    {user.firstName}
                   </Heading>
                 </Flex>
-                {user.role === "seller" ? (
+                {user.isSeller? (
                   <Badge mt={{ base: 0, md: 4 }} colorScheme="red">
                     Seller
                   </Badge>

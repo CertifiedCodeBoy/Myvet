@@ -8,7 +8,7 @@ import google from "../Assets/google.png";
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const API_URL = "https://5208-154-121-43-250.ngrok-free.app/register";
+  const API_URL = "http://localhost:5000/register";
 
   const signUser = async (formData) => {
     const response = await fetch(API_URL, {
