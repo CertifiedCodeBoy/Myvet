@@ -6,7 +6,6 @@ import { ProductsContext } from "../contexts/ProductsContext";
 
 const MyProducts = () => {
   const { products } = useContext(ProductsContext); // Get products and deleteProduct function from context
-
   const handleDelete = (productId) => {
   };
 

@@ -9,12 +9,14 @@ import { useParams } from "react-router-dom";
 import { ProductsContext } from "../contexts/ProductsContext";
 import { UserContext } from "../contexts/UserContext";
 import { FavoritesContext } from "../contexts/FavoritesContext";
+import { CartContext } from "../contexts/CartContext";
 import Cookies from "js-cookie";
 import { Heart } from "phosphor-react";
 
 const ProductPage = () => {
   const { user, isLoggedIn } = useContext(UserContext);
-  const { addFavorite } = useContext(FavoritesContext);
+  const { addFavorite, isFavorite } = useContext(FavoritesContext);
+  const { addToCart, getCart, removeFromCart, buyProducts } = useContext(CartContext);
   const { id } = useParams();
   const { getProduct, loading } = useContext(ProductsContext);
 
@@ -23,7 +25,6 @@ const ProductPage = () => {
   const [rating, setRating] = useState(0);
   const [isAddingReview, setIsAddingReview] = useState(false);
   const [comment, setComment] = useState("");
-  const [isFavorite, setIsFavorite] = useState(false);
 
   // Sample fake comments data
   const [comments, setComments] = useState([
@@ -56,7 +57,6 @@ const ProductPage = () => {
     const fetchProduct = async () => {
       const data = await getProduct(id);
       setProduct(data.result);
-      setIsFavorite(data.isFavorite);
     };
     fetchProduct();
   }, []);
@@ -69,8 +69,20 @@ const ProductPage = () => {
     setSelectedColor(color);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (id) => {
     // Implement add to cart functionality
+    const productDetails = {
+      id: product._id,
+      name: product.name,
+      color: selectedColor,
+      size: "null",
+      quantity: 1,
+      pic: product.pic[0],
+      price: product.price,
+    };
+
+    addToCart(id,productDetails);
+
   };
 
   const handleAddToFavorites = () => {
@@ -165,19 +177,20 @@ const ProductPage = () => {
           <div className="mb-4 flex">
             <label className="text-gray-700 mr-2 font-semibold">Color:</label>
             <div className="flex items-center">
-              {product.colors.map((color) => (
+              { product.colors.length == 0 ? <p>Out of stock</p> :
+              product.colors.map((color, index) => (
                 <button
-                  key={color}
+                  key={index}
                   className={`w-8 h-8 rounded-full border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${
                     selectedColor === color
                       ? "ring-2 ring-primarybg-primary"
                       : ""
                   }`}
                   style={{
-                    backgroundColor: color.toLowerCase(),
+                    backgroundColor: color.color,
                     cursor: "pointer",
                   }}
-                  onClick={() => handleColorChange(color)}
+                  onClick={() => handleColorChange(color.color)}
                 ></button>
               ))}
             </div>
@@ -186,24 +199,25 @@ const ProductPage = () => {
           <div className="mb-4 flex items-center">
             <label className="text-gray-700 mr-2 font-semibold">Size:</label>
             <div className="flex items-center">
-              {/* {product.colors.sizes.map((size) => (
+              { product.colors.length == 0 ? <p>Out of stock</p> :
+              product.colors.map((size, index) => (
                 <button
-                  key={size}
+                  key={index}
                   className={`w-10 h-10 rounded-md border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${!isAvailableSize(size) ? 'bg-gray-200 cursor-not-allowed' : selectedSize === size ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
                   style={{ minWidth: '2.5rem', textAlign: 'center' }}
                   onClick={() => isAvailableSize(size) && handleSizeChange(size)}
                   disabled={!isAvailableSize(size)}
                 >
-                  {size}
+                  {/* {size} */}
+                  {"null"}
                 </button>
-              ))} */}
+              ))}
             </div>
           </div>
           {/* Buttons: Add to Cart and Add to Favorites */}
           <div className="flex flex-col gap-4">
             <button
-              onClick={handleAddToCart}
-              disabled={!selectedSize || !selectedColor}
+              onClick={()=>{handleAddToCart(product.id)}}
               className="bg-primary text-white px-6 py-4 rounded-3xl hover:bg-amber-950 cursor-pointer"
             >
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />

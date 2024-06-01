@@ -9,6 +9,7 @@ const FavoritesProvider = ({ children }) => {
   //   const [error, setError] = useState(null);
 
   const [favorites, setFavorites] = useState([]);
+  const [isFavorite, setIsFavorite] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -42,6 +43,7 @@ const FavoritesProvider = ({ children }) => {
         const data = await response.json();
         if (response.ok) {
           setFavorites(data);
+          console.log(data)
           setLoading(false);
         } else {
           throw new Error(
@@ -57,7 +59,7 @@ const FavoritesProvider = ({ children }) => {
       }
     };
     fetchFavorites();
-  }, []);
+  }, [isFavorite]);
 
   const addFavorite = async (newFavorite, id) => {
     try {
@@ -72,10 +74,7 @@ const FavoritesProvider = ({ children }) => {
       const data = await response.json();
       if (response.ok) {
         console.log(data);
-      } else {
-        throw new Error(
-          data.message || "An error occurred while adding the favorite."
-        );
+        setIsFavorite(data.isFavorite);
       }
     } catch (error) {
       console.error("Error adding favorite:", error);
@@ -117,7 +116,7 @@ const FavoritesProvider = ({ children }) => {
     //   {children}
     // </ProductsContext.Provider>
     <FavoritesContext.Provider
-      value={{ favorites, addFavorite, loading, error }}
+      value={{ favorites, addFavorite, isFavorite, loading, error }}
     >
       {children}
     </FavoritesContext.Provider>

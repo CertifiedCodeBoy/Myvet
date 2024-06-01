@@ -14,7 +14,6 @@ import { FavoritesContext } from "../contexts/FavoritesContext";
 import { UserContext } from "../contexts/UserContext";
 
 const Favorites = () => {
-  
   const { favorites, loading, error } = useContext(FavoritesContext);
 
   if (loading || !favorites) {
@@ -29,7 +28,7 @@ const Favorites = () => {
       </Box>
     );
   }
-  
+
   if (error) {
     return (
       <Box>
@@ -52,11 +51,10 @@ const Favorites = () => {
         justifyContent="start"
         p={4}
       >
-        {
-        favoriteProducts.map((product,index) => (
-          <Kard key={index} product={product} />
-        ))
-      }
+        {favoriteProducts &&
+          favoriteProducts.map((product, index) => (
+            <Kard key={index} product={product} />
+          ))}
       </Box>
     </Box>
   );
@@ -97,12 +95,12 @@ const Favorites = () => {
 
 const Kard = ({ product }) => {
   const { addFavorite } = useContext(FavoritesContext);
+
+  const handleDelete = (Id) => {
+    addFavorite(product, Id);
+  };
   return (
-    <Link
-      to={`/Product/${product._id}`}
-      onClick={() => window.scrollTo(0, 0)}
-    >
-      <Card
+    <Card
         px={"8"}
         pt={4}
         mx={4}
@@ -112,6 +110,7 @@ const Kard = ({ product }) => {
           borderRadius: "10px",
         }}
       >
+        <Link to={`/Product/${product.id}`} onClick={() => window.scrollTo(0, 0)}>
         <Image
           src={product.pic}
           alt={`Image`}
@@ -127,6 +126,7 @@ const Kard = ({ product }) => {
               (product.name.length > 20 ? "..." : "")}
           </h1>
         </Box>
+        </Link>
         <Box
           my={4}
           display={"flex"}
@@ -143,17 +143,12 @@ const Kard = ({ product }) => {
             _focus={{ boxShadow: "none" }}
             borderRadius={"full"}
             p={2}
-            onClick={(e) => {
-              e.preventDefault();
-              addFavorite(product, product._id);
-              window.location.reload();
-            }}
+            onClick={() => {handleDelete(product.id)}}
           >
-            Remove 
+            Remove
           </Button>
         </Box>
       </Card>
-    </Link>
   );
 };
 
