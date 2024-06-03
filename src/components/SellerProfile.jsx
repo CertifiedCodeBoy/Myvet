@@ -50,7 +50,9 @@ const SellerProfile = () => {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    Cookies.remove("token");
+    Cookies.remove("jwt");
+    localStorage.removeItem("user");
+    localStorage.removeItem("jwt");
     navigate("/");
     onClose();
   };

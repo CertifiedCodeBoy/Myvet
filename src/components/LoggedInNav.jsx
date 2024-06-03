@@ -108,7 +108,7 @@ const LoggedInNav = () => {
                   setIsHoveredKids(false);
                 }}
               >
-                <Link to={"/Categories/men's clothing"}>Men</Link>
+                <Link to={"/PreCategory/Men"}>Men</Link>
                 <span
                   className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
                     current === "/Categories/men's%20clothing"
@@ -127,7 +127,7 @@ const LoggedInNav = () => {
                   setIsHoveredKids(false);
                 }}
               >
-                <Link to={"/Categories/women's clothing"}>Women</Link>
+                <Link to={"/PreCategory/Women"}>Women</Link>
                 <span
                   className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
                     current === "/Categories/women's%20clothing"
@@ -146,7 +146,7 @@ const LoggedInNav = () => {
                   setIsHoveredMen(false);
                 }}
               >
-                <Link to={"/Categories/Kids"}>Kids</Link>
+                <Link to={"/PreCategory/Kids"}>Kids</Link>
                 <span
                   className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
                     current === "/Categories/Kids" ? "w-full" : "w-0"
@@ -163,7 +163,7 @@ const LoggedInNav = () => {
                   setIsHoveredKids(false);
                 }}
               >
-                <Link to={"/Categories/jewelery"}>Accessories</Link>
+                <Link to={"/PreCategory/Accessories"}>Accessories</Link>
                 <span
                   className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
                     current === "/Categories/jewelery" ? "w-full" : "w-0"
@@ -333,37 +333,37 @@ const LoggedInNav = () => {
         >
           <Flex justify={"center"} gap={20}>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Shirts"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Shirts
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Pants"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Pants
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Shoe"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
-              Shoes
+              Shoe
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Hoodies"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Hoodies
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Jackets"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Jackets
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Sweaters"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Sweaters
@@ -378,38 +378,38 @@ const LoggedInNav = () => {
           onMouseLeave={() => setIsHoveredWomen(false)}
         >
           <Flex justify={"center"} gap={20}>
-            <Link
-              to={"/Categories/me's clothing "}
+          <Link
+              to={"/Categories/Shirts"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Shirts
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Pants"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Pants
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Shoe"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
-              Shoes
+              Shoe
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Hoodies"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Hoodies
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Jackets"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Jackets
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Sweaters"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Sweaters
@@ -424,38 +424,38 @@ const LoggedInNav = () => {
           onMouseLeave={() => setIsHoveredKids(false)}
         >
           <Flex justify={"center"} gap={20}>
-            <Link
-              to={"/Categories/me's clothing "}
+          <Link
+              to={"/Categories/Shirts"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Shirts
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Pants"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Pants
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Shoe"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
-              Shoes
+              Shoe
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Hoodies"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Hoodies
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Jackets"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Jackets
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/Sweaters"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Sweaters
@@ -471,37 +471,37 @@ const LoggedInNav = () => {
         >
           <Flex justify={"center"} gap={20}>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Gold
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Silver
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Diamond
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Rings
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Necklaces
             </Link>
             <Link
-              to={"/Categories/me's clothing "}
+              to={"/Categories/"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Bracelets
@@ -523,17 +523,15 @@ const SearchInput = ({ width, placeholder, pr }) => {
     setSearch(e.target.value);
     const searchTerm = e.target.value;
 
-    try {
-      const response = await fetch(
-        `https://fakestoreapi.com/products?title=${searchTerm}`
-      );
-      const data = await response.json();
-      const products = data.filter((p) => p.category !== "electronics");
-
-      setResults(
-        products
+    const response = await fetch(
+      `http://localhost:5000/search?name=${searchTerm}`
+    );
+    const data = await response.json();
+    console.log(data);
+     setResults(
+        data.result
           .map((product) => {
-            const highlightedTitle = product.title
+            const highlightedTitle = product.name
               .split(new RegExp(`(${searchTerm})`, "gi"))
               .map((part, i) =>
                 part.toLowerCase() === searchTerm.toLowerCase() ? (
@@ -557,9 +555,6 @@ const SearchInput = ({ width, placeholder, pr }) => {
           // Remove undefined elements (products that don't contain the search term in their title)
           .filter(Boolean)
       );
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    }
   };
   const handleSearch = () => {
     onClose();
@@ -666,7 +661,7 @@ const SearchInput = ({ width, placeholder, pr }) => {
                           onClick={handleSearch}
                         >
                           <Box>
-                            <Link to={`/product/${result.id}`}>
+                            <Link to={`/product/${result._id}`}>
                               {result.highlightedTitle}
                             </Link>
                           </Box>

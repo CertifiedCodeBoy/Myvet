@@ -19,6 +19,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.15.10",
+    "@phosphor-icons/react": "^2.1.5",
     "@splidejs/react-splide": "^0.7.12",
     "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "axios": "^1.6.8",
@@ -33,6 +34,7 @@
     "react-router-dom": "^6.23.0",
     "react-spinners": "^0.13.8",
     "react-transition-group": "^4.4.5",
+    "scrollreveal": "^4.0.9",
     "socket.io-client": "^4.7.4",
     "swiper": "^11.1.0",
     "webpack": "^5.90.1"

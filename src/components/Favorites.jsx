@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import {
   Box,
   Heading,
@@ -14,9 +14,13 @@ import { FavoritesContext } from "../contexts/FavoritesContext";
 import { UserContext } from "../contexts/UserContext";
 
 const Favorites = () => {
-  const { favorites, loading, error } = useContext(FavoritesContext);
+  const { favorites, loading, error, fetchFavorites } = useContext(FavoritesContext);
 
-  if (loading || !favorites) {
+  useEffect(() => {
+    fetchFavorites();
+  }, [FavoritesContext]);
+
+  if (loading) {
     return (
       <Box>
         <Skeleton
@@ -29,15 +33,19 @@ const Favorites = () => {
     );
   }
 
-  if (error) {
+  if (!favorites || favorites.length === 0) {
     return (
       <Box>
-        <Text>{error}</Text>
+        <Heading as="h1" size="xl" textAlign="center" my={10}>
+          Favorites
+        </Heading>
+        <Text textAlign="center">No favorites yet</Text>
       </Box>
     );
   }
 
-  const favoriteProducts = favorites.favorites;
+
+  const favoriteProducts = favorites;
 
   return (
     <Box>
@@ -94,12 +102,19 @@ const Favorites = () => {
 // };
 
 const Kard = ({ product }) => {
-  const { addFavorite } = useContext(FavoritesContext);
+  const { favorites, isFavorite, addFavorite, fetchFavorites } = useContext(FavoritesContext);
 
   const handleDelete = (Id) => {
-    addFavorite(product, Id);
+    addFavorite(Id);
+    setTimeout(() => {
+      fetchFavorites();
+    }, 500);
   };
+
+
   return (
+    <>
+    { favorites.length != 0 &&
     <Card
         px={"8"}
         pt={4}
@@ -143,12 +158,16 @@ const Kard = ({ product }) => {
             _focus={{ boxShadow: "none" }}
             borderRadius={"full"}
             p={2}
-            onClick={() => {handleDelete(product.id)}}
+            onClick={() => {
+              handleDelete(product.id)
+            }}
           >
             Remove
           </Button>
         </Box>
       </Card>
+  }
+  </>
   );
 };
 

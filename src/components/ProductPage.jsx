@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext,useReducer } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart,
@@ -16,7 +16,7 @@ import { Heart } from "phosphor-react";
 const ProductPage = () => {
   const { user, isLoggedIn } = useContext(UserContext);
   const { addFavorite, isFavorite } = useContext(FavoritesContext);
-  const { addToCart, getCart, removeFromCart, buyProducts } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   const { id } = useParams();
   const { getProduct, loading } = useContext(ProductsContext);
 
@@ -25,6 +25,19 @@ const ProductPage = () => {
   const [rating, setRating] = useState(0);
   const [isAddingReview, setIsAddingReview] = useState(false);
   const [comment, setComment] = useState("");
+  
+
+  // const [ isInFavorites, setIsInFavorites ] = useState(isFavorite);
+  // using useReducer instead of useState to handle complex state logic
+  const [isInFavorites, setIsInFavorites] = useReducer(
+    (state, action) => state,
+    isFavorite
+  );
+
+
+
+
+
 
   // Sample fake comments data
   const [comments, setComments] = useState([
@@ -54,12 +67,13 @@ const ProductPage = () => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
+    setIsInFavorites(isFavorite);
     const fetchProduct = async () => {
       const data = await getProduct(id);
       setProduct(data.result);
     };
     fetchProduct();
-  }, []);
+  }, [FavoritesContext, id, isFavorite, ProductsContext]);
 
   const handleSizeChange = (size) => {
     setSelectedSize(size);
@@ -72,32 +86,26 @@ const ProductPage = () => {
   const handleAddToCart = (id) => {
     // Implement add to cart functionality
     const productDetails = {
-      id: product._id,
-      name: product.name,
-      color: selectedColor,
-      size: "null",
+      ProductId: product._id,
+      colors: {
+        sizes: {
+          value: "M",
+          ShoeSize: 40,
+        },
+        color: "Black",
+      },
       quantity: 1,
-      pic: product.pic[0],
-      price: product.price,
     };
 
-    addToCart(id,productDetails);
-
+    addToCart(productDetails, product._id);
   };
 
   const handleAddToFavorites = () => {
     const productId = product._id;
-    const productImage = product.pic[0];
-    const productTitle = product.name;
-    const productPrice = product.price;
-    const requestBody = {
-      id: productId,
-      price: productPrice,
-      name: productTitle,
-      pic: productImage,
-    };
-
-    addFavorite(requestBody, productId);
+    addFavorite(productId);
+    setTimeout(() => {
+      setIsInFavorites(!isFavorite);
+    }, 500);
   };
 
   const handleRatingChange = (newRating) => {
@@ -177,47 +185,66 @@ const ProductPage = () => {
           <div className="mb-4 flex">
             <label className="text-gray-700 mr-2 font-semibold">Color:</label>
             <div className="flex items-center">
-              { product.colors.length == 0 ? <p>Out of stock</p> :
-              product.colors.map((color, index) => (
-                <button
-                  key={index}
-                  className={`w-8 h-8 rounded-full border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${
-                    selectedColor === color
-                      ? "ring-2 ring-primarybg-primary"
-                      : ""
-                  }`}
-                  style={{
-                    backgroundColor: color.color,
-                    cursor: "pointer",
-                  }}
-                  onClick={() => handleColorChange(color.color)}
-                ></button>
-              ))}
+              {product.colors.length == 0 ? (
+                <p>Out of stock</p>
+              ) : (
+                product.colors.map((color, index) => (
+                  <button
+                    key={index}
+                    className={`w-8 h-8 rounded-full border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${
+                      selectedColor === color
+                        ? "ring-2 ring-primarybg-primary"
+                        : ""
+                    }`}
+                    style={{
+                      backgroundColor: color.color,
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      console.log(color.color);
+                      handleColorChange(color.color);
+                    }}
+                  ></button>
+                ))
+              )}
             </div>
           </div>
           {/* Size Selector */}
           <div className="mb-4 flex items-center">
             <label className="text-gray-700 mr-2 font-semibold">Size:</label>
             <div className="flex items-center">
-              { product.colors.length == 0 ? <p>Out of stock</p> :
-              product.colors.map((size, index) => (
-                <button
-                  key={index}
-                  className={`w-10 h-10 rounded-md border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${!isAvailableSize(size) ? 'bg-gray-200 cursor-not-allowed' : selectedSize === size ? 'bg-primary text-white' : 'bg-white text-gray-700'}`}
-                  style={{ minWidth: '2.5rem', textAlign: 'center' }}
-                  onClick={() => isAvailableSize(size) && handleSizeChange(size)}
-                  disabled={!isAvailableSize(size)}
-                >
-                  {/* {size} */}
-                  {"null"}
-                </button>
-              ))}
+              {product.colors.length == 0 ? (
+                <p>Out of stock</p>
+              ) : (
+                product.colors.map((size, index) => (
+                  <button
+                    key={index}
+                    className={`w-10 h-10 rounded-md border border-gray-400 mr-2 focus:outline-none focus:border-gray-700 ${
+                      !isAvailableSize(size)
+                        ? "bg-gray-200 cursor-not-allowed"
+                        : selectedSize === size
+                        ? "bg-primary text-white"
+                        : "bg-white text-gray-700"
+                    }`}
+                    style={{ minWidth: "2.5rem", textAlign: "center" }}
+                    onClick={() =>
+                      isAvailableSize(size) && handleSizeChange(size)
+                    }
+                    disabled={!isAvailableSize(size)}
+                  >
+                    {/* {size} */}
+                    {"null"}
+                  </button>
+                ))
+              )}
             </div>
           </div>
           {/* Buttons: Add to Cart and Add to Favorites */}
           <div className="flex flex-col gap-4">
             <button
-              onClick={()=>{handleAddToCart(product.id)}}
+              onClick={() => {
+                handleAddToCart(product.id);
+              }}
               className="bg-primary text-white px-6 py-4 rounded-3xl hover:bg-amber-950 cursor-pointer"
             >
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
@@ -227,16 +254,10 @@ const ProductPage = () => {
               onClick={handleAddToFavorites}
               className="bg-transparent text-primarybg-primary border border-amber-950 px-6 py-4 rounded-3xl hover:bg-gray-100 hover:text-amber-950"
             >
-              {isFavorite ? (
+              {isInFavorites ? (
                 <div className="flex items-center justify-center gap-4">
-                  <Heart 
-                  size={24}
-                  color="red"
-                  weight="fill"
-                  />
-                  <p
-                    className="text-amber-950 hover:text-amber-950 text-md "
-                  >
+                  <Heart size={24} color="red" weight="fill" />
+                  <p className="text-amber-950 hover:text-amber-950 text-md ">
                     Remove from Favorites
                   </p>
                 </div>

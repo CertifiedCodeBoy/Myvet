@@ -27,7 +27,6 @@ import {
 } from "@chakra-ui/react";
 import { useDisclosure } from "@chakra-ui/react";
 
-
 const Navbar = () => {
   const [focused, setFocused] = useState(false);
   const isTablet = window.screen.width >= 768 && window.screen.width < 1024;
@@ -84,9 +83,13 @@ const Navbar = () => {
                 }}
               >
                 <Link to={"/Categories/men's clothing"}>Men</Link>
-                <span className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
-                  current === "/Categories/men's%20clothing" ? "w-full" : "w-0"
-                } group-hover:w-full transition-all duration-500`}></span>
+                <span
+                  className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
+                    current === "/Categories/men's%20clothing"
+                      ? "w-full"
+                      : "w-0"
+                  } group-hover:w-full transition-all duration-500`}
+                ></span>
               </div>
 
               <div
@@ -99,9 +102,14 @@ const Navbar = () => {
                 }}
               >
                 <Link to={"/Categories/women's clothing"}>Women</Link>
-                <span className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
-                  current === "/Categories/women's%20clothing" ? "w-full" : "w-0"
-                } group-hover:w-full transition-all duration-500`}></span>              </div>
+                <span
+                  className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
+                    current === "/Categories/women's%20clothing"
+                      ? "w-full"
+                      : "w-0"
+                  } group-hover:w-full transition-all duration-500`}
+                ></span>{" "}
+              </div>
 
               <div
                 className="group relative text-md h-[20px] text-black font-medium inline-block"
@@ -113,9 +121,12 @@ const Navbar = () => {
                 }}
               >
                 <Link to={"/Categories/Kids"}>Kids</Link>
-                <span className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
-                  current === "/Categories/Kids" ? "w-full" : "w-0"
-                } group-hover:w-full transition-all duration-500`}></span>              </div>
+                <span
+                  className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
+                    current === "/Categories/Kids" ? "w-full" : "w-0"
+                  } group-hover:w-full transition-all duration-500`}
+                ></span>{" "}
+              </div>
 
               <div
                 className="group relative text-md h-[20px] text-black font-medium inline-block"
@@ -127,9 +138,12 @@ const Navbar = () => {
                 }}
               >
                 <Link to={"/Categories/jewelery"}>Accessories</Link>
-                <span className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
-                  current === "/Categories/jewelery" ? "w-full" : "w-0"
-                } group-hover:w-full transition-all duration-500`}></span>              </div>
+                <span
+                  className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
+                    current === "/Categories/jewelery" ? "w-full" : "w-0"
+                  } group-hover:w-full transition-all duration-500`}
+                ></span>{" "}
+              </div>
             </div>
             <div className="flex flex-row-reverse items-center gap-4 ml-4">
               <Link to="/SignUp">
@@ -376,43 +390,39 @@ const SearchInput = ({ width, placeholder, pr }) => {
     setSearch(e.target.value);
     const searchTerm = e.target.value;
 
-    try {
-      const response = await fetch(
-        `https://fakestoreapi.com/products?title=${searchTerm}`
-      );
-      const data = await response.json();
-      const products = data.filter((p) => p.category !== "electronics");
+    const response = await fetch(
+      `http://localhost:5000/search?name=${searchTerm}`
+    );
+    const data = await response.json();
+    console.log(data);
 
-      setResults(
-        products
-          .map((product) => {
-            const highlightedTitle = product.title
-              .split(new RegExp(`(${searchTerm})`, "gi"))
-              .map((part, i) =>
-                part.toLowerCase() === searchTerm.toLowerCase() ? (
-                  <span key={i} style={{ backgroundColor: "yellow" }}>
-                    {part}
-                  </span>
-                ) : (
-                  part
-                )
-              );
+    // setResults(
+    //   products
+    //     .map((product) => {
+    //       const highlightedTitle = product.title
+    //         .split(new RegExp(`(${searchTerm})`, "gi"))
+    //         .map((part, i) =>
+    //           part.toLowerCase() === searchTerm.toLowerCase() ? (
+    //             <span key={i} style={{ backgroundColor: "yellow" }}>
+    //               {part}
+    //             </span>
+    //           ) : (
+    //             part
+    //           )
+    //         );
 
-            // Only include products that contain the search term in their title
-            if (highlightedTitle.some((part) => typeof part !== "string")) {
-              return {
-                id: product.id,
-                title: product.title,
-                highlightedTitle: highlightedTitle,
-              };
-            }
-          })
-          // Remove undefined elements (products that don't contain the search term in their title)
-          .filter(Boolean)
-      );
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    }
+    //       // Only include products that contain the search term in their title
+    //       if (highlightedTitle.some((part) => typeof part !== "string")) {
+    //         return {
+    //           id: product.id,
+    //           title: product.title,
+    //           highlightedTitle: highlightedTitle,
+    //         };
+    //       }
+    //     })
+    //     // Remove undefined elements (products that don't contain the search term in their title)
+    //     .filter(Boolean)
+    // );
   };
   const handleSearch = () => {
     onClose();

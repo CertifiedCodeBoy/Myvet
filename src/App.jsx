@@ -29,6 +29,7 @@ import SellerProfile from "./components/SellerProfile"; // Import SellerProfile
 import ItemPage from "./components/ItemPage";
 import SellerItem from "./components/SellerItem";
 import EditPage from "./components/EditPage"; // Import EditPage
+import PreCategory from "./components/preCategory";
 
 const App = () => {
   const { isLoggedIn, user } = useContext(UserContext);
@@ -77,6 +78,16 @@ const App = () => {
                 <>
                   <Loginsignupnav />
                   <SignUp />
+                </>
+              }
+            ></Route>
+            <Route
+              path="/PreCategory/:category"
+              element={
+                <>
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  <PreCategory />
+                  <Footer />
                 </>
               }
             ></Route>

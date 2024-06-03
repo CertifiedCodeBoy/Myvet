@@ -123,7 +123,13 @@ const loading = () => {
         "
         >
           <p className="italic text-white font-thin">
-            Reloading in {timeLeft} seconds ...
+            Reloading in {timeLeft} seconds ... {" "}
+            <button
+              className="text-white underline"
+              onClick={()=>{window.location.reload()}}
+            >
+              reload now
+            </button>
           </p>
         </div>
       </div>

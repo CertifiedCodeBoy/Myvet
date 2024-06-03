@@ -29,47 +29,16 @@ const FavoritesProvider = ({ children }) => {
   //     fetchProducts();
   //   }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchFavorites = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/favorites", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            jwt: Cookies.get("jwt"),
-          },
-        });
-        const data = await response.json();
-        if (response.ok) {
-          setFavorites(data);
-          console.log(data)
-          setLoading(false);
-        } else {
-          throw new Error(
-            data.message || "An error occurred while fetching favorites."
-          );
-        }
-      } catch (error) {
-        console.error("Error fetching favorites:", error);
-        setError(
-          error.message || "An error occurred while fetching favorites."
-        );
-        setLoading(false);
-      }
-    };
-    fetchFavorites();
-  }, [isFavorite]);
+  
 
-  const addFavorite = async (newFavorite, id) => {
+  const addFavorite = async (id) => {
     try {
       const response = await fetch(`http://localhost:5000/product/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           jwt: Cookies.get("jwt"),
-        },
-        body: JSON.stringify(newFavorite),
+        }
       });
       const data = await response.json();
       if (response.ok) {
@@ -79,6 +48,35 @@ const FavoritesProvider = ({ children }) => {
     } catch (error) {
       console.error("Error adding favorite:", error);
       setError(error.message || "An error occurred while adding the favorite.");
+    }
+  };
+
+  const fetchFavorites = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/favorites", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          jwt: Cookies.get("jwt"),
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setFavorites(data.favorites);
+        console.log(data.favorites)
+        setLoading(false);
+      } else {
+        throw new Error(
+          data.message || "An error occurred while fetching favorites."
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching favorites:", error);
+      setError(
+        error.message || "An error occurred while fetching favorites."
+      );
+      setFavorites([]);
+      setLoading(false);
     }
   };
 
@@ -116,7 +114,7 @@ const FavoritesProvider = ({ children }) => {
     //   {children}
     // </ProductsContext.Provider>
     <FavoritesContext.Provider
-      value={{ favorites, addFavorite, isFavorite, loading, error }}
+      value={{ favorites, addFavorite, isFavorite, loading, error, fetchFavorites }}
     >
       {children}
     </FavoritesContext.Provider>
