@@ -113,7 +113,12 @@ const Slideshow = () => {
         </Box>
         <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
           <Button colorScheme={"red"} size={"lg"} rounded={"full"}>
-            SHOP NOW
+            <Link
+              to="/Categories/Shoe"
+              className="text-white text-lg font-semibold"
+            >
+              SHOP NOW
+            </Link>
           </Button>
           <Button
             colorScheme={"gray"}

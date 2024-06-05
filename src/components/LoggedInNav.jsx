@@ -97,7 +97,6 @@ const LoggedInNav = () => {
           <div className="flex items-center px-4">
             <div
               className="flex items-center justify-center gap-4 px-2 h-8"
-              id="categories"
             >
               <div
                 className="group relative text-md h-[20px] text-black font-medium inline-block"

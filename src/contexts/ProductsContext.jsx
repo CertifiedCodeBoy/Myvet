@@ -1,17 +1,13 @@
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import UserContext from "./UserContext";
 
 export const ProductsContext = createContext();
 
 const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState();
   const [product, setProduct] = useState();
-  const [unloggedProducts, setUnloggedProducts] = useState([]);
-  const [userProducts, setUserProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { isLoggedIn } = UserContext;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,6 +20,7 @@ const ProductsProvider = ({ children }) => {
         });
         const data = await response.json();
         setProducts(data);
+        console.log(data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -31,24 +28,7 @@ const ProductsProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
-    const unloggedCate = async () => {
-      // fetch from this api 'https://fakestoreapi.com/products/categories
-      await fetch("https://fakestoreapi.com/products")
-      .then((res) => res.json())
-      .then((data) => {
-        setLoading(false);
-        console.log(data);
-        setUnloggedProducts(data);
-      })
-      .catch((error) => {
-          setLoading(false);
-          console.error("Error:", error);
-        });
-    };
-
-
-    isLoggedIn ? fetchProducts() : unloggedCate();
+    fetchProducts();
   }, []);
 
   const getProduct = async (id) => {
@@ -217,8 +197,6 @@ const ProductsProvider = ({ children }) => {
     }
   };
 
-  
-
   return (
     <ProductsContext.Provider
       value={{
@@ -226,8 +204,6 @@ const ProductsProvider = ({ children }) => {
         product,
         loading,
         error,
-        userProducts,
-        unloggedProducts,
         getProduct,
         getArticles,
         deleteProduct,

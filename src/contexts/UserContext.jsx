@@ -5,7 +5,7 @@ export const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("jwt") ? true : false
-    );
+  );
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);

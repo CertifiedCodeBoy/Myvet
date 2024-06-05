@@ -53,7 +53,7 @@ const Login = () => {
     loginUser(formData)
       .then((data) => {
         setIsLoggedIn(true);
-        localStorage.setItem("jwt", data.token);
+        localStorage.setItem("jwt", data.jwt);
         localStorage.setItem("user", JSON.stringify(data.user));
         Cookies.set("jwt",data.jwt);
         setUser(data.user);
