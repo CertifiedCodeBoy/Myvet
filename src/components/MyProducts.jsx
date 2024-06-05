@@ -1,22 +1,50 @@
-import React, { useContext } from "react";
-import { Box, Button, Flex, Heading, Image, IconButton } from "@chakra-ui/react";
+import React, { useContext, useEffect } from "react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Image,
+  IconButton,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
 import { ProductsContext } from "../contexts/ProductsContext";
+import Loading from "./Loading";
+//useparams is used to get the id of the product
+import { useParams } from "react-router-dom";
 
 const MyProducts = () => {
-  const { products } = useContext(ProductsContext); // Get products and deleteProduct function from context
+  const { deleteProduct, getArticles, userProducts, loading, error } = useContext(ProductsContext); // Get products and deleteProduct function from context
+  const { id } = useParams(); // Get sellerId from params
+  useEffect(() => {
+    getArticles();
+    console.log(userProducts);
+  }, [ProductsContext]);
+
   const handleDelete = (productId) => {
+    deleteProduct(productId);
+    setTimeout(() => {
+      getArticles();
+    }, 500);
   };
+
+  if (loading || !userProducts) {
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Box>{error}</Box>;
+  }
 
   return (
     <Box p={8}>
       <Heading mb={4}>My Products</Heading>
       <Flex flexWrap="wrap">
-        {products.Shoe
-          .map((product) => (
+        {userProducts &&
+          userProducts.map((product, index) => (
             <Box
-              key={product._id}
+              key={index}
               maxW="sm"
               borderWidth="1px"
               borderRadius="lg"
@@ -27,9 +55,26 @@ const MyProducts = () => {
               boxShadow="lg"
               position="relative"
             >
-              <Link key={product.id} to={`/EditPage`} style={{ textDecoration: "none" }}>
-                <Box height="200px" position="relative" overflow="hidden" borderRadius="lg" mb={2}>
-                  <Image src={product.pic[0]} alt={product.name} w="100%" h="100%" objectFit="contain" cursor="pointer" borderRadius="lg" />
+              <Link
+                to={`/Product/${product._id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <Box
+                  height="200px"
+                  position="relative"
+                  overflow="hidden"
+                  borderRadius="lg"
+                  mb={2}
+                >
+                  <Image
+                    src={product.pic[0]}
+                    alt={product.name}
+                    w="100%"
+                    h="100%"
+                    objectFit="contain"
+                    cursor="pointer"
+                    borderRadius="lg"
+                  />
                 </Box>
                 <Box>
                   <Heading fontSize="xl">{product.name}</Heading>
@@ -40,7 +85,7 @@ const MyProducts = () => {
                 <IconButton
                   icon={<FaTrashAlt />}
                   aria-label="Delete"
-                  onClick={() => handleDelete(product.id)}
+                  onClick={() => handleDelete(product._id)}
                   colorScheme="red"
                   variant="ghost"
                   mr={2}
@@ -51,7 +96,7 @@ const MyProducts = () => {
                   colorScheme="blue"
                   variant="ghost"
                 >
-                  <FaEdit /> 
+                  <FaEdit />
                 </Button>
               </Flex>
             </Box>
@@ -60,7 +105,7 @@ const MyProducts = () => {
       <Flex justifyContent="flex-end">
         <Button
           as={Link}
-          to="/ItemPage"
+          to={`/ItemPage/${id}`}
           zIndex={1}
           colorScheme="blue"
           size="lg"

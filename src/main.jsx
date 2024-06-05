@@ -11,7 +11,6 @@ import CategoriesProvider from "./contexts/CategoriesContext.jsx";
 import { CartProvider } from "./contexts/CartContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <ChakraProvider>
       <ProductsProvider>
         <UserProvider>
@@ -27,5 +26,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </UserProvider>
       </ProductsProvider>
     </ChakraProvider>
-  </React.StrictMode>
 );

@@ -63,7 +63,7 @@ const FavoritesProvider = ({ children }) => {
       const data = await response.json();
       if (response.ok) {
         setFavorites(data.favorites);
-        console.log(data.favorites)
+        // console.log(data.favorites)
         setLoading(false);
       } else {
         throw new Error(

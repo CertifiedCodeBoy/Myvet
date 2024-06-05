@@ -43,6 +43,7 @@ const SellerProfile = () => {
   const [p2, setP2] = useState(false);
   const [p3, setP3] = useState(false);
   const [p4, setP4] = useState(false);
+  const [p5, setP5] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isSeller } = useContext(SellerContext);
   const navigate = useNavigate();
@@ -226,7 +227,7 @@ const SellerProfile = () => {
                     Customer
                   </Badge>
                 )}
-                <Flex gap={4} mt={{ base: 4, md: 0 }}>
+                {/* <Flex gap={4} mt={{ base: 4, md: 0 }}>
                   <Button
                     mt={{ base: 2, md: 4 }}
                     position={"relative"}
@@ -237,6 +238,7 @@ const SellerProfile = () => {
                       setP2(false);
                       setP3(false);
                       setP4(false);
+                      setP5(false); // *************************************************************
                       setFocused(!focused);
                       toast({
                         title: "Changes were not saved",
@@ -257,6 +259,7 @@ const SellerProfile = () => {
                       setP2(false);
                       setP3(false);
                       setP4(false);
+                      setP5(false); // *************************************************************
                       setFocused(!focused);
                       toast({
                         title: "Changes saved successfully !",
@@ -267,39 +270,40 @@ const SellerProfile = () => {
                   >
                     Save
                   </Button>
-                </Flex>
+                </Flex> */}
                 <Button
                   mt={{ base: 2, md: 4 }}
                   position={"relative"}
-                  right={{ base: 0, md: -24 }}
+                  right={-20}
                   onClick={() => {
                     setP1(true);
                     setP2(false);
                     setP3(false);
                     setP4(false);
-                    setFocused(!focused);
+                    setP5(!p5);
                   }}
-                  bg={!focused ? "#F2F2F2" : "#111"}
-                  color={!focused ? "#111" : "#F2F2F2"}
+                  bg={"#F2F2F2" }
+                  color={ "#111"}
                   _hover={{
                     bg: "#111",
                     color: "#F2F2F2",
                     transition: "0.5s",
                   }}
-                  display={focused ? "none" : ""}
                 >
                   <Gear size={20} />
                 </Button>
               </Flex>
             </Box>
             <Divider mt={8} />
-            <Box width={"100%"} p={0}>
+            {!p5 &&
+              <Box width={"100%"} p={0}>
               <MyProducts /> {/* Include MyProducts component within Seller Info */}
-            </Box>
+            </Box>}
           </Box>
         )}
         {p2 && <Favorites />}
         {p3 && <Cart />}
+        {p5 && <Settings close={setP5} />}
       </Box>
       <AlertDialog
         isOpen={isOpen}

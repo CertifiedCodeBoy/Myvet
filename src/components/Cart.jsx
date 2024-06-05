@@ -17,14 +17,14 @@ const Cart = () => {
   useEffect(() => {
     fetchCart();
   }, [CartContext]);
-
+  
   const handleRemove = (item) => {
     removeFromCart(item);
     setTimeout(() => {
       fetchCart();
     }, 1000);
   };
-
+  
   if (loading) {
     return (
       <Box>
@@ -33,7 +33,7 @@ const Cart = () => {
           startColor="gray.200"
           endColor="gray.300"
           height="90px"
-        />
+          />
       </Box>
     );
   }

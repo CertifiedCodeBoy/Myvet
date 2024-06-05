@@ -30,13 +30,17 @@ import ItemPage from "./components/ItemPage";
 import SellerItem from "./components/SellerItem";
 import EditPage from "./components/EditPage"; // Import EditPage
 import PreCategory from "./components/preCategory";
+import Settings from "./components/Settings";
 
 const App = () => {
   const { isLoggedIn, user } = useContext(UserContext);
-  const { products, loading } = useContext(ProductsContext);
-  if (loading || !products) {
-    return <Loading />;
-  }
+  const { 
+    products, 
+    loading,  
+    unloggedProducts,
+  } = useContext(ProductsContext);
+  
+  isLoggedIn ? !products || loading && <Loading/> : !unloggedProducts || loading && <Loading/>; 
 
   return (
     <OffersProvider>
@@ -174,10 +178,12 @@ const App = () => {
               }
             ></Route>
             <Route
-              path="/ItemPage"
+              path="/ItemPage/:id"
               element={
                 <>
+                  <LoggedInNav />
                   <ItemPage />
+                  <Footer />
                 </>
               }
             ></Route>
@@ -216,6 +222,16 @@ const App = () => {
                 <>
                   <LoggedInNav />
                   {user && user.isSeller ? <SellerProfile /> : <BuyerProfile />}
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
+              path={`/Settings`}
+              element={
+                <>
+                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
+                  {/* <Settings  /> */}
                   <Footer />
                 </>
               }

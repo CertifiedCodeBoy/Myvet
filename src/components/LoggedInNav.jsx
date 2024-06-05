@@ -282,7 +282,7 @@ const LoggedInNav = () => {
                           //if user is seller, show seller products
                           user.isSeller ? (
                             <Link
-                              to={`/Profile`}
+                              to={`/Profile/${user.id}`}
                               className="flex items-center gap-2 hover:underline"
                               onClick={() => {
                                 onClose();
@@ -378,7 +378,7 @@ const LoggedInNav = () => {
           onMouseLeave={() => setIsHoveredWomen(false)}
         >
           <Flex justify={"center"} gap={20}>
-          <Link
+            <Link
               to={"/Categories/Shirts"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
@@ -424,7 +424,7 @@ const LoggedInNav = () => {
           onMouseLeave={() => setIsHoveredKids(false)}
         >
           <Flex justify={"center"} gap={20}>
-          <Link
+            <Link
               to={"/Categories/Shirts"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
@@ -516,8 +516,6 @@ const LoggedInNav = () => {
 const SearchInput = ({ width, placeholder, pr }) => {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = React.useRef();
 
   const handleChange = async (e) => {
     setSearch(e.target.value);
@@ -527,179 +525,107 @@ const SearchInput = ({ width, placeholder, pr }) => {
       `http://localhost:5000/search?name=${searchTerm}`
     );
     const data = await response.json();
-    console.log(data);
-     setResults(
-        data.result
-          .map((product) => {
-            const highlightedTitle = product.name
-              .split(new RegExp(`(${searchTerm})`, "gi"))
-              .map((part, i) =>
-                part.toLowerCase() === searchTerm.toLowerCase() ? (
-                  <span key={i} style={{ backgroundColor: "yellow" }}>
-                    {part}
-                  </span>
-                ) : (
-                  part
-                )
-              );
+    setResults(
+      data.result
+        .map((product) => {
+          const highlightedTitle = product.name
+            .split(new RegExp(`(${searchTerm})`, "gi"))
+            .map((part, i) =>
+              part.toLowerCase() === searchTerm.toLowerCase() ? (
+                <span key={i} style={{ backgroundColor: "yellow" }}>
+                  {part}
+                </span>
+              ) : (
+                part
+              )
+            );
 
-            // Only include products that contain the search term in their title
-            if (highlightedTitle.some((part) => typeof part !== "string")) {
-              return {
-                id: product.id,
-                title: product.title,
-                highlightedTitle: highlightedTitle,
-              };
-            }
-          })
-          // Remove undefined elements (products that don't contain the search term in their title)
-          .filter(Boolean)
-      );
+          // Only include products that contain the search term in their title
+          if (highlightedTitle.some((part) => typeof part !== "string")) {
+            return {
+              id: product._id,
+              title: product.name,
+              highlightedTitle: highlightedTitle,
+            };
+          }
+        })
+        // Remove undefined elements (products that don't contain the search term in their title)
+        .filter(Boolean)
+    );
   };
+
   const handleSearch = () => {
-    onClose();
     setSearch("");
     setResults([]);
   };
 
   return (
-    <Box pl={4} className="absolute left-20">
+    <Box pl={4} className="relative">
       <InputGroup>
         <InputLeftElement
           pointerEvents="none"
           children={<FontAwesomeIcon icon={faSearch} />}
         />
         <Input
-          readOnly
           type="text"
           placeholder={placeholder}
+          value={search}
+          onChange={handleChange}
           bg={"#F2F2F2"}
           height={"40px"}
           rounded={"full"}
           width={width}
-          cursor={"pointer"}
+          cursor={"text"}
           pr={pr}
           _focus={{
             border: "none",
             boxShadow: "md",
-            cursor: "pointer",
           }}
           _hover={{
             boxShadow: "md",
             transition: "0.5s",
           }}
-          onClick={onOpen}
         />
       </InputGroup>
 
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={() => {
-          onClose();
-          setSearch("");
-          setResults([]);
-          Input.value = "";
-        }}
-        motionPreset="slideInBottom"
-      >
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader
-              fontSize="lg"
-              fontWeight="bold"
-              textAlign={"center"}
-            >
-              Search Products, sellers, categories
-              <AlertDialogCloseButton />
-            </AlertDialogHeader>
-
-            <AlertDialogBody>
-              <InputGroup>
-                <Input
-                  type="text"
-                  placeholder="Search"
-                  value={search}
-                  onChange={handleChange}
-                  bg={"#F2F2F2"}
-                  height={"40px"}
-                  rounded={"8"}
-                  width={"100%"}
-                  cursor={"pointer"}
-                  pr={pr}
-                  _focus={{
-                    border: "1px solid #111",
-                    boxShadow: "md",
-                    cursor: "text",
-                  }}
-                  _hover={{
-                    boxShadow: "md",
-                    transition: "0.5s",
-                  }}
-                />
-              </InputGroup>
-
-              <Box
-                my={4}
-                p={search ? 4 : 0}
-                bg={"gray.200"}
-                rounded={"md"}
-                display={search ? "block" : "none"}
-              >
-                {results.length === 0 ? (
-                  <p>No results found</p>
-                ) : (
-                  <List spacing={4}>
-                    {results.map((result, index) => (
-                      <>
-                        <ListItem
-                          key={index}
-                          _hover={{
-                            cursor: "pointer",
-                            textDecoration: "underline",
-                          }}
-                          onClick={handleSearch}
-                        >
-                          <Box>
-                            <Link to={`/product/${result._id}`}>
-                              {result.highlightedTitle}
-                            </Link>
-                          </Box>
-                        </ListItem>
-                        {index < results.length - 1 && (
-                          <Divider borderColor={"black"} />
-                        )}
-                      </>
-                    ))}
-                  </List>
-                )}
-              </Box>
-            </AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button
-                ref={cancelRef}
-                onClick={() => {
-                  onClose();
-                  setSearch("");
-                  setResults([]);
-                  Input.value = "";
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                colorScheme="teal"
-                onClick={handleSearch}
-                isDisabled={!search}
-                ml={3}
-              >
-                Search
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+      {search && (
+        <Box
+          my={4}
+          p={4}
+          bg={"gray.200"}
+          rounded={"md"}
+          position="absolute"
+          zIndex="1000"
+          width={width}
+        >
+          {results.length === 0 ? (
+            <p>No results found</p>
+          ) : (
+            <List spacing={4}>
+              {results.map((result, index) => (
+                <React.Fragment key={index}>
+                  <ListItem
+                    _hover={{
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                    }}
+                    onClick={handleSearch}
+                  >
+                    <Box>
+                      <Link to={`/product/${result.id}`}>
+                        {result.highlightedTitle}
+                      </Link>
+                    </Box>
+                  </ListItem>
+                  {index < results.length - 1 && (
+                    <Divider borderColor={"black"} />
+                  )}
+                </React.Fragment>
+              ))}
+            </List>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };

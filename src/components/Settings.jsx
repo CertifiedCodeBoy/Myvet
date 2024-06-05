@@ -1,9 +1,13 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Button } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import { useToast } from "@chakra-ui/react";
+import { useState } from "react";
 
-const Settings = () => {
+const Settings = ({close}) => {
+  const toast = useToast();
   const { user } = useContext(UserContext);
+
   return (
     <>
       {user && (
@@ -29,7 +33,7 @@ const Settings = () => {
                   type="text"
                   id="firstName"
                   name="firstName"
-                  placeholder={user.name}
+                  placeholder={user.firstName}
                   style={{
                     width: "100%",
                     padding: "10px",
@@ -51,7 +55,7 @@ const Settings = () => {
                   type="text"
                   id="LastName"
                   name="LastName"
-                  placeholder={user.name}
+                  placeholder={user.lastName}
                   style={{
                     width: "100%",
                     padding: "10px",
@@ -97,7 +101,7 @@ const Settings = () => {
                   type="tel"
                   id="phone"
                   name="phone"
-                  placeholder="01123456789"
+                  placeholder="0658598146"
                   style={{
                     width: "100%",
                     padding: "10px",
@@ -180,6 +184,53 @@ const Settings = () => {
                   backgroundColor: "#F2F2F2",
                 }}
               />
+            </Flex>
+            <Flex
+              gap={4}
+              mt={4}
+              direction={{ base: "column", md: "row" }}
+              justifyContent={"end"}
+            >
+              <Button
+                mt={{ base: 2, md: 4 }}
+                position={"relative"}
+                onClick={() => {
+                  // setP1(true);
+                  // setP2(false);
+                  // setP3(false);
+                  // setP4(false);
+                  // setP5(false); // *************************************************************
+                  // setFocused(!focused);
+                  close();
+                  toast({
+                    title: "Changes were not saved",
+                    status: "error",
+                  });
+                }}
+                colorScheme="red"
+              >
+                Cancel
+              </Button>
+              <Button
+                mt={{ base: 2, md: 4 }}
+                position={"relative"}
+                onClick={() => {
+                  // setP1(true);
+                  // setP2(false);
+                  // setP3(false);
+                  // setP4(false);
+                  // setP5(false); // *************************************************************
+                  // setFocused(!focused);
+                  close();
+                  toast({
+                    title: "Changes saved successfully !",
+                    status: "success",
+                  });
+                }}
+                colorScheme="green"
+              >
+                Save
+              </Button>
             </Flex>
           </form>
         </Box>

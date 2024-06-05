@@ -1,17 +1,22 @@
 import React, { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import UserContext from "./UserContext";
 
 export const ProductsContext = createContext();
 
 const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState();
+  const [product, setProduct] = useState();
+  const [unloggedProducts, setUnloggedProducts] = useState([]);
+  const [userProducts, setUserProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { isLoggedIn } = UserContext;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/homepage`,{
+        const response = await fetch(`http://localhost:5000/homepage`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -26,24 +31,124 @@ const ProductsProvider = ({ children }) => {
         setLoading(false);
       }
     };
-    fetchProducts();
+
+    const unloggedCate = async () => {
+      // fetch from this api 'https://fakestoreapi.com/products/categories
+      await fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        console.log(data);
+        setUnloggedProducts(data);
+      })
+      .catch((error) => {
+          setLoading(false);
+          console.error("Error:", error);
+        });
+    };
+
+
+    isLoggedIn ? fetchProducts() : unloggedCate();
   }, []);
 
-    const getProduct = async (id) => {
+  const getProduct = async (id) => {
     try {
       const response = await fetch(`http://localhost:5000/product/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "jwt": Cookies.get("jwt") 
-
+          jwt: Cookies.get("jwt"),
         },
       });
       const data = await response.json();
-      return data;
+      if (response.ok) {
+        console.log(data);
+        setProduct(data.result);
+        return data;
+      } else {
+        console.log("Response not ok");
+      }
     } catch (error) {
       console.error("Error fetching product:", error);
-      setError(error.message || "An error occurred while fetching the product.");
+      setError(
+        error.message || "An error occurred while fetching the product."
+      );
+    }
+  };
+
+  const deleteProduct = async (productId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/product/${productId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            jwt: Cookies.get("jwt"),
+          },
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data);
+      } else {
+        console.log("REspone not ok", data);
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      setError(
+        error.message || "An error occurred while deleting the product."
+      );
+    }
+  };
+
+  const addProduct = async (newProduct, sellerId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/${sellerId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          jwt: Cookies.get("jwt"),
+        },
+        body: JSON.stringify(newProduct),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data);
+      } else {
+        console.log(sellerId);
+        console.log("Response not ok");
+      }
+    } catch (error) {
+      console.error("Error adding product:", error);
+      setError(error.message || "An error occurred while adding the product.");
+    }
+  };
+
+  const updateProduct = async (productId, updatedProduct) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/product/${productId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            jwt: Cookies.get("jwt"),
+          },
+          body: JSON.stringify(updatedProduct),
+        }
+      );
+      const data = await response.json();
+      if (response.ok) {
+        console.log(data);
+      } else {
+        console.log("Response not ok");
+      }
+    } catch (error) {
+      console.error("Error updating product:", error);
+      setError(
+        error.message || "An error occurred while updating the product."
+      );
     }
   };
 
@@ -92,8 +197,45 @@ const ProductsProvider = ({ children }) => {
   //   }
   // };
 
+  const getArticles = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/articles", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          jwt: Cookies.get("jwt"),
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUserProducts(data.data);
+        console.log(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+      setError(error.message || "An error occurred while fetching articles.");
+    }
+  };
+
+  
+
   return (
-    <ProductsContext.Provider value={{ products, loading, error, getProduct }}>
+    <ProductsContext.Provider
+      value={{
+        products,
+        product,
+        loading,
+        error,
+        userProducts,
+        unloggedProducts,
+        getProduct,
+        getArticles,
+        deleteProduct,
+        addProduct,
+        updateProduct,
+        setError,
+      }}
+    >
       {children}
     </ProductsContext.Provider>
   );

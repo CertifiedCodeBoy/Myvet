@@ -11,6 +11,8 @@ const Section = ({ title, category }) => {
   const useProducts = () => useContext(ProductsContext);
   const { loading } = useProducts();
 
+  console.log(category);
+
   if (loading) {
     return (
       <Skeleton

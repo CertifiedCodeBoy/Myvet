@@ -1,63 +1,62 @@
 import React, { useState, useContext, useEffect } from "react";
 import { SketchPicker } from "react-color";
-import { useNavigate, useParams } from "react-router-dom"; // Import useNavigate hook directly from react-router-dom
+import { useNavigate, useParams } from "react-router-dom";
 import { ProductsContext } from "../contexts/ProductsContext";
+import { useTimeout, Flex } from "@chakra-ui/react";
 
 const EditPage = () => {
-  const history = useNavigate(); // Initialize useHistory
+  const history = useNavigate();
   const { id } = useParams();
-  const { products } = useContext(ProductsContext);
-  const [product, setProduct] = useState(null);
+  const { getProduct, product, updateProduct, setError, error } =
+    useContext(ProductsContext);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [colors, setColors] = useState([]);
-  const [selectedColor, setSelectedColor] = useState("#ffffff");
+  const [category, setCategory] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [selectedColor, setSelectedColor] = useState("");
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const [selectedSize, setSelectedSize] = useState("");
-  const [sizes, setSizes] = useState([]);
-  const [pic, setPic] = useState([]);
+  const [image, setImage] = useState(null);
   const [hoveredColorIndex, setHoveredColorIndex] = useState(null);
-  const [hoveredSizeIndex, setHoveredSizeIndex] = useState(null);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/product/${id}`);
-        const data = await response.json();
-        setProduct(data.result);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
-    };
+    getProduct(id);
+  }, []);
 
-    fetchProduct();
-  }, [id]);
-
-  useEffect(() => {
+  useTimeout(() => {
     if (product) {
       setName(product.name);
       setPrice(product.price);
       setDescription(product.description);
       setColors(product.colors);
-      if (product.colors.length > 0) {
-        setSizes(product.colors.sizes);
-      }
+      setCategory(product.category);
+      setGender(product.gender);
+      setAge(product.age);
     }
-  }, [product]);
+  }, 500);
 
   const handleColorAdd = () => {
-    setColors([...colors, selectedColor]);
+    setColors([
+      ...colors,
+      {
+        color: selectedColor,
+        sizes: ["S", "M", "L", "XL", "XXL"].map((size) => ({
+          value: size,
+          shoeSize: "",
+          inStock: 0,
+        })),
+      },
+    ]);
     setShowColorPicker(false);
   };
 
-  const handleSizeAdd = () => {
-    setSizes([...sizes, selectedSize]);
-    setSelectedSize("");
-  };
-
-  const handleImageChange = (e) => {
-    setPic(e.target.files[0]);
+  const handleColorChange = (index, newColor) => {
+    const updatedColors = colors.map((color, i) =>
+      i === index ? { ...color, color: newColor.hex } : color
+    );
+    setColors(updatedColors);
   };
 
   const handleColorDelete = (index) => {
@@ -66,48 +65,54 @@ const EditPage = () => {
     setColors(updatedColors);
   };
 
-  const handleSizeDelete = (index) => {
-    const updatedSizes = [...sizes];
-    updatedSizes.splice(index, 1);
-    setSizes(updatedSizes);
+  const handleSizeStockChange = (colorIndex, sizeIndex, newStock) => {
+    const updatedColors = colors.map((color, i) => {
+      if (i === colorIndex) {
+        const updatedSizes = color.sizes.map((size, j) =>
+          j === sizeIndex ? { ...size, inStock: parseInt(newStock) } : size
+        );
+        return { ...color, sizes: updatedSizes };
+      }
+      return color;
+    });
+
+    setColors(updatedColors);
+  };
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const filteredColors = colors.map((color) => ({
+      color: color.color,
+      sizes: color.sizes.filter((size) => size.inStock > 0),
+    }));
+
+    const productData = {
+      name,
+      price: Number(price),
+      description,
+      colors: filteredColors,
+      category,
+      gender,
+      age,
+      pic: image ? image.name : "",
+    };
+
     try {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("price", parseFloat(price));
-      formData.append("description", description);
-      formData.append("pic", pic);
-      formData.append("category", "men's clothing");
-      formData.append("colors", JSON.stringify(colors)); // Add colors to form data
-      formData.append("sizes", JSON.stringify(sizes)); // Add sizes to form data
-
-      const newProduct = {
-        name: name,
-        price: parseFloat(price),
-        description,
-        pic: [
-          "https://via.placeholder.com/150",
-          "https://via.placeholder.com/150",
-          "https://via.placeholder.com/150",
-        ],
-        category: "men's clothing",
-        colors : {
-          color : sizes,
-        },
-      };
-
-      console.log("Product added successfully!", newProduct);
+      await updateProduct(id, productData);
+      history("/");
     } catch (error) {
-      console.error("Error adding product:", error);
+      console.error("Error updating product:", error);
     }
   };
 
   return (
     <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-semibold mb-4">Add Product</h1>
+      <h1 className="text-3xl font-semibold mb-4">Edit Product</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -141,9 +146,33 @@ const EditPage = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
           ></textarea>
         </div>
+
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Product Colors
+            Category
+          </label>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
+          >
+            <option value="">Select Category</option>
+            <option value="Shoe">Shoe</option>
+            <option value="Pants">Pants</option>
+            <option value="Hoodie">Hoodie</option>
+            <option value="TShirt">TShirt</option>
+            <option value="Jacket">Jacket</option>
+            <option value="Sweater">Sweater</option>
+            <option value="Shorts">Shorts</option>
+            <option value="Skirt">Skirt</option>
+            <option value="Dress">Dress</option>
+            <option value="Hidjeb">Hidjeb</option>
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Product Colors and Sizes
           </label>
           <div className="flex items-center">
             <button
@@ -181,78 +210,77 @@ const EditPage = () => {
                 </button>
               </div>
             )}
-            {colors.map((color, index) => (
-              <div
-                key={index}
-                className="flex items-center mr-2 relative"
-                onMouseEnter={() => setHoveredColorIndex(index)}
-                onMouseLeave={() => setHoveredColorIndex(null)}
-              >
-                <div
-                  className="w-8 h-8 rounded-full mx-1"
-                  style={{ backgroundColor: color }}
-                ></div>
-                {hoveredColorIndex === index && (
-                  <button
-                    type="button"
-                    className="w-5 items-center absolute top-0 right-0 transform translate-x-2/4 -translate-y-2/4 text-gray-600 focus:outline-none"
-                    onClick={() => handleColorDelete(index)}
-                  >
-                    X
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Product Sizes
-          </label>
-          <div className="flex items-center">
-            <select
-              value={selectedSize}
-              onChange={(e) => setSelectedSize(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800 mr-2"
-            >
-              <option value="">Select Size</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-              <option value="XXL">XXL</option>
-              <option value="XXXL">XXXL</option>
-            </select>
-            <button
-              type="button"
-              onClick={handleSizeAdd}
-              className="bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-950"
-            >
-              Add Size
-            </button>
           </div>
           <div className="flex flex-wrap mt-2">
-            {sizes.map((size, index) => (
-              <div
-                key={index}
-                className="px-3 py-1 bg-gray-200 text-sm rounded-full mr-2 mb-2 relative"
-                onMouseEnter={() => setHoveredSizeIndex(index)}
-                onMouseLeave={() => setHoveredSizeIndex(null)}
-              >
-                {size}
-                {hoveredSizeIndex === index && (
+            {colors.map((color, colorIndex) => (
+              <div key={colorIndex} className="mb-4 w-full">
+                <div className="flex items-center mb-2">
+                  <div
+                    className="w-8 h-8 rounded-full"
+                    style={{ backgroundColor: color.color }}
+                  ></div>
                   <button
                     type="button"
-                    className="ml-1 text-gray-600 focus:outline-none"
-                    onClick={() => handleSizeDelete(index)}
+                    className="ml-2 text-red-600 focus:outline-none"
+                    onClick={() => handleColorDelete(colorIndex)}
                   >
                     X
                   </button>
-                )}
+                </div>
+                <div className="flex flex-wrap">
+                  {color.sizes.map((size, sizeIndex) => (
+                    <div
+                      key={sizeIndex}
+                      className="flex items-center mr-2 mb-2"
+                    >
+                      <div className="mr-2">{size.value || size.shoeSize}</div>
+                      <input
+                        type="number"
+                        value={size.inStock}
+                        onChange={(e) =>
+                          handleSizeStockChange(colorIndex, sizeIndex, e.target.value)
+                        }
+                        className="w-16 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Gender
+          </label>
+          <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
+          >
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Unisex">Unisex</option>
+          </select>
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Age
+          </label>
+          <select
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-amber-800"
+          >
+            <option value="">Select Age</option>
+            <option value="Kids">Kids</option>
+            <option value="Adults">Adults</option>
+          </select>
+        </div>
+
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Product Image
@@ -261,15 +289,18 @@ const EditPage = () => {
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full px-4 py-2 rounded-md focus:outline-none"
+            className="w-full"
           />
         </div>
-        <button
-          type="submit"
-          className="bg-amber-800 text-white px-8 py-3 rounded-md hover:bg-amber-950"
-        >
-          Edit Product
-        </button>
+
+        <div>
+          <button
+            type="submit"
+            className="bg-amber-800 text-white px-4 py-2 rounded-md hover:bg-amber-950"
+          >
+            Update Product
+          </button>
+        </div>
       </form>
     </div>
   );
