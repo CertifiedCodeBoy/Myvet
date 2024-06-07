@@ -127,7 +127,12 @@ const Slideshow = () => {
             ml={5}
             gap={4}
           >
-            LEARN MORE
+            <Link
+              to="/Welcome"
+              className="text-lg font-semibold"
+            >
+              LEARN MORE
+            </Link>
             <ArrowSquareOut size={24} />
           </Button>
         </Box>

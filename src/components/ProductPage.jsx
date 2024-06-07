@@ -78,7 +78,8 @@ const ProductPage = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [rating, setRating] = useState(0);
   const [isAddingReview, setIsAddingReview] = useState(false);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState();
+  const [comments, setComments] = useState([]);
   const [product, setProduct] = useState(null);
   const [isInFavorites, setIsInFavorites] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -89,33 +90,10 @@ const ProductPage = () => {
       const data = await getProduct(id);
       setProduct(data.result);
       setIsInFavorites(data.isFavorite);
+      setComments(data.result.comments);
     };
     fetchProduct();
   }, [FavoritesContext, id, isFavorite, ProductsContext]);
-
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      rating: 5,
-      comment: "Great shoes! Very comfortable.",
-      date: "Feb 18, 2024",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      rating: 4,
-      comment: "Nice design and good quality.",
-      date: "Feb 16, 2024",
-    },
-    {
-      id: 3,
-      name: "Alice Johnson",
-      rating: 2,
-      comment: "Decent shoes, but could be better.",
-      date: "Feb 20, 2024",
-    },
-  ]);
 
   const handleSizeChange = (size) => {
     setSelectedSize(size);
@@ -160,7 +138,17 @@ const ProductPage = () => {
     });
 
     try {
-      await addToCart(productDetails, product._id);
+      addToCart(productDetails, product._id);
+      if (!isLoggedIn) {
+        setTimeout(() => {
+          toast({
+            title: "Failed to add to cart, Login First !",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }, 2000);
+      }
       setTimeout(() => {
         toast({
           title: "Added to cart",
@@ -170,9 +158,10 @@ const ProductPage = () => {
         });
       }, 2000);
     } catch (error) {
+      console.error("Error adding to cart:", error);
       setTimeout(() => {
         toast({
-          title: "Failed to add to cart",
+          title: "Failed to add to cart, Login First !",
           status: "error",
           duration: 3000,
           isClosable: true,
@@ -185,7 +174,7 @@ const ProductPage = () => {
     const productId = product._id;
     addFavorite(productId);
     setTimeout(() => {
-      setIsInFavorites(!isFavorite);
+      setIsInFavorites(!isInFavorites);
     }, 500);
   };
 
@@ -201,7 +190,12 @@ const ProductPage = () => {
     if (isLoggedIn) {
       setIsAddingReview(!isAddingReview);
     } else {
-      alert("You need to be logged in to write a review.");
+      toast({
+        title: "You must be logged in to write a review",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
@@ -293,9 +287,7 @@ const ProductPage = () => {
               my-4
             "
           >
-            <h1 className="text-xl font-medium  text-gray-900">
-              Description
-            </h1>
+            <h1 className="text-xl font-medium  text-gray-900">Description</h1>
             <p className="text-gray-700 mb-2 text-pretty text-justify ">
               <Text>
                 {/* {product.description} */}
@@ -351,7 +343,11 @@ const ProductPage = () => {
                         <button
                           key={`${colorIndex}-${sizeIndex}`}
                           className={`px-2 py-1 size-9 flex items-start justify-center rounded-full focus:outline-none border-2 ${
-                            selectedSize === size.value
+                            product.category === "Shoe"
+                              ? selectedSize === size.shoeSize
+                                ? "border-black"
+                                : "border-gray-300"
+                              : selectedSize === size.value
                               ? "border-black"
                               : "border-gray-300"
                           }`}
@@ -365,9 +361,15 @@ const ProductPage = () => {
                             color: color.color === "black" ? "black" : "white",
                             cursor: "pointer",
                           }}
-                          onClick={() => handleSizeChange(size.value)}
+                          onClick={() =>
+                            handleSizeChange(
+                              product.category === "Shoe"
+                                ? size.shoeSize
+                                : size.value
+                            )
+                          }
                         >
-                          {product.category === "shoes"
+                          {product.category === "Shoe"
                             ? size.shoeSize
                             : size.value}
                         </button>
@@ -398,18 +400,36 @@ const ProductPage = () => {
                 Quantity :
               </label>
 
-              <QuantitySelector />
+              <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
             </div>
 
             <button
-              onClick={() => handleAddToCart(product.id)}
+              onClick={() => {
+                isLoggedIn
+                  ? handleAddToCart(product._id)
+                  : toast({
+                      title: "You must be logged in to add to cart",
+                      status: "error",
+                      duration: 3000,
+                      isClosable: true,
+                    });
+              }}
               className="bg-primary text-white px-6 py-4 rounded-3xl hover:bg-amber-950 cursor-pointer"
             >
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />
               Add to Cart
             </button>
             <button
-              onClick={handleAddToFavorites}
+              onClick={() => {
+                isLoggedIn
+                  ? handleAddToFavorites()
+                  : toast({
+                      title: "You must be logged in to add to favorites",
+                      status: "error",
+                      duration: 3000,
+                      isClosable: true,
+                    });
+              }}
               className="bg-transparent text-primary border border-amber-950 px-6 py-4 rounded-3xl hover:bg-gray-100 hover:text-amber-950"
             >
               {isInFavorites ? (
@@ -444,7 +464,8 @@ const ProductPage = () => {
           </button>
         </div>
         {/* Fake Comments */}
-        {comments.map((fakeComment, index) => (
+        {comments.map((comment, index) => (
+          console.log(comment),
           <div key={index} className="mb-4">
             <div className="flex items-center mb-1">
               {/* User Rating */}
@@ -454,20 +475,18 @@ const ProductPage = () => {
                     key={i}
                     icon={faStar}
                     className={
-                      i < fakeComment.rating
-                        ? "text-yellow-500"
-                        : "text-gray-400"
+                      i < comment.rating ? "text-yellow-500" : "text-gray-400"
                     }
                   />
                 ))}
               </div>
               {/* User Name */}
-              <p className="text-gray-800 font-semibold">{fakeComment.name}</p>
+              <p className="text-gray-800 font-semibold">{comment.name}</p>
             </div>
             {/* Comment Date */}
-            <p className="text-gray-600 mb-1">{fakeComment.date}</p>
+            <p className="text-gray-600 mb-1">{comment.name}</p>
             {/* User Comment */}
-            <p className="text-gray-700">{fakeComment.comment}</p>
+            <p className="text-gray-700">{comment.content}</p>
           </div>
         ))}
         {/* Review Form (conditional) */}
@@ -508,9 +527,7 @@ const ProductPage = () => {
 
 export default ProductPage;
 
-export const QuantitySelector = () => {
-  const [quantity, setQuantity] = useState(1);
-
+export const QuantitySelector = ({ quantity, setQuantity }) => {
   const handleIncrement = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };

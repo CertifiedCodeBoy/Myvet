@@ -7,6 +7,7 @@ const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState();
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(true);
+  const [userProducts, setUserProducts] = useState();
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -204,6 +205,7 @@ const ProductsProvider = ({ children }) => {
         product,
         loading,
         error,
+        userProducts,
         getProduct,
         getArticles,
         deleteProduct,

@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import { FavoritesContext } from "../contexts/FavoritesContext";
 import { UserContext } from "../contexts/UserContext";
+import PageNotFound from "./PageNotFound";
 
 const Favorites = () => {
   const { favorites, loading, error, fetchFavorites } = useContext(FavoritesContext);
@@ -39,7 +40,18 @@ const Favorites = () => {
         <Heading as="h1" size="xl" textAlign="center" my={10}>
           Favorites
         </Heading>
-        <Text textAlign="center">No favorites yet</Text>
+        <div
+            className="
+              h-screen
+              flex
+              justify-center
+
+            "
+        >
+
+            <PageNotFound reason={"No favorites found"} />
+
+        </div>
       </Box>
     );
   }

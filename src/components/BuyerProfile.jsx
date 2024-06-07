@@ -32,14 +32,13 @@ import Cart from "./Cart";
 import UpgradeToSeller from "./UpgradeToSeller";
 import Cookies from "js-cookie";
 import Settings from "./Settings";
+import SellerSection from "./SellerSection";
 
 const BuyerProfile = () => {
   const toast = useToast();
   const [selected, setSelected] = useState(1);
   const { user, isLoading, setIsLoggedIn } = useContext(UserContext);
-  const [isExpanded, setIsExpanded] = useState(
-    false
-  );
+  const [isExpanded, setIsExpanded] = useState(false);
   const [focused, setFocused] = useState(false);
   const [p1, setP1] = useState(true);
   const [p2, setP2] = useState(false);
@@ -53,6 +52,8 @@ const BuyerProfile = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("jwt");
+    localStorage.removeItem("user");
+    Cookies.remove("jwt");
     navigate("/");
     onClose();
   };
@@ -254,7 +255,7 @@ const BuyerProfile = () => {
                     Seller{" "}
                   </Badge>
                 )}
-                <Flex gap={4} mt={{ base: 4, md: 0 }}>
+                {/* <Flex gap={4} mt={{ base: 4, md: 0 }}>
                   <Button
                     mt={{ base: 2, md: 4 }}
                     position={"relative"}
@@ -297,27 +298,25 @@ const BuyerProfile = () => {
                   >
                     Save
                   </Button>
-                </Flex>
+                </Flex> */}
                 <Button
                   mt={{ base: 2, md: 4 }}
                   position={"relative"}
-                  right={{ base: 0, md: -24 }}
+                  right={-20}
                   onClick={() => {
                     setP1(true);
                     setP2(false);
                     setP3(false);
                     setP4(false);
                     setP5(!p5);
-                    setFocused(!focused);
                   }}
-                  bg={!focused ? "#F2F2F2" : "#111"}
-                  color={!focused ? "#111" : "#F2F2F2"}
+                  bg={"#F2F2F2"}
+                  color={"#111"}
                   _hover={{
                     bg: "#111",
                     color: "#F2F2F2",
                     transition: "0.5s",
                   }}
-                  display={focused ? "none" : ""}
                 >
                   <Gear size={20} />
                 </Button>
@@ -326,30 +325,16 @@ const BuyerProfile = () => {
             <Divider mt={8} />
             <Box width={"100%"} p={0}>
               {!p5 && (
-                <Flex
-                  mt={{ base: 0, md: 4 }}
-                  fontSize={20}
-                  gap={1}
-                  direction={{ base: "column", md: "row" }}
-                >
-                  <p> You have no products listed yet. </p>{" "}
-                  <p
-                    className="underline cursor-pointer"
-                    onClick={() => {
-                      setSelected(4);
-                      setP1(false);
-                      setP2(false);
-                      setP3(false);
-                      setP4(true);
-                    }}
-                  >
-                    Click here
-                  </p>{" "}
-                  to start selling.
-                </Flex>
+                <SellerSection
+                  title="Head to the Upgrade to Seller Section and send a request to our admin!"
+                  user={user}
+                  setP4={setP4}
+                  setP1={setP1}
+                  setSelected={setSelected}
+                />
               )}
             </Box>
-            {p5 && <Settings />}
+            {p5 && <Settings setP5={setP5} />}
           </Box>
         )}
         {p2 && <Favorites />}

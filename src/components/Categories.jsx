@@ -19,6 +19,7 @@ import { CategoriesContext } from "../contexts/CategoriesContext.jsx";
 import { Link } from "react-router-dom";
 import { extendTheme } from "@chakra-ui/react";
 import { radioTheme } from "./Styles/radio.ts";
+import PageNotFound from "./PageNotFound.jsx";
 
 export const theme = extendTheme({
   components: { Radio: radioTheme },
@@ -26,33 +27,24 @@ export const theme = extendTheme({
 
 const Categories = () => {
   const { category } = useParams();
-  const {
-    categories,
-    loading,
-    error,
-    fetchCategories,
-    fetchPriceFilter,
-  } = useContext(CategoriesContext);
+  const { categories, loading, error, fetchCategories, fetchPriceFilter } =
+    useContext(CategoriesContext);
   const [priceFilter, setPriceFilter] = useState("");
   const [genderFilter, setGenderFilter] = useState("");
   const [ageFilter, setAgeFilter] = useState("");
 
   useEffect(() => {
-  fetchCategories(category);
+    fetchCategories(category);
   }, []);
 
   useEffect(() => {
     fetchPriceFilter(category, priceFilter, genderFilter, ageFilter);
-  }, [ priceFilter, genderFilter, ageFilter]);
-  
+  }, [priceFilter, genderFilter, ageFilter]);
+
   if (loading) {
     return <div className="min-h-96">Loading...</div>;
   }
-  
-  if (error) {
-    return <div className="min-h-96">An error occurred: {error}</div>;
-  }
-  
+
 
   return (
     <>
@@ -178,17 +170,21 @@ const Categories = () => {
             </Stack>
           </Box>
           <Box flex="1" p={4}>
-            <Flex wrap="wrap" justify="start">
-              {categories.map((product, index) => (
-                <Box
-                  key={index}
-                  w={{ base: "100%", sm: "50%", md: "33%", lg: "25%" }}
-                  p={2}
-                >
-                  <Kard product={product} />
-                </Box>
-              ))}
-            </Flex>
+            {error ? (
+              <PageNotFound reason={"This fileter does not exist !"} category={category} />
+            ) : (
+              <Flex wrap="wrap" justify="start">
+                {categories.map((product, index) => (
+                  <Box
+                    key={index}
+                    w={{ base: "100%", sm: "50%", md: "33%", lg: "25%" }}
+                    p={2}
+                  >
+                    <Kard product={product} />
+                  </Box>
+                ))}
+              </Flex>
+            )}
           </Box>
         </Flex>
       </Box>

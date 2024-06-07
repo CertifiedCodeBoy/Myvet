@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Box, Button, Heading, Spacer } from "@chakra-ui/react";
 import { Card, Image, Text } from "@chakra-ui/react";
 import { Flex } from "@chakra-ui/react";
@@ -6,11 +6,13 @@ import { Link } from "react-router-dom";
 import { Heart, Plus } from "phosphor-react";
 import image2 from "../Assets/slideshowImages/2.jpeg";
 import image5 from "../Assets/slideshowImages/5.jpeg";
+import { UserContext } from "../contexts/UserContext";
 
 const Featured = ({ title }) => {
   const [hoverStates, setHoverStates] = useState({});
   const [isClicked, setIsClicked] = useState({});
   const featuredImages = [image2, image5];
+  const { isLoggedIn } = useContext(UserContext);
 
   return (
     <div>
@@ -22,7 +24,7 @@ const Featured = ({ title }) => {
         align={"center"}
         gap={2}
         flex={1}
-        direction={{base: "column", md: "row"}}
+        direction={{ base: "column", md: "row" }}
       >
         {featuredImages.map((image, index) => (
           <Card
@@ -63,7 +65,11 @@ const Featured = ({ title }) => {
                   {index === 0 ? "Cutton Hoodies" : "Our Latest Collection"}
                 </Text>
                 <Link
-                  to={index === 0 ? `/Categories/men's clothing` : `/Categories/women's clothing`}
+                  to={
+                    index === 0
+                      ? `/Categories/men's clothing`
+                      : `/Categories/women's clothing`
+                  }
                 >
                   <Text color={"white"} fontSize={"xl"} textDecor={"underline"}>
                     {index === 0 ? "Shop now" : "Discover More"}
@@ -79,11 +85,20 @@ const Featured = ({ title }) => {
                     color: "white",
                   }}
                   onClick={() =>
-                    setIsClicked((prev) => ({ ...prev, [index]: !prev[index] }))
+                    isLoggedIn
+                      ? setIsClicked((prev) => ({
+                          ...prev,
+                          [index]: !prev[index],
+                        }))
+                      : (window.location.href = "/Login")
                   }
                 >
-                  {isClicked[index] ? (
-                    <Heart size={24} color={"red"} weight="fill" />
+                  {isLoggedIn ? (
+                    isClicked[index] ? (
+                      <Heart size={24} color={"red"} weight="fill" />
+                    ) : (
+                      <Heart size={24} color={"white"} />
+                    )
                   ) : (
                     <Heart size={24} color={"white"} />
                   )}

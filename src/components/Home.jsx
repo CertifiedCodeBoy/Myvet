@@ -8,13 +8,34 @@ import UseMobile from "./UseMobile";
 import { UserContext } from "../contexts/UserContext";
 import { ProductsContext } from "../contexts/ProductsContext";
 import Loading from "./Loading";
+import { useToast } from "@chakra-ui/react";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+import blackLogo from "../Assets/blacklogo.png";
+import ShoppingBags from "../Assets/ShoppingBags.png";
+import { Link } from "react-router-dom";
+import StartSelling from "./StartSelling";
+import SellerSection from "./SellerSection.jsx";
 
 const Home = () => {
+  const { user } = useContext(UserContext);
+  const toast = useToast();
   const { showToast, setShowToast } = useContext(UserContext);
   const { products } = useContext(ProductsContext);
+  const [showModal, setShowModal] = React.useState(showToast);
+
+  // setTimeout(() => {
+  //   setShowModal(false);
+  // }, 10000);
 
   if (!products) {
-    return (<Loading />)
+    return <Loading />;
   }
 
   return (
@@ -30,13 +51,62 @@ const Home = () => {
             <CloseButton onClick={() => setShowToast(false)} />
           </div>
         )}
+
+        {user && !user.isSeller && (
+          <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+            <ModalOverlay />
+            <ModalContent
+              className="
+            overflow-hidden
+            "
+            >
+              <ModalHeader
+                className="
+              bg-gray-100
+                flex justify-start items-center
+              "
+              >
+                <div
+                  className="
+                flex justify-start gap-4 items-center 
+                "
+                >
+                  <img src={blackLogo} alt="logo" className="w-12 mx-auto" />
+                  <p className="text-lg font-bold text-center">
+                    Did You know?!
+                  </p>
+                </div>
+              </ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <p className="text-2xl text-center p-4">
+                  You can start your e-commerce journey and start selling with
+                  us!
+                </p>
+                <p className="text-lg font-bold p-4 text-center">
+                  <Link to={`/Profile/${user.id}`} className="text-blue-500">
+                    Click here to learn more!
+                  </Link>
+                </p>
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+        )}
       </div>
       <div className="w-full">
+        {user && !user.isSeller && <StartSelling user={user.id} />}
         {window.innerWidth > 640 ? <Slideshow /> : <UseMobile />}
         <Section title="Most Sold" category={products.mostSold} />
         <Featured title="Featured" />
         <Section title="Shoes" category={products.Shoe} />
-        <Section title="Hidjebs" category={products.Hidjeb} />
+        {user && !user.isSeller && (
+          <SellerSection
+            title="
+          You can start selling today!
+        "
+            user={user}
+          />
+        )}
         <Section title="Pants" category={products.Pants} />
         <Section title="Hoodies" category={products.Hoodie} />
         <Section title="T-Shirts" category={products.TShirt} />

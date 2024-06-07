@@ -44,16 +44,19 @@ const CategoriesProvider = ({ children }) => {
 
   const fetchCategories = async (category) => {
     try {
-      const response = await fetch(`http://localhost:5000/search?category=${category}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          jwt: Cookies.get("jwt"),
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/search?category=${category}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            jwt: Cookies.get("jwt"),
+          },
+        }
+      );
       const data = await response.json();
       if (response.ok) {
-          setCategories(data.result);
+        setCategories(data.result);
         setLoading(false);
       } else {
         throw new Error(
@@ -65,35 +68,35 @@ const CategoriesProvider = ({ children }) => {
       setError(error.message || "An error occurred while fetching categories.");
       setLoading(false);
     }
+  };
 
-};
-
-    const fetchPriceFilter = async (category, price, gender, age) => {
-        try {
-            const response = await fetch(`http://localhost:5000/search?category=${category}&sort=${price}&gender=${gender}&age=${age}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                jwt: Cookies.get("jwt"),
-            },
-            });
-            const data = await response.json();
-            if (response.ok) {
-            setCategories(data.result);
-            setLoading(false);
-            } else {
-            throw new Error(
-                data.message || "An error occurred while fetching categories."
-            );
-            }
-        } catch (error) {
-            console.error("Error fetching categories:", error);
-            setError(error.message || "An error occurred while fetching categories.");
-            setLoading(false);
+  const fetchPriceFilter = async (category, price, gender, age) => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/search?category=${category}&sort=${price}&gender=${gender}&age=${age}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            jwt: Cookies.get("jwt"),
+          },
         }
-        };
-
-
+      );
+      const data = await response.json();
+      if (response.ok) {
+        setCategories(data.result);
+        setLoading(false);
+      } else {
+        throw new Error(
+          data.message || "An error occurred while fetching categories."
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      setError(error.message || "An error occurred while fetching categories.");
+      setLoading(false);
+    }
+  };
 
   //   const addFavorite = async (newFavorite) => {
   //     try {

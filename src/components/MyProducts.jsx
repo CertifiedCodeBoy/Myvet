@@ -67,7 +67,7 @@ const MyProducts = () => {
                   mb={2}
                 >
                   <Image
-                    src={product.pic[0]}
+                    src={product.pic}
                     alt={product.name}
                     w="100%"
                     h="100%"

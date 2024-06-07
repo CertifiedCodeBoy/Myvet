@@ -31,16 +31,16 @@ import SellerItem from "./components/SellerItem";
 import EditPage from "./components/EditPage"; // Import EditPage
 import PreCategory from "./components/preCategory";
 import Settings from "./components/Settings";
+import PageNotFound from "./components/PageNotFound";
+import ForgotPassword from "./components/ForgotPassword"; // Import ForgotPassword
 
 const App = () => {
   const { isLoggedIn, user } = useContext(UserContext);
-  const { 
-    products, 
-    loading,  
-    unloggedProducts,
-  } = useContext(ProductsContext);
-  
-  isLoggedIn ? !products || loading && <Loading/> : !unloggedProducts || loading && <Loading/>; 
+  const { products, loading, unloggedProducts } = useContext(ProductsContext);
+
+  isLoggedIn
+    ? !products || (loading && <Loading />)
+    : !unloggedProducts || (loading && <Loading />);
 
   return (
     <OffersProvider>
@@ -198,6 +198,16 @@ const App = () => {
               }
             ></Route>
             <Route
+              path="/Settings"
+              element={
+                <>
+                  <LoggedInNav />
+                  <Settings />
+                  <Footer />
+                </>
+              }
+            ></Route>
+            <Route
               path="/Contact"
               element={
                 <>
@@ -227,12 +237,11 @@ const App = () => {
               }
             ></Route>
             <Route
-              path={`/Settings`}
+              path={`/forgotpassword`}
               element={
                 <>
-                  {isLoggedIn ? <LoggedInNav /> : <Navbar />}
-                  {/* <Settings  /> */}
-                  <Footer />
+                  <Loginsignupnav />
+                  <ForgotPassword />
                 </>
               }
             ></Route>
@@ -255,7 +264,10 @@ const App = () => {
                 </>
               }
             ></Route>
-            <Route path="*" element={<h1>Not Found</h1>}></Route>
+            <Route
+              path="*"
+              element={<PageNotFound reason={"Page does not exist"} />}
+            ></Route>
           </Routes>
         </Router>
       </div>

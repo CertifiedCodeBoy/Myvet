@@ -153,7 +153,18 @@ const Login = () => {
               >
                 Login
               </button>
-              <div className="relative my-5 flex items-center justify-center">
+              <div>
+                {/*
+                  forgot password goes here:
+                */}
+                <Link
+                  to="/forgotpassword"
+                  className="text-center text-sm mt-2 text-gray-500 hover:underline"
+                >
+                  <p className="text-center text-sm mt-2 text-gray-500 hover:underline">  Forgot password ?</p>
+                </Link>
+              </div>
+              <div className="relative mt-2  mb-8 flex items-center justify-center">
                 <div className="flex-grow border-t border-black"></div>
                 <div className="px-2 text-center font-bold">OR</div>
                 <div className="flex-grow border-t border-black"></div>

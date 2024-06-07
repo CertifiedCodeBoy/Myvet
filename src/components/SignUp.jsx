@@ -22,8 +22,7 @@ const SignUp = () => {
           "firstName": `${formData.firstName}`,
           "lastName": `${formData.lastName}`,
           "password": `${formData.password}`,
-          // "pic": "https://picsum.photos/800",
-          // "phoneNumber": `${formData.phoneNumber}`,
+          "phoneNumber": `${formData.phoneNumber}`,
         }
       ),
     });

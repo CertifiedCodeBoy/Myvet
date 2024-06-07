@@ -18,9 +18,46 @@ import {
   MenuOptionGroup,
   MenuDivider,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
+  const [orders, setOrders] = useState([]);
+  useEffect(() => {
+    function fetchMyOrders() {
+      fetch("http://localhost:5000/myorders", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          jwt: Cookies.get("jwt"),
+        },
+      })
+        .then(async (response) => {
+          if (response.ok) {
+            return response.json();
+          } else if (response.status === 404) {
+            const errorData = await response.json();
+            throw new Error(errorData || "Not Found");
+          } else if (response.status === 400) {
+            const errorData_1 = await response.json();
+            throw new Error(errorData_1.message || "Bad Request");
+          } else {
+            throw new Error("Request failed: " + response.statusText);
+          }
+        })
+        .then((data) => {
+          console.log("Orders retrieved successfully:", data.myOrders);
+          setOrders(data.myOrders);
+        })
+        .catch((error) => {
+          console.error("Failed to retrieve orders:", error.message);
+        });
+    }
+
+    // Call the function to fetch orders
+    fetchMyOrders();
+  }, []);
   const [status, setStatus] = useState("");
   const pOrders = [
     {
@@ -61,8 +98,8 @@ const Orders = () => {
   ];
 
   let filteredOrders = status
-    ? pOrders.filter((order) => order.status === status)
-    : pOrders;
+    ? orders.filter((order) => order.status === status)
+    : orders;
   return (
     <div>
       <Box className="flex justify-between items-center">
@@ -134,9 +171,9 @@ const Orders = () => {
             <CardHeader>{order.id}</CardHeader>
             <CardBody p={4}>
               <Box>
-                <Box>{order.name}</Box>
+                <Box>{order.name ? order.name : "Product"}</Box>
                 <Box>{order.date}</Box>
-                <Box>${order.total}</Box>
+                <Box>${order.price}</Box>
                 <Heading size="md">{order.status}</Heading>
               </Box>
             </CardBody>
@@ -146,7 +183,9 @@ const Orders = () => {
                 flex flex-col justify-between gap-4
                 "
               >
-                <Button colorScheme="blue">View</Button>
+                <Button colorScheme="blue">
+                  <Link to={`/Product/${order.productId}`}>View</Link>
+                </Button>
                 {order.status === "Pending" ||
                 order.status === "shipped" ||
                 order.status === "On the way" ? (

@@ -35,8 +35,8 @@ const SellerProfile = () => {
   const toast = useToast();
   const [selected, setSelected] = useState(1);
   const { user, isLoading, setIsLoggedIn } = useContext(UserContext);
-  const [isExpanded, setIsExpanded] = useState(() =>
-    typeof window !== "undefined" && false
+  const [isExpanded, setIsExpanded] = useState(
+    () => typeof window !== "undefined" && false
   );
   const [focused, setFocused] = useState(false);
   const [p1, setP1] = useState(true); // Seller profile selected by default
@@ -47,7 +47,7 @@ const SellerProfile = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isSeller } = useContext(SellerContext);
   const navigate = useNavigate();
-  const cancelRef = useRef();  
+  const cancelRef = useRef();
 
   const handleLogout = () => {
     setIsLoggedIn(false);
@@ -218,7 +218,7 @@ const SellerProfile = () => {
                     {user.firstName}
                   </Heading>
                 </Flex>
-                {user.isSeller? (
+                {user.isSeller ? (
                   <Badge mt={{ base: 0, md: 4 }} colorScheme="red">
                     Seller
                   </Badge>
@@ -282,8 +282,8 @@ const SellerProfile = () => {
                     setP4(false);
                     setP5(!p5);
                   }}
-                  bg={"#F2F2F2" }
-                  color={ "#111"}
+                  bg={"#F2F2F2"}
+                  color={"#111"}
                   _hover={{
                     bg: "#111",
                     color: "#F2F2F2",
@@ -295,15 +295,17 @@ const SellerProfile = () => {
               </Flex>
             </Box>
             <Divider mt={8} />
-            {!p5 &&
+            {!p5 && (
               <Box width={"100%"} p={0}>
-              <MyProducts /> {/* Include MyProducts component within Seller Info */}
-            </Box>}
+                <MyProducts />{" "}
+                {/* Include MyProducts component within Seller Info */}
+              </Box>
+            )}
           </Box>
         )}
         {p2 && <Favorites />}
         {p3 && <Cart />}
-        {p5 && <Settings close={setP5} />}
+        {p5 && <Settings setP5={setP5} />}
       </Box>
       <AlertDialog
         isOpen={isOpen}

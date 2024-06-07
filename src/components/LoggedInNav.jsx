@@ -49,8 +49,12 @@ import {
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../contexts/CartContext";
 
 const LoggedInNav = () => {
+  const { cart, fetchCart } = useContext(CartContext);
   const { isOpen, onOpen, onClose, onToggle } = useDisclosure();
   const { isSeller } = useContext(SellerContext);
   const { user } = useContext(UserContext);
@@ -63,6 +67,20 @@ const LoggedInNav = () => {
   const [isHoveredAccessories, setIsHoveredAccessories] = useState(false);
   const location = useLocation();
   const current = location.pathname;
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    Cookies.remove("jwt");
+    localStorage.removeItem("user");
+    navigate("/");
+    window.location.reload();
+  };
+
+  if (!user) {
+    return <div>Loading ...</div>;
+  }
+
   return (
     <nav className="bg-gray-200 sticky px-4 py-2 w-full top-0 flex justify-center items-center z-50 font-main shadow-xl min-h-[60px]">
       <div className="container">
@@ -95,9 +113,7 @@ const LoggedInNav = () => {
           </div>
           {/* Categories, Login, Signup */}
           <div className="flex items-center px-4">
-            <div
-              className="flex items-center justify-center gap-4 px-2 h-8"
-            >
+            <div className="flex items-center justify-center gap-4 px-2 h-8">
               <div
                 className="group relative text-md h-[20px] text-black font-medium inline-block"
                 onMouseEnter={() => {
@@ -162,7 +178,7 @@ const LoggedInNav = () => {
                   setIsHoveredKids(false);
                 }}
               >
-                <Link to={"/PreCategory/Accessories"}>Accessories</Link>
+                <Link to={"/Categories/Accessories"}>Accessories</Link>
                 <span
                   className={`absolute h-0.5 bg-black -bottom-1 left-0 ${
                     current === "/Categories/jewelery" ? "w-full" : "w-0"
@@ -175,6 +191,7 @@ const LoggedInNav = () => {
                 className="flex items-center relative"
                 onMouseEnter={() => {
                   onOpen();
+                  fetchCart();
                 }}
               >
                 <Link to={`/Profile/${user.id}`}>
@@ -262,13 +279,13 @@ const LoggedInNav = () => {
                               top="-10px"
                               right="-10px"
                             >
-                              3
+                              {cart.length ? cart.length : 0}
                             </Badge>
                           </Box>
                           <span>My Cart</span>
                         </Link>
                         <Link
-                          to={`/Settings`}
+                          to={`/Profile/${user.id}`}
                           className="flex items-center gap-2 hover:underline"
                           onClick={() => {
                             onClose();
@@ -292,8 +309,8 @@ const LoggedInNav = () => {
                             </Link>
                           ) : null
                         }
-                        <Link
-                          to="/Profile"
+                        <Button
+                          onClick={handleLogout}
                           className="flex items-center gap-2 hover:underline"
                         >
                           <ArrowSquareOut size={24} color="red" />
@@ -304,7 +321,7 @@ const LoggedInNav = () => {
                           >
                             Logout
                           </span>
-                        </Link>
+                        </Button>
                       </PopoverBody>
                     </PopoverContent>
                   </Popover>
@@ -470,7 +487,7 @@ const LoggedInNav = () => {
         >
           <Flex justify={"center"} gap={20}>
             <Link
-              to={"/Categories/"}
+              to={"/Categories/jewlery"}
               className={`text-md px-4 h-[20px] text-black font-medium`}
             >
               Gold

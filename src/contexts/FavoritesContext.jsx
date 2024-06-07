@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
 import Cookies from "js-cookie";
-
+import { UserContext } from "../contexts/UserContext";
 export const FavoritesContext = createContext();
 
 const FavoritesProvider = ({ children }) => {
@@ -12,6 +12,7 @@ const FavoritesProvider = ({ children }) => {
   const [isFavorite, setIsFavorite] = useState();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { isLoggedIn } = useContext(UserContext);
 
   //   useEffect(() => {
   //     const fetchProducts = async () => {
@@ -44,7 +45,7 @@ const FavoritesProvider = ({ children }) => {
       if (response.ok) {
         console.log(data);
         setIsFavorite(data.isFavorite);
-      }
+      } 
     } catch (error) {
       console.error("Error adding favorite:", error);
       setError(error.message || "An error occurred while adding the favorite.");

@@ -18,7 +18,7 @@ const EditPage = () => {
   const [age, setAge] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [hoveredColorIndex, setHoveredColorIndex] = useState(null);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const EditPage = () => {
   };
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    setImage(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -286,8 +286,8 @@ const EditPage = () => {
             Product Image
           </label>
           <input
-            type="file"
-            accept="image/*"
+            type="text"
+            value={image}
             onChange={handleImageChange}
             className="w-full"
           />

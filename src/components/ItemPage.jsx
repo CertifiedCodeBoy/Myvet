@@ -23,7 +23,7 @@ const ItemPage = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [sizes, setSizes] = useState([]);
   const [stock, setStock] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [hoveredColorIndex, setHoveredColorIndex] = useState(null);
   const [hoveredSizeIndex, setHoveredSizeIndex] = useState(null);
 
@@ -38,7 +38,7 @@ const ItemPage = () => {
   };
 
   const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
+    setImage(e.target.value);
   };
 
   const handleColorDelete = (index) => {
@@ -73,12 +73,12 @@ const ItemPage = () => {
             category: category, // Assuming you have a state for this
             gender: gender, // Assuming you have a state for this
             age: age, // Assuming you have a state for this
-            pic: image.name, // Assuming image is a string URL
+            pic: image, // Assuming image is a string URL
           }
         : {
             name: name,
             price: Number(price),
-            pic: image.name, // Assuming image is a string URL
+            pic: image, // Assuming image is a string URL
             category: category, // Assuming you have a state for this
             gender: gender, // Assuming you have a state for this
             age: age, // Assuming you have a state for this
@@ -344,9 +344,9 @@ const ItemPage = () => {
             Product Image
           </label>
           <input
-            type="file"
-            accept="image/*"
+            type="text"
             onChange={handleImageChange}
+            value={image}
             className="w-full px-4 py-2 rounded-md focus:outline-none"
           />
         </div>
