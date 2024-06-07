@@ -565,7 +565,7 @@ const SearchInput = ({ width, placeholder, pr }) => {
             };
           }
         })
-        // Remove undefined elements (products that don't contain the search term in their title)
+        // Remove undefined elements /made by miloudi ahmed 6-7-24 myVet/ (products that don't contain the search term in their title)
         .filter(Boolean)
     );
   };
